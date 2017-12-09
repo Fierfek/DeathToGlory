@@ -40,6 +40,7 @@ public class ControlScheme : MonoBehaviour {
 		cc.Move(moveDirection * Time.deltaTime);
 
 		transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X")  * cameraPanSpeedX, 0));
+		transform.Rotate(new Vector3(-Input.GetAxis("Mouse Y") * cameraPanSpeedY, 0, 0));
 		transform.Rotate(0, 0, -transform.eulerAngles.z);
 
 
