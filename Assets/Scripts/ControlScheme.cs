@@ -6,9 +6,11 @@
 
 public class ControlScheme : MonoBehaviour {
 
-	public float moveSpeed;
-	public float jumpSpeed;
-	public float gravity;
+	public float moveSpeed = 1;
+	public float jumpSpeed = 1;
+	public float gravity = 1;
+	public float cameraPanSpeedX = 1;
+	public float cameraPanSpeedY = 1;
 
 	public Camera playerCamera;
 
@@ -29,7 +31,6 @@ public class ControlScheme : MonoBehaviour {
 
 			if (Input.GetButton("Jump")) {
 				moveDirection.y = jumpSpeed;
-				print("jumping");
 			}
 
 		} else {
@@ -38,8 +39,7 @@ public class ControlScheme : MonoBehaviour {
 		moveDirection.y -= gravity * Time.deltaTime;
 		cc.Move(moveDirection * Time.deltaTime);
 
-		transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X"), 0));
-		transform.Rotate(new Vector3(-Input.GetAxis("Mouse Y"), 0, 0));
+		transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X")  * cameraPanSpeedX, 0));
 		transform.Rotate(0, 0, -transform.eulerAngles.z);
 
 
