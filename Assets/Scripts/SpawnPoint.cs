@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
 
-public class Spawner : MonoBehaviour {
+public class SpawnPoint: MonoBehaviour {
 
 	SphereCollider sphereCollider;
 	Queue<Enemy> spawnQueue;

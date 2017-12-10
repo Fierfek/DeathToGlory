@@ -7,12 +7,11 @@
 public class ControlScheme : MonoBehaviour {
 
 	public float moveSpeed = 1;
+	public float sprintSpeed = 2;
 	public float jumpSpeed = 1;
 	public float gravity = 1;
 	public float cameraPanSpeedX = 1;
 	public float cameraPanSpeedY = 1;
-
-	public Camera playerCamera;
 
 	Vector3 moveDirection;
 
@@ -28,7 +27,13 @@ public class ControlScheme : MonoBehaviour {
 		if(cc.isGrounded) {
 			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 			moveDirection = transform.TransformDirection(moveDirection);
-			moveDirection *= moveSpeed;
+
+			if(Input.GetButton("Sprint")) {
+				moveDirection *= sprintSpeed;
+			} else {
+				moveDirection *= moveSpeed;
+			}
+			
 
 			if (Input.GetButton("Jump")) {
 				moveDirection.y = jumpSpeed;
