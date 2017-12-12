@@ -6,16 +6,18 @@
 
 public class ControlScheme : MonoBehaviour {
 
+	private Vector3 moveDirection;
 	public float moveSpeed = 1;
 	public float sprintSpeed = 2;
 	public float jumpSpeed = 1;
 	public float gravity = 1;
-	public float cameraPanSpeedX = 1;
-	public float cameraPanSpeedY = 1;
-
-	Vector3 moveDirection;
-
+	public float adjust = 0;
+	
 	CharacterController cc;
+
+	public GameObject cameraAnchor;
+	private float radToDeg = 180 / Mathf.PI;
+	private Quaternion cameraRotation;
 
 	private void Start() {
 		cc = GetComponent<CharacterController>();
@@ -23,12 +25,17 @@ public class ControlScheme : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		//This is close to out of combat controls.
-		if(cc.isGrounded) {
-			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-			moveDirection = transform.TransformDirection(moveDirection);
 
-			if(Input.GetButton("Sprint")) {
+		if(cc.isGrounded) {
+			//save current camera rotation, rotate the character, then unrotate the camera.
+			cameraRotation = cameraAnchor.transform.rotation;
+			transform.eulerAngles = new Vector3(0, Mathf.Atan2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * radToDeg, 0);
+			cameraAnchor.transform.rotation = cameraRotation;
+
+			//set the movement direction
+			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+
+			if (Input.GetButton("Sprint")) {
 				moveDirection *= sprintSpeed;
 			} else {
 				moveDirection *= moveSpeed;
@@ -40,11 +47,9 @@ public class ControlScheme : MonoBehaviour {
 			}
 
 		}
+
+		//set gravity & move;
 		moveDirection.y -= gravity * Time.deltaTime;
 		cc.Move(moveDirection * Time.deltaTime);
-
-		transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X")  * cameraPanSpeedX, 0));
-		transform.Rotate(new Vector3(-Input.GetAxis("Mouse Y") * cameraPanSpeedY, 0, 0));
-		transform.Rotate(0, 0, -transform.eulerAngles.z);
 	}
 }
