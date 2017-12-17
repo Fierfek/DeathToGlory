@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour {
 
+    //All the fields relating to the inventory height/width, inventory slot number, inventory row number,
+    //and inventory layout.
     private RectTransform inventoryRectangle;
     private float inventoryWidth, inventoryHeight;
     public int slots;
@@ -11,9 +13,10 @@ public class Inventory : MonoBehaviour {
     public float slotPaddingLeft, slotPaddingTop;
     public float slotSize;
     public GameObject slotPrefab;
-    private List<GameObject> allSlots; 
+    private List<GameObject> allSlots;
+    private int emptySlot;
 
-	// Use this for initialization
+    //Initializes inventory.
 	void Start () {
         CreateLayout();
 	}
@@ -23,9 +26,13 @@ public class Inventory : MonoBehaviour {
 		
 	}
 
+
+	// Creates an empty inventory with a number of slots and a number of rows specified by the editor.
     private void CreateLayout()
     {
         allSlots = new List<GameObject>();
+        emptySlot = slots;
+
         inventoryWidth = (slots / rows) * (slotSize + slotPaddingLeft) + slotPaddingLeft;
         inventoryHeight = (rows) * (slotSize + slotPaddingTop) + slotPaddingTop;
         inventoryRectangle = GetComponent<RectTransform>();
@@ -50,5 +57,35 @@ public class Inventory : MonoBehaviour {
         }
     }
 
+
+    //Adds an item to a slot.
+    public bool AddItem(Item item)
+    {
+        if(item.maxSize == 1)
+        {
+            PlaceEmpty(item);
+            return true;
+        }
+        return false;
+    }
+
+    //Adds the item to an empty slot.
+    private bool PlaceEmpty(Item addedItem)
+    {
+        if (emptySlot > 0)
+        {
+            foreach (GameObject slot in allSlots)
+            {
+                Slot temp = slot.GetComponent<Slot>();
+                if (temp.IsEmpty)
+                {
+                    temp.AddItem(addedItem);
+                    emptySlot--;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 }
