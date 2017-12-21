@@ -24,6 +24,7 @@ public class Item : MonoBehaviour {
         switch (type)
         {
             case ItemType.CONSUMABLE:
+                
                 Debug.Log("The "+ consumableType+ " has been used.");
                 break;
             default:

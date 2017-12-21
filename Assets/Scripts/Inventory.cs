@@ -14,10 +14,25 @@ public class Inventory : MonoBehaviour {
     public float slotSize;
     public GameObject slotPrefab;
     private List<GameObject> allSlots;
-    private int emptySlot;
+    private static int emptySlots;
+
+    public static int EmptySlots
+    {
+        get
+        {
+            return emptySlots;
+        }
+
+        set
+        {
+            emptySlots = value;
+        }
+    }
+
+
 
     //Initializes inventory.
-	void Start () {
+    void Start () {
         CreateLayout();
 	}
 	
@@ -31,7 +46,7 @@ public class Inventory : MonoBehaviour {
     private void CreateLayout()
     {
         allSlots = new List<GameObject>();
-        emptySlot = slots;
+        EmptySlots = slots;
 
         inventoryWidth = (slots / rows) * (slotSize + slotPaddingLeft) + slotPaddingLeft;
         inventoryHeight = (rows) * (slotSize + slotPaddingTop) + slotPaddingTop;
@@ -58,7 +73,7 @@ public class Inventory : MonoBehaviour {
     }
 
 
-    //Adds an item to a slot.
+    //Adds an items to a slot.
     public bool AddItem(Item item)
     {
         if(item.maxSize == 1)
@@ -66,13 +81,33 @@ public class Inventory : MonoBehaviour {
             PlaceEmpty(item);
             return true;
         }
+        else
+        {
+            foreach(GameObject slot in allSlots)
+            {
+                Slot temporary = slot.GetComponent<Slot>();
+                if (!temporary.IsEmpty)
+                {
+                    if(temporary.CurrentItem.type == item.type && temporary.IsAvailable)
+                    {
+                        temporary.AddItem(item);
+
+                        return true;
+                    }
+                }
+            }
+            if(EmptySlots > 0)
+            {
+                PlaceEmpty(item);
+            }
+        }
         return false;
     }
 
     //Adds the item to an empty slot.
     private bool PlaceEmpty(Item addedItem)
     {
-        if (emptySlot > 0)
+        if (EmptySlots > 0)
         {
             foreach (GameObject slot in allSlots)
             {
@@ -80,7 +115,7 @@ public class Inventory : MonoBehaviour {
                 if (temp.IsEmpty)
                 {
                     temp.AddItem(addedItem);
-                    emptySlot--;
+                    EmptySlots--;
                     return true;
                 }
             }

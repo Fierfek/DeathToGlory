@@ -6,6 +6,7 @@
 public class MainCharacter : MonoBehaviour {
 
 	Health health;
+    public Inventory inventory;
 
 	// Use this for initialization
 	void Start () {
@@ -18,4 +19,12 @@ public class MainCharacter : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Item")
+        {
+            inventory.AddItem(other.GetComponent<Item>());
+        }
+    }
 }
