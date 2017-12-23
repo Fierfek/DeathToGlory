@@ -44,7 +44,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
     }
 
     // Creates an empty stack for the empty slot.
-    void Start () {
+    void Awake () {
         ItemStack = new Stack<Item>();
         RectTransform slotRect = GetComponent<RectTransform>();
         RectTransform textRect = stackText.GetComponent<RectTransform>();
@@ -76,9 +76,13 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
 
     public void AddItems(Stack<Item> itemStack)
     {
-        this.ItemStack = new Stack<Item>(itemStack);
+        /*this.ItemStack = new Stack<Item>(itemStack);
         stackText.text = itemStack.Count > 1 ? itemStack.Count.ToString() : string.Empty;
-        ChangeSprite(CurrentItem.spriteNeutral, CurrentItem.spriteHighlighted);
+        ChangeSprite(CurrentItem.spriteNeutral, CurrentItem.spriteHighlighted);*/
+
+		foreach(Item i in itemStack) {
+			AddItem(i);
+		}
 
     }
 

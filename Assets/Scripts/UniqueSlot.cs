@@ -11,18 +11,33 @@ public class UniqueSlot : Slot
 
 	public ItemEnums.ItemType slotType;
 
-    //Adds an item to the stack and increases the stack's item count to the slot.
-    public void AddItem(Item newitem)
-    {
-        if (slotType == newitem.type)
-        {
-           ItemStack.Push(newitem);
-           if (ItemStack.Count > 1)
-            {
-                stackText.text = ItemStack.Count.ToString();
-            }
+	void Start() {
+		tag = "Unique";
+	}
 
-            ChangeSprite(newitem.spriteNeutral, newitem.spriteHighlighted);
-        }
-    }
+	//Adds an item to the stack and increases the stack's item count to the slot.
+	public new void AddItem(Item newitem) {
+
+		print(newitem.type + "" + slotType.ToString());
+
+		if (slotType == newitem.type) {
+			ItemStack.Push(newitem);
+			if (ItemStack.Count > 1) {
+				stackText.text = ItemStack.Count.ToString();
+			}
+
+			ChangeSprite(newitem.spriteNeutral, newitem.spriteHighlighted);
+		}
+	}
+
+	public new void AddItems(Stack<Item> itemStack) {
+		/*this.ItemStack = new Stack<Item>(itemStack);
+        stackText.text = itemStack.Count > 1 ? itemStack.Count.ToString() : string.Empty;
+        ChangeSprite(CurrentItem.spriteNeutral, CurrentItem.spriteHighlighted);*/
+
+		foreach (Item i in itemStack) {
+			AddItem(i);
+		}
+
+	}
 }

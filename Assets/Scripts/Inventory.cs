@@ -17,6 +17,9 @@ public class Inventory : MonoBehaviour {
     public float slotSize;
     public GameObject slotPrefab;
 
+	private UniqueSlot uniqueSlot;
+	private bool unique;
+
     private static Slot fromSlot, toSlot;
     private List<GameObject> allSlots;
 
@@ -166,7 +169,8 @@ public class Inventory : MonoBehaviour {
         {
             if (!clicked.GetComponent<Slot>().IsEmpty)
             {
-                fromSlot = clicked.GetComponent<Slot>();
+				
+				fromSlot = clicked.GetComponent<Slot>();
                 fromSlot.GetComponent<Image>().color = Color.gray;
 
                 hoverObject = (GameObject) Instantiate(iconPrefab);
@@ -184,13 +188,27 @@ public class Inventory : MonoBehaviour {
         }
         else if(toSlot == null)
         {
-            toSlot = clicked.GetComponent<Slot>();
+			if(clicked.tag == "Unique") {
+				unique = true;
+			} else {
+				unique = false;
+			}
+
+			toSlot = clicked.GetComponent<Slot>();
+            
             Destroy(GameObject.Find("Hover"));
         }
         if(toSlot != null && fromSlot != null)
         {
             Stack<Item> tempToSlot = new Stack<Item>(toSlot.ItemStack);
-            toSlot.AddItems(fromSlot.ItemStack);
+
+			if(unique) {
+				uniqueSlot = (UniqueSlot)toSlot;
+				uniqueSlot.AddItems(fromSlot.ItemStack);
+			} else {
+				toSlot.AddItems(fromSlot.ItemStack);
+			}
+            
 
             if(tempToSlot.Count == 0)
             {
@@ -203,6 +221,7 @@ public class Inventory : MonoBehaviour {
 
             fromSlot.GetComponent<Image>().color = Color.white;
             toSlot = null;
+			uniqueSlot = null;
             fromSlot = null;
         }
     }
