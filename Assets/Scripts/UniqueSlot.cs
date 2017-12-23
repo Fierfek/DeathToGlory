@@ -1,18 +1,20 @@
 ﻿using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-public class Slot : MonoBehaviour, IPointerClickHandler {
+public class UniqueSlot : MonoBehaviour, IPointerClickHandler
+{
 
     //This has the stack with text for stack amount and sprites for the slot.
     private Stack<Item> itemStack;
     public Text stackText;
     public Sprite slotEmpty;
     public Sprite slotHighlight;
-    
+    public ItemEnums.ItemType slotType;
 
     //If the stack is empty, then the slot is empty.
     public bool IsEmpty
@@ -22,7 +24,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
 
     public bool IsAvailable
     {
-        get {return CurrentItem.maxSize > ItemStack.Count; }
+        get { return CurrentItem.maxSize > ItemStack.Count; }
     }
 
     public Item CurrentItem
@@ -44,7 +46,8 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
     }
 
     // Creates an empty stack for the empty slot.
-    void Start () {
+    void Start()
+    {
         ItemStack = new Stack<Item>();
         RectTransform slotRect = GetComponent<RectTransform>();
         RectTransform textRect = stackText.GetComponent<RectTransform>();
@@ -55,24 +58,30 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
 
         textRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, slotRect.sizeDelta.y);
         textRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, slotRect.sizeDelta.x);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     //Adds an item to the stack and increases the stack's item count to the slot.
     public void AddItem(Item newitem)
     {
-        ItemStack.Push(newitem);
-        if(ItemStack.Count > 1)
+        if (slotType == newitem.type)
         {
-            stackText.text = ItemStack.Count.ToString();
-        }
+           ItemStack.Push(newitem);
+           if (ItemStack.Count > 1)
+            {
+                stackText.text = ItemStack.Count.ToString();
+            }
 
-        ChangeSprite(newitem.spriteNeutral, newitem.spriteHighlighted);
-        //Debug.Log("");
+            ChangeSprite(newitem.spriteNeutral, newitem.spriteHighlighted);
+        }
+           
+ 
+      
     }
 
     public void AddItems(Stack<Item> itemStack)
@@ -114,12 +123,12 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
     {
         itemStack.Clear();
         ChangeSprite(slotEmpty, slotHighlight);
-        stackText.text = string.Empty; 
+        stackText.text = string.Empty;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(eventData.button == PointerEventData.InputButton.Right)
+        if (eventData.button == PointerEventData.InputButton.Right)
         {
             UseItem();
         }

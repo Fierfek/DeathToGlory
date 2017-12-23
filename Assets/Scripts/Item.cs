@@ -5,11 +5,10 @@ using UnityEngine;
 public class Item : MonoBehaviour {
 
     //Enumerated values for the type of item.
-    public enum ItemType { HEAD, CHEST, ARMS, HANDS, LEGS, FEET, CONSUMABLE, ACCESSORY};
-    public enum ConsumeType { HEALTH, GADGET};
 
-    public ItemType type;
-    public ConsumeType consumableType;
+
+    public ItemEnums.ItemType type;
+    public ItemEnums.ConsumeType consumableType;
 
     //Creates spaces for using sprites in the inventory slots.
     public Sprite spriteNeutral;
@@ -21,15 +20,9 @@ public class Item : MonoBehaviour {
     //Not currently available. Needs more programming.
 	public void UseItem()
     {
-        switch (type)
+       if(type == ItemEnums.ItemType.CONSUMABLE)
         {
-            case ItemType.CONSUMABLE:
-                
-                Debug.Log("The "+ consumableType+ " has been used.");
-                break;
-            default:
-
-                break;
+            print("Item Consumed.");
         }
     }
 }
