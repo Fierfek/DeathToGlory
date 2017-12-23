@@ -72,7 +72,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
         }
 
         ChangeSprite(newitem.spriteNeutral, newitem.spriteHighlighted);
-        //Debug.Log("");
     }
 
     public void AddItems(Stack<Item> itemStack)
@@ -84,7 +83,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
     }
 
     //Changes sprite depending on if the slot is selected or not.
-    private void ChangeSprite(Sprite neutral, Sprite highlight)
+    protected void ChangeSprite(Sprite neutral, Sprite highlight)
     {
         GetComponent<Image>().sprite = neutral;
 
