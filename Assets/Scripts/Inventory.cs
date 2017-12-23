@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour {
 
     //All the fields relating to the inventory height/width, inventory slot number, inventory row number,
     //and inventory layout.
+    
     private RectTransform inventoryRectangle;
     private float inventoryWidth, inventoryHeight;
     public int slots;
@@ -13,8 +16,21 @@ public class Inventory : MonoBehaviour {
     public float slotPaddingLeft, slotPaddingTop;
     public float slotSize;
     public GameObject slotPrefab;
+
+    private static Slot fromSlot, toSlot;
     private List<GameObject> allSlots;
+
+    public GameObject iconPrefab;
+
+    private static GameObject hoverObject;
+
     private static int emptySlots;
+
+    public Canvas canvas;
+
+    private float hoverYOffset;
+
+    public EventSystem eventSystem;
 
     public static int EmptySlots
     {
@@ -38,7 +54,27 @@ public class Inventory : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (!eventSystem.IsPointerOverGameObject(-1) && fromSlot != null)
+            {
+                fromSlot.GetComponent<Image>().color = Color.white;
+                fromSlot.ClearSlot();
+                Destroy(GameObject.Find("Hover"));
+                toSlot = null;
+                fromSlot = null;
+                hoverObject = null;
+            }
+        }
+		if(hoverObject != null)
+        {
+            Vector2 position;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, Input.mousePosition, canvas.worldCamera, out position);
+            position.Set(position.x, position.y - hoverYOffset);
+            hoverObject.transform.position = canvas.transform.TransformPoint(position);
+        }
 	}
 
 
@@ -46,6 +82,7 @@ public class Inventory : MonoBehaviour {
     private void CreateLayout()
     {
         allSlots = new List<GameObject>();
+        hoverYOffset = slotSize * 0.01f;
         EmptySlots = slots;
 
         inventoryWidth = (slots / rows) * (slotSize + slotPaddingLeft) + slotPaddingLeft;
@@ -121,6 +158,53 @@ public class Inventory : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    public void MoveItem(GameObject clicked)
+    {
+        if(fromSlot == null)
+        {
+            if (!clicked.GetComponent<Slot>().IsEmpty)
+            {
+                fromSlot = clicked.GetComponent<Slot>();
+                fromSlot.GetComponent<Image>().color = Color.gray;
+
+                hoverObject = (GameObject) Instantiate(iconPrefab);
+                hoverObject.GetComponent<Image>().sprite = clicked.GetComponent<Image>().sprite;
+                hoverObject.name = "Hover";
+
+                RectTransform hoverTransform = hoverObject.GetComponent<RectTransform>();
+                RectTransform clickedTransform = clicked.GetComponent<RectTransform>();
+                hoverTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, clickedTransform.sizeDelta.x);
+                hoverTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, clickedTransform.sizeDelta.y);
+
+                hoverObject.transform.SetParent(GameObject.Find("Canvas").transform, true);
+                hoverObject.transform.localScale = fromSlot.gameObject.transform.localScale;
+            }
+        }
+        else if(toSlot == null)
+        {
+            toSlot = clicked.GetComponent<Slot>();
+            Destroy(GameObject.Find("Hover"));
+        }
+        if(toSlot != null && fromSlot != null)
+        {
+            Stack<Item> tempToSlot = new Stack<Item>(toSlot.ItemStack);
+            toSlot.AddItems(fromSlot.ItemStack);
+
+            if(tempToSlot.Count == 0)
+            {
+                fromSlot.ClearSlot();
+            }
+            else
+            {
+                fromSlot.AddItems(tempToSlot);
+            }
+
+            fromSlot.GetComponent<Image>().color = Color.white;
+            toSlot = null;
+            fromSlot = null;
+        }
     }
 
 }

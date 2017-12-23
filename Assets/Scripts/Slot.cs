@@ -15,22 +15,35 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
     //If the stack is empty, then the slot is empty.
     public bool IsEmpty
     {
-        get { return itemStack.Count == 0; }
+        get { return ItemStack.Count == 0; }
     }
 
     public bool IsAvailable
     {
-        get {return CurrentItem.maxSize > itemStack.Count; }
+        get {return CurrentItem.maxSize > ItemStack.Count; }
     }
 
     public Item CurrentItem
     {
-        get { return itemStack.Peek(); }
+        get { return ItemStack.Peek(); }
     }
 
-	// Creates an empty stack for the empty slot.
-	void Start () {
-        itemStack = new Stack<Item>();
+    public Stack<Item> ItemStack
+    {
+        get
+        {
+            return itemStack;
+        }
+
+        set
+        {
+            itemStack = value;
+        }
+    }
+
+    // Creates an empty stack for the empty slot.
+    void Start () {
+        ItemStack = new Stack<Item>();
         RectTransform slotRect = GetComponent<RectTransform>();
         RectTransform textRect = stackText.GetComponent<RectTransform>();
 
@@ -50,14 +63,22 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
     //Adds an item to the stack and increases the stack's item count to the slot.
     public void AddItem(Item newitem)
     {
-        itemStack.Push(newitem);
-        if(itemStack.Count > 1)
+        ItemStack.Push(newitem);
+        if(ItemStack.Count > 1)
         {
-            stackText.text = itemStack.Count.ToString();
+            stackText.text = ItemStack.Count.ToString();
         }
 
         ChangeSprite(newitem.spriteNeutral, newitem.spriteHighlighted);
-        Debug.Log("");
+        //Debug.Log("");
+    }
+
+    public void AddItems(Stack<Item> itemStack)
+    {
+        this.ItemStack = new Stack<Item>(itemStack);
+        stackText.text = itemStack.Count > 1 ? itemStack.Count.ToString() : string.Empty;
+        ChangeSprite(CurrentItem.spriteNeutral, CurrentItem.spriteHighlighted);
+
     }
 
     //Changes sprite depending on if the slot is selected or not.
@@ -76,8 +97,8 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
     {
         if (!IsEmpty)
         {
-            itemStack.Pop().UseItem();
-            stackText.text = itemStack.Count > 1 ? itemStack.Count.ToString() : string.Empty;
+            ItemStack.Pop().UseItem();
+            stackText.text = ItemStack.Count > 1 ? ItemStack.Count.ToString() : string.Empty;
 
             if (IsEmpty)
             {
@@ -85,6 +106,13 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
                 Inventory.EmptySlots++;
             }
         }
+    }
+
+    public void ClearSlot()
+    {
+        itemStack.Clear();
+        ChangeSprite(slotEmpty, slotHighlight);
+        stackText.text = string.Empty;
     }
 
     public void OnPointerClick(PointerEventData eventData)
