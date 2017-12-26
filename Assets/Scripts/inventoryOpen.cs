@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class inventoryOpen : MonoBehaviour {
 
-	bool currentState;
+	bool currentState = false;
 	public GameObject inventoryPanel;
 
 	// Use this for initialization
 	void Start () {
-		
+        inventoryPanel.SetActive(currentState);
 	}
 	
 	// Update is called once per frame

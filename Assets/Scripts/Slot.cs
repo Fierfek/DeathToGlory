@@ -57,10 +57,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
         textRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, slotRect.sizeDelta.x);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     //Adds an item to the stack and increases the stack's item count to the slot.
     public void AddItem(Item newitem)
@@ -93,7 +89,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
         GetComponent<Button>().spriteState = st;
     }
 
-    private void UseItem()
+    protected void UseItem()
     {
         if (!IsEmpty)
         {

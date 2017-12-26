@@ -9,7 +9,6 @@ public class Item : MonoBehaviour {
     public ItemEnums.ConsumeType consumableType;
 
     //Item Characteristics
-    public bool armor;
 
     public int healthMod;
     public float movementMod;
@@ -17,9 +16,9 @@ public class Item : MonoBehaviour {
     public int magicAtkMod;
     public int magicDefMod;
     public int spiritMod;
-    public int armorRating;
-    public int effectDuration;
-    public string itemDescription;
+    public int armorMod;
+    //public int effectDuration;
+    public string itemName;
 
     //Creates spaces for using sprites in the inventory slots.
     public Sprite spriteNeutral;
@@ -27,6 +26,14 @@ public class Item : MonoBehaviour {
 
     public int maxSize;
 
+
+    private void Start()
+    {
+        switch (type)
+        {
+
+        }
+    }
 	public void UseItem()
     {
        if(type == ItemEnums.ItemType.CONSUMABLE)

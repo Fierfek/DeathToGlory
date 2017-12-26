@@ -10,6 +10,7 @@ public class UniqueSlot : Slot
 {
 
 	public ItemEnums.ItemType slotType;
+    public string buttonName;
 
 	void Start() {
 		tag = "Unique";
@@ -35,4 +36,19 @@ public class UniqueSlot : Slot
         stackText.text = itemStack.Count > 1 ? itemStack.Count.ToString() : string.Empty;
         ChangeSprite(CurrentItem.spriteNeutral, CurrentItem.spriteHighlighted);
 	}
+
+    private void Update()
+    {
+       if(!buttonName.Equals(""))
+        {
+            if(slotType == ItemEnums.ItemType.CONSUMABLE)
+            {
+                if (Input.GetButtonDown(buttonName))
+                {
+                    UseItem();
+                }
+
+            }
+        }
+    }
 }

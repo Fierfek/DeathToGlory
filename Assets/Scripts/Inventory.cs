@@ -51,7 +51,7 @@ public class Inventory : MonoBehaviour {
 
 
     //Initializes inventory.
-    void Start () {
+    void Awake () {
         CreateLayout();
 	}
 	

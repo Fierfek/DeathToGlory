@@ -2,22 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStats : MonoBehaviour {
+public static class CharacterStats  {
 
-    public int maxHealth;
-    public int currentHealth;
-    public int armor;
-    public double movement;
-    public float movementMod;
-    public int magicDefense;
-    public int magicAttack;
-    public int attackStrength;
-    public int spirit;
-    
+    public static int healthMod;
+    public static float movementMod = 1.00f;
+    public static int attackMod;
+    public static int magicAtkMod;
+    public static int magicDefMod;
+    public static int spiritMod;
+    public static int armorMod;
 
+    //Player Stats
+    public static float moveSpeed = 1;
+    public static float sprintSpeed = 2;
+    public static float jumpSpeed = 1;
+    public static float gravity = 1;
+    public static int attack;
+    public static int magicDef;
+    public static int magicAtk;
+    public static int spirit;
+    public static int armor;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    /*void Start () {
         maxHealth = 10;
         movementMod = 1.00000f;
         movement = 1 * movementMod;
@@ -32,4 +39,5 @@ public class CharacterStats : MonoBehaviour {
 	void Update () {
 		
 	}
+    */
 }

@@ -6,10 +6,7 @@
 
 public class ControlScheme : MonoBehaviour {
 
-	public float moveSpeed = 1;
-	public float sprintSpeed = 2;
-	public float jumpSpeed = 1;
-	public float gravity = 1;
+
 	public float cameraPanSpeedX = 1;
 	public float cameraPanSpeedY = 1;
 
@@ -29,18 +26,18 @@ public class ControlScheme : MonoBehaviour {
 			moveDirection = transform.TransformDirection(moveDirection);
 
 			if(Input.GetButton("Sprint")) {
-				moveDirection *= sprintSpeed;
+				moveDirection *= CharacterStats.sprintSpeed * CharacterStats.movementMod;
 			} else {
-				moveDirection *= moveSpeed;
+				moveDirection *= CharacterStats.moveSpeed * CharacterStats.movementMod;
 			}
 			
 
 			if (Input.GetButton("Jump")) {
-				moveDirection.y = jumpSpeed;
+				moveDirection.y = CharacterStats.jumpSpeed;
 			}
 
 		}
-		moveDirection.y -= gravity * Time.deltaTime;
+		moveDirection.y -= CharacterStats.gravity * Time.deltaTime;
 		cc.Move(moveDirection * Time.deltaTime);
 
 		transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X")  * cameraPanSpeedX, 0));
