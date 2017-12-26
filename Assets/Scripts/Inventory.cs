@@ -167,6 +167,7 @@ public class Inventory : MonoBehaviour {
 
     public void MoveItem(GameObject clicked)
     {
+		bool skip = false;
         if(fromSlot == null)
         {
             if (!clicked.GetComponent<Slot>().IsEmpty)
@@ -209,11 +210,11 @@ public class Inventory : MonoBehaviour {
                 uniqueSlot = (UniqueSlot)toSlot;
                 if (uniqueSlot.slotType == fromSlot.ItemStack.Peek().type)
                 {
-				uniqueSlot.AddItems(fromSlot.ItemStack);
+					uniqueSlot.AddItems(fromSlot.ItemStack);
                 }
                 else
                 {
-
+					skip = true;
                 }
 
 
@@ -222,17 +223,15 @@ public class Inventory : MonoBehaviour {
 				toSlot.AddItems(fromSlot.ItemStack);
 			}
             
+			if(!skip) {
+				if (tempToSlot.Count == 0) {
+					fromSlot.ClearSlot();
+				} else {
+					fromSlot.AddItems(tempToSlot);
+				}
+			}
 
-            if(tempToSlot.Count == 0)
-            {
-                fromSlot.ClearSlot();
-            }
-            else
-            {
-                fromSlot.AddItems(tempToSlot);
-            }
-
-            fromSlot.GetComponent<Image>().color = Color.white;
+			fromSlot.GetComponent<Image>().color = Color.white;
             toSlot = null;
 			uniqueSlot = null;
             fromSlot = null;
