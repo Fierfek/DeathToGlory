@@ -8,6 +8,19 @@ public class Item : MonoBehaviour {
 	public ItemEnums.ItemType type;
     public ItemEnums.ConsumeType consumableType;
 
+    //Item Characteristics
+    public bool armor;
+
+    public int healthMod;
+    public float movementMod;
+    public int attackMod;
+    public int magicAtkMod;
+    public int magicDefMod;
+    public int spiritMod;
+    public int armorRating;
+    public int effectDuration;
+    public string itemDescription;
+
     //Creates spaces for using sprites in the inventory slots.
     public Sprite spriteNeutral;
     public Sprite spriteHighlighted;

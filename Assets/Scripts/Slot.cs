@@ -79,7 +79,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler {
         /*this.ItemStack = new Stack<Item>(itemStack);
         stackText.text = itemStack.Count > 1 ? itemStack.Count.ToString() : string.Empty;
         ChangeSprite(CurrentItem.spriteNeutral, CurrentItem.spriteHighlighted);*/
-
+        //There is an error where the stack goes higher than the max item stack size.
 		foreach(Item i in itemStack) {
 			AddItem(i);
 		}

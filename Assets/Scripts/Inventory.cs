@@ -63,12 +63,14 @@ public class Inventory : MonoBehaviour {
         {
             if (!eventSystem.IsPointerOverGameObject(-1) && fromSlot != null)
             {
+
                 fromSlot.GetComponent<Image>().color = Color.white;
                 fromSlot.ClearSlot();
                 Destroy(GameObject.Find("Hover"));
                 toSlot = null;
                 fromSlot = null;
                 hoverObject = null;
+
             }
         }
 		if(hoverObject != null)
@@ -201,11 +203,22 @@ public class Inventory : MonoBehaviour {
         if(toSlot != null && fromSlot != null)
         {
             Stack<Item> tempToSlot = new Stack<Item>(toSlot.ItemStack);
-
+            
 			if(unique) {
-				uniqueSlot = (UniqueSlot)toSlot;
+
+                uniqueSlot = (UniqueSlot)toSlot;
+                if (uniqueSlot.slotType == fromSlot.ItemStack.Peek().type)
+                {
 				uniqueSlot.AddItems(fromSlot.ItemStack);
-			} else {
+                }
+                else
+                {
+
+                }
+
+
+			}
+            else {
 				toSlot.AddItems(fromSlot.ItemStack);
 			}
             
