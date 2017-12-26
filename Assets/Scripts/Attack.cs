@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-//All damage according to character orientation. Character orientations should be halted druing attacks. 
+//All damage according to character orientation. Character orientations should be halted druing attacks.
+
+[RequireComponent(typeof(Rigidbody))]
 
 public class Attack : MonoBehaviour {
 
+	Rigidbody rigidbody;
 	public GameObject[] path;
 	float transitionTime, t, percent;
 	int i, length;
@@ -11,7 +14,9 @@ public class Attack : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//Setup Collider
+		rigidbody = gameObject.GetComponent<Rigidbody>();
+		rigidbody.useGravity = false;
+		rigidbody.isKinematic = true;
 	}
 
 
@@ -22,6 +27,7 @@ public class Attack : MonoBehaviour {
 		i = 0;
 		t = 0;
 		active = true;
+		gameObject.SetActive(active);
 	}
 
 	public void DoAttack(float time) {
@@ -30,10 +36,7 @@ public class Attack : MonoBehaviour {
 		i = 0;
 		t = 0;
 		active = true;
-	}
-
-	private void OnCollisionEnter(Collision collision) {
-		print("Hit");
+		gameObject.SetActive(active);
 	}
 
 	// Update is called once per frame
@@ -48,6 +51,7 @@ public class Attack : MonoBehaviour {
 
 			if (i >= length - 1) {
 				active = false;
+				gameObject.SetActive(active);
 			} else {
 				percent = t / transitionTime;
 

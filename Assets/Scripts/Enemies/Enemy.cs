@@ -22,4 +22,8 @@ public class Enemy : MonoBehaviour {
 		target = GameObject.Find("MainCharacter").transform;    //set target to main character
 		tag = "Enemy";
 	}
+
+	/*protected virtual void OnTriggerEnter(Collider other) {
+		print("hit2");
+	}*/
 }

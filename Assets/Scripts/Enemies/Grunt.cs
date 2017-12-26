@@ -22,4 +22,10 @@ public class Grunt : Enemy {
 			//Die
 		}
 	}
+
+
+	//Derivitives of enemy need this to work properly.
+	private void OnTriggerEnter(Collider other) {
+		//print("hit1");
+	}
 }
