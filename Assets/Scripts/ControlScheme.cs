@@ -7,10 +7,7 @@
 public class ControlScheme : MonoBehaviour {
 
 	private Vector3 moveDirection;
-	public float moveSpeed = 1;
-	public float sprintSpeed = 2;
-	public float jumpSpeed = 1;
-	public float gravity = 1;
+
 
 	CharacterController cc;
 
