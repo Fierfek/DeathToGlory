@@ -6,27 +6,27 @@
 public class MainCharacter : MonoBehaviour {
 
 	Health health;
-    public Inventory inventory;
-    public static bool updateStats;
-    public UniqueSlot[]  equipped;
+
+  public Inventory inventory;
+  public static bool updateStats;
+  public UniqueSlot[]  equipped;
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
 		health = GetComponent<Health>();
 
 		health.setHealth(100);
 
-
-        CharacterStats.moveSpeed = 5f;
-        CharacterStats.sprintSpeed = 10f;
-        CharacterStats.jumpSpeed = 5f;
-        CharacterStats.gravity = 9.8f;
-        CharacterStats.armor = 3;
-        CharacterStats.magicAtk = 3;
-        CharacterStats.magicDef = 3;
-        CharacterStats.attack = 3;
-        CharacterStats.spirit = 0;
-    }
+    CharacterStats.moveSpeed = 5f;
+    CharacterStats.sprintSpeed = 10f;
+    CharacterStats.jumpSpeed = 5f;
+    CharacterStats.gravity = 9.8f;
+    CharacterStats.armor = 3;
+    CharacterStats.magicAtk = 3;
+    CharacterStats.magicDef = 3;
+    CharacterStats.attack = 3;
+    CharacterStats.spirit = 0;
+  }
 	
 	// Update is called once per frame
 	void Update () {
@@ -44,7 +44,6 @@ public class MainCharacter : MonoBehaviour {
             updateStats = false;
         }
 	}
-
 
     private void OnTriggerEnter(Collider other)
     {
