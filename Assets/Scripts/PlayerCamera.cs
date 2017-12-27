@@ -2,22 +2,19 @@
 
 public class PlayerCamera : MonoBehaviour {
 
-	public Vector3 standardOffset;
+	public GameObject lookAt;
+	public GameObject anchor;
+	public Vector3 offset;
 
-	//Can be used for sprint or dash
-	public Vector3 sprintOffset;
+	public float distance;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start() {
+		transform.localPosition = offset;
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
-		if(Input.GetButton("Sprint")) {
-			transform.localPosition = sprintOffset;
-		} else {
-			transform.localPosition = standardOffset;
-		}
+	void Update() {
+		transform.LookAt(lookAt.transform);
 	}
 }
