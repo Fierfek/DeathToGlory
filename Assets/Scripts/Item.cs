@@ -29,10 +29,7 @@ public class Item : MonoBehaviour {
 
     private void Start()
     {
-        switch (type)
-        {
 
-        }
     }
 	public void UseItem()
     {

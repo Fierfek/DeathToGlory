@@ -10,7 +10,8 @@ public class UniqueSlot : Slot
 {
 
 	public ItemEnums.ItemType slotType;
-    public string buttonName;
+    public string buttonName, dPadButton;
+
 
 	void Start() {
 		tag = "Unique";
@@ -47,7 +48,6 @@ public class UniqueSlot : Slot
                 {
                     UseItem();
                 }
-
             }
         }
     }
