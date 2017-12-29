@@ -11,6 +11,7 @@ public class UniqueSlot : Slot
 
 	public ItemEnums.ItemType slotType;
     public string buttonName, dPadButton;
+    private bool dPadPress = false;
 
 
 	void Start() {
@@ -47,6 +48,18 @@ public class UniqueSlot : Slot
                 if (Input.GetButtonDown(buttonName))
                 {
                     UseItem();
+                }
+                if (Input.GetAxisRaw(dPadButton) == 1)
+                {
+                    if(dPadPress == false)
+                    {
+                        UseItem();
+                        dPadPress = true;
+                    }
+                }
+                if(Input.GetAxisRaw(dPadButton) == 0)
+                {
+                    dPadPress = false;
                 }
             }
         }
