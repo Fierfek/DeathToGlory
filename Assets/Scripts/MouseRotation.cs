@@ -13,8 +13,8 @@ public class MouseRotation : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * rotationSpeedX, 0));
-		transform.Rotate(new Vector3(-Input.GetAxis("Mouse Y") * rotationSpeedY, 0, 0));
+		transform.Rotate(new Vector3(0, Input.GetAxis("Look Horizontal") * rotationSpeedX, 0));
+		transform.Rotate(new Vector3(-Input.GetAxis("Look Vertical") * rotationSpeedY, 0, 0));
 		transform.Rotate(0, 0, -transform.eulerAngles.z);
 	}
 }

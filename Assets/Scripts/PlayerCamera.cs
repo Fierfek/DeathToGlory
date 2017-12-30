@@ -6,6 +6,7 @@ public class PlayerCamera : MonoBehaviour {
 	public GameObject anchor;
 	public Vector3 offset;
 	public Vector3 battleOffset;
+	public Vector3 zoomOffset;
 
 	public float distance = 1;
 

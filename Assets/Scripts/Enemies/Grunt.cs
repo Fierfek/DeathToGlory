@@ -23,9 +23,9 @@ public class Grunt : Enemy {
 		}
 	}
 
-
-	//Derivitives of enemy need this to work properly.
+	//Derivitives of enemy need this and a collider with trigger checked to work properly.
 	private void OnTriggerEnter(Collider other) {
-		//print("hit1");
+		print(name + " has been hit");
+		//take damage
 	}
 }

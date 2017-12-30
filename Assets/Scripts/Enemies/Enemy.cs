@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour {
 
 	
 	protected Health health;			//All enemies should have health or sometype of damage taking system
-    protected NavMeshAgent agent;		//nav mesh agent on object     
+    protected NavMeshAgent agent;		//nav mesh agent on object 
     protected Transform target;			//the transform of the target to move towards
 
 	//Enemy attributes
@@ -22,8 +22,4 @@ public class Enemy : MonoBehaviour {
 		target = GameObject.Find("MainCharacter").transform;    //set target to main character
 		tag = "Enemy";
 	}
-
-	/*protected virtual void OnTriggerEnter(Collider other) {
-		print("hit2");
-	}*/
 }
