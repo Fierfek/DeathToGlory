@@ -7,8 +7,10 @@ public class MainCharacter : MonoBehaviour {
 
 	Health health;
 	CharacterMovement cm;
+	
 	public static bool updateStats;
 	public Attack attack;
+	public PlayerCamera pCamera;
 
 	// Use this for initialization
 	void Start() {
@@ -34,6 +36,10 @@ public class MainCharacter : MonoBehaviour {
 		if (Input.GetButton("Roll")) {
 			cm.Roll();
 			//roll
+		}
+
+		if(Input.GetAxis("Hook Throw") == -1) {
+			pCamera.ThrowHook();
 		}
 	}
 
