@@ -32,11 +32,6 @@ public class CharacterMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-
-		
-
-		
-
 		if (cc.isGrounded) {
 
 			//Find the foreward relative to the camera

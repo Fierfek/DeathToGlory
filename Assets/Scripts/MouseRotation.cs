@@ -5,16 +5,29 @@ using UnityEngine;
 public class MouseRotation : MonoBehaviour {
 
 	public float rotationSpeedX, rotationSpeedY;
+	public float yMin = -20f, yMax = 80f;
 
-	// Use this for initialization
-	void Start() {
-
-	}
+	private Quaternion rotation;
+	private float x, y;
 
 	// Update is called once per frame
 	void Update() {
-		transform.Rotate(new Vector3(0, Input.GetAxis("Look Horizontal") * rotationSpeedX, 0));
-		transform.Rotate(new Vector3(-Input.GetAxis("Look Vertical") * rotationSpeedY, 0, 0));
-		transform.Rotate(0, 0, -transform.eulerAngles.z);
+		x += Input.GetAxis("Look Horizontal") * rotationSpeedX;
+		y -= Input.GetAxis("Look Vertical") * rotationSpeedY;
+
+		y = ClampAngle(y, yMin, yMax);
+
+
+		rotation = Quaternion.Euler(y, x, 0);
+
+		transform.rotation = rotation;
+	}
+
+	private float ClampAngle(float angle, float min, float max) {
+		if (angle < -360F)
+			angle += 360F;
+		if (angle > 360F)
+			angle -= 360F;
+		return Mathf.Clamp(angle, min, max);
 	}
 }
