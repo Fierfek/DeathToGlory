@@ -10,7 +10,7 @@ public class Grunt : Enemy {
 		name = "Grunt";
 
 		agent.speed = movementSpeed;
-		health.setHealth(10f);
+		health.SetHealth(10f);
 	}
 	
 	// Update is called once per frame
@@ -18,7 +18,7 @@ public class Grunt : Enemy {
 		agent.SetDestination(target.position);  //update agent destination to target location
 
 		//Check for death
-		if(health.getHealth() <= 0) {
+		if(health.GetHealth() <= 0) {
 			//Die
 		}
 	}
