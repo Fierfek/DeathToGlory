@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour {
 	void Awake() {
 		health = GetComponent<Health>();
 		agent = GetComponent<NavMeshAgent>();                   //set agent to this objects agent
-		target = GameObject.Find("MainCharacter").transform;    //set target to main character
+		target = GameObject.Find("Main Character").transform;    //set target to main character
 		tag = "Enemy";
 	}
 }
