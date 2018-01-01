@@ -9,18 +9,19 @@ public class MainCharacter : MonoBehaviour {
 	CharacterMovement cm;
 	public static bool updateStats;
 	public Attack attack;
+    public float shrineHealRate;
 
 	// Use this for initialization
 	void Start() {
 		health = GetComponent<Health>();
-		health.setHealth(100);
+		health.SetHealth(100);
 		cm = GetComponent<CharacterMovement>();
     }
 	
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetButton("Basic Attack")) {
-			basicAttack();
+			BasicAttack();
 		}
 
 		if (Input.GetButton("Sprint")) {
@@ -37,7 +38,22 @@ public class MainCharacter : MonoBehaviour {
 		}
 	}
 
-	public void basicAttack() {
+	public void BasicAttack() {
 		attack.DoAttack(.5f);
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Shrine")
+        {
+            while(health.GetHealth() < health.GetMaxHealth())
+            {
+                health.Heal(shrineHealRate);
+            }
+            if (Input.GetButton("Interact"))
+            {
+                GameControl.saveState.Save();
+            }
+        }
+    }
 }

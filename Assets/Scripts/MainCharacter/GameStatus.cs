@@ -2,16 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GameStatus {
+[System.Serializable]
+public class GameStatus {
 
-	//God Item abilities
-	public static bool Hel;
-	public static bool Odin;
-	public static bool Loki;
-	public static bool FreyaFrey;
-	public static bool Thor;
-	public static bool Tyr;
-	public static bool Balder;
-	public static bool Eir;
-	public static bool Heimdallr;
+    //God Item abilities
+    public static GameStatus currentSave;
+    //public string saveName; when we need for save game names.
+    public bool Hel;
+    public bool Odin;
+    public bool Loki;
+    public bool FreyaFrey;
+    public bool Thor;
+    public bool Tyr;
+    public bool Balder;
+    public bool Eir;
+    public bool Heimdallr;
+
+    public GameStatus()
+    {
+        //saveName = "";
+        Hel = false;
+        Odin = false;
+        Loki = false;
+        FreyaFrey = false;
+        Thor = false;
+        Tyr = false;
+        Balder = false;
+        Eir = false;
+        Heimdallr = false;
+    }
+
+
+
 }
