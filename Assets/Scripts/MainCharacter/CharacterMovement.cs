@@ -3,6 +3,7 @@
 //Handles the control input
 
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(MouseRotationX))]
 
 public class CharacterMovement : MonoBehaviour {
 
@@ -12,9 +13,10 @@ public class CharacterMovement : MonoBehaviour {
 	public float jumpSpeed = 1;
 	public float gravity = 1;
 
-	private bool jump, sprint, roll;
+	private bool jump, sprint, roll, hook;
 
 	CharacterController cc;
+	MouseRotationX mrx;
 
 	public GameObject cameraAnchor;
 	private float radToDeg = 180 / Mathf.PI;
@@ -27,12 +29,19 @@ public class CharacterMovement : MonoBehaviour {
 
 	private void Start() {
 		cc = GetComponent<CharacterController>();
-		jump = sprint = roll = false;
+		mrx = GetComponent<MouseRotationX>();
+		jump = sprint = roll = hook = false;
 	}
 
 	// Update is called once per frame
 	void Update() {
-		if (cc.isGrounded) {
+		if (hook) {
+			mrx.enabled = true;
+		} else {
+			mrx.enabled = false;
+		}
+
+			if (cc.isGrounded) {
 
 			//Find the foreward relative to the camera
 			forward = cameraAnchor.transform.forward.normalized;
@@ -44,9 +53,13 @@ public class CharacterMovement : MonoBehaviour {
 
 			if (Input.GetAxisRaw("Move Horizontal") != 0 || Input.GetAxisRaw("Move Vertical") != 0) {
 				//save current camera rotation, rotate the character, then unrotate the camera.
-				cameraRotation = cameraAnchor.transform.rotation;
-				RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
-				cameraAnchor.transform.rotation = cameraRotation;
+				//cameraRotation = cameraAnchor.transform.rotation;
+				
+				if(!hook) { 
+					RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
+				}
+				
+				//cameraAnchor.transform.rotation = cameraRotation;
 			}
 
 			if (jump) {
@@ -64,7 +77,6 @@ public class CharacterMovement : MonoBehaviour {
 			}
 
 			resetFlags();
-
 		}
 
 		//set gravity & move;
@@ -84,10 +96,12 @@ public class CharacterMovement : MonoBehaviour {
 		roll = true;
 	}
 
+	public void HookShot() {
+		hook = true;
+	}
+
 	private void resetFlags() {
-		jump = false;
-		sprint = false;
-		roll = false;
+		jump = sprint = roll = hook = false;		
 	}
 
 	private void RotateTo(float angle) {

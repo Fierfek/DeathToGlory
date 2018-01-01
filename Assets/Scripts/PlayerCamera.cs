@@ -34,8 +34,12 @@ public class PlayerCamera : MonoBehaviour {
 		}
 
 		if (Physics.Linecast(lookAt.position, anchor.TransformPoint(offset), out hit)) {
-			distance = -hit.distance;
-			transform.localPosition = new Vector3(0.0f, 1.0f, distance);
+			if(hit.collider.gameObject.tag.Equals("Player")) {
+
+			} else {
+				distance = -hit.distance;
+				transform.localPosition = new Vector3(0.0f, 1.0f, distance);
+			}			
 		} else {
 			transform.localPosition = offset;
 		}
