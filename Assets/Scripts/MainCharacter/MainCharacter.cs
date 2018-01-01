@@ -2,7 +2,7 @@
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(CharacterMovement))]
-
+//hello
 public class MainCharacter : MonoBehaviour {
 
 	Health health;
@@ -40,7 +40,6 @@ public class MainCharacter : MonoBehaviour {
 
 		if(Input.GetAxis("Hook Throw") == -1) {
 			pCamera.ThrowHook();
-			cm.HookShot();
 		}
 	}
 
