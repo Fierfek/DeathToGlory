@@ -13,7 +13,7 @@ public class CharacterMovement : MonoBehaviour {
 	public float jumpSpeed = 1;
 	public float gravity = 1;
 
-	private bool jump, sprint, roll, hook, grav;
+	private bool jump, sprint, roll, hook, grav, rolling;
 
 	CharacterController cc;
 	MouseRotationX mrx;
@@ -23,14 +23,18 @@ public class CharacterMovement : MonoBehaviour {
 	private Quaternion cameraRotation;
 	private Vector3 forward, right;
 
-	//inputs
 	private float currentRotation;
 	public float turnRate = .75f;
+
+	public float rollTime, rollStart, rollSpeed;
+	private float rollPause;
+	private Vector3 rollDirection;
+
 
 	private void Start() {
 		cc = GetComponent<CharacterController>();
 		mrx = GetComponent<MouseRotationX>();
-		jump = sprint = roll = hook = grav = false;
+		jump = sprint = roll = hook = grav = rolling = false;
 	}
 
 	// Update is called once per frame
@@ -51,6 +55,11 @@ public class CharacterMovement : MonoBehaviour {
 			//set the movements direction
 			moveDirection = Input.GetAxis("Move Horizontal") * right + Input.GetAxis("Move Vertical") * forward;
 
+			if (roll) {
+				rolling = true;
+				rollDirection = moveDirection;
+			}
+
 			if (Input.GetAxisRaw("Move Horizontal") != 0 || Input.GetAxisRaw("Move Vertical") != 0) {
 				if(!hook) {
 					RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
@@ -67,11 +76,14 @@ public class CharacterMovement : MonoBehaviour {
 				moveDirection *= moveSpeed;
 			}
 
-			if(roll) {
-				//roll
+			if(rolling) {
+				if(Time.time <= rollStart + rollTime) {
+					moveDirection = Vector3.zero;
+					moveDirection = rollDirection * rollSpeed;
+				} else {
+					rolling = false;
+				}
 			}
-
-			
 		}
 
 		resetFlags();
@@ -79,10 +91,7 @@ public class CharacterMovement : MonoBehaviour {
 			moveDirection.y -= gravity * Time.deltaTime;
 		}
 
-
 		cc.Move(moveDirection * Time.deltaTime);
-
-		
 	}
 
 	public void gravityOff() {
@@ -98,7 +107,11 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	public void Roll() {
-		roll = true;
+		if(rollStart + rollTime + rollPause <= Time.time) {
+			rollStart = Time.time;
+			roll = true;
+			rollPause = .5f;
+		}
 	}
 
 	public void HookShot() {
@@ -106,7 +119,7 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	private void resetFlags() {
-		jump = sprint = roll = hook = grav = false;		
+		jump = sprint = roll = hook = grav = false;
 	}
 
 	private void RotateTo(float angle) {
