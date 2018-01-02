@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class MouseRotationX : MonoBehaviour {
 
-	public float rotationSpeedX, rotationSpeedY;
-
 	private Quaternion rotation;
-	private float x;
+	public GameObject cameraAnchor;
 
 	// Update is called once per frame
 	void Update() {
-		x += Input.GetAxis("Look Horizontal") * rotationSpeedX;
-
-		rotation = Quaternion.Euler(0, x, 0);
-
+		rotation = Quaternion.Euler(0, cameraAnchor.transform.rotation.eulerAngles.y, 0);
 		transform.rotation = rotation;
 	}
 }

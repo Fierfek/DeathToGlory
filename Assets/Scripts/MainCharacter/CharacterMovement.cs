@@ -13,7 +13,7 @@ public class CharacterMovement : MonoBehaviour {
 	public float jumpSpeed = 1;
 	public float gravity = 1;
 
-	private bool jump, sprint, roll, hook;
+	private bool jump, sprint, roll, hook, grav;
 
 	CharacterController cc;
 	MouseRotationX mrx;
@@ -30,7 +30,7 @@ public class CharacterMovement : MonoBehaviour {
 	private void Start() {
 		cc = GetComponent<CharacterController>();
 		mrx = GetComponent<MouseRotationX>();
-		jump = sprint = roll = hook = false;
+		jump = sprint = roll = hook = grav = false;
 	}
 
 	// Update is called once per frame
@@ -41,7 +41,7 @@ public class CharacterMovement : MonoBehaviour {
 			mrx.enabled = false;
 		}
 
-			if (cc.isGrounded) {
+		if (cc.isGrounded) {
 
 			//Find the foreward relative to the camera
 			forward = cameraAnchor.transform.forward.normalized;
@@ -52,14 +52,9 @@ public class CharacterMovement : MonoBehaviour {
 			moveDirection = Input.GetAxis("Move Horizontal") * right + Input.GetAxis("Move Vertical") * forward;
 
 			if (Input.GetAxisRaw("Move Horizontal") != 0 || Input.GetAxisRaw("Move Vertical") != 0) {
-				//save current camera rotation, rotate the character, then unrotate the camera.
-				//cameraRotation = cameraAnchor.transform.rotation;
-				
-				if(!hook) { 
+				if(!hook) {
 					RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
 				}
-				
-				//cameraAnchor.transform.rotation = cameraRotation;
 			}
 
 			if (jump) {
@@ -76,12 +71,22 @@ public class CharacterMovement : MonoBehaviour {
 				//roll
 			}
 
-			resetFlags();
+			
 		}
 
-		//set gravity & move;
-		moveDirection.y -= gravity * Time.deltaTime;
+		resetFlags();
+		if (!grav) {
+			moveDirection.y -= gravity * Time.deltaTime;
+		}
+
+
 		cc.Move(moveDirection * Time.deltaTime);
+
+		
+	}
+
+	public void gravityOff() {
+		grav = true;
 	}
 
 	public void Jump() {
@@ -101,7 +106,7 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	private void resetFlags() {
-		jump = sprint = roll = hook = false;		
+		jump = sprint = roll = hook = grav = false;		
 	}
 
 	private void RotateTo(float angle) {
