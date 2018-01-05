@@ -7,17 +7,24 @@ using UnityEngine;
 public class Shrine : MonoBehaviour {
 
     public float shrineHealRate;
+    public GameControl gameControl;
     
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            GameControl.currentState.Save();
-            while (other.GetComponent<Health>().GetHealth() < other.GetComponent<Health>().GetMaxHealth())
-            {
-                other.GetComponent<Health>().Heal(shrineHealRate);
-            }
+            gameControl.Save();
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+
+
+            other.GetComponent<Health>().Heal(shrineHealRate);
+
 
         }
     }

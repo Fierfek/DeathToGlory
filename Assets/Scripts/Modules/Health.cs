@@ -3,6 +3,7 @@
 //Module class
 //Used to define how much health an object has
 
+[System.Serializable]
 public class Health : MonoBehaviour {
 	float currentHealth = 1;
 	float startingHealth;
