@@ -11,7 +11,7 @@ public class MainCharacter : MonoBehaviour {
 	public static bool updateStats;
 	public Attack attack;
 	public PlayerCamera pCamera;
-    public float shrineHealRate;
+
 
 	LayerMask mask = 1 << 2;
 
@@ -20,6 +20,8 @@ public class MainCharacter : MonoBehaviour {
 	private float hookAxis = 0f;
 	public Hook hook;
 	public GameObject reticle;
+
+
 
 	// Use this for initialization
 	void Start() {
@@ -88,18 +90,5 @@ public class MainCharacter : MonoBehaviour {
 		attack.DoAttack(.5f);
 	}
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Shrine")
-        {
-            while(health.GetHealth() < health.GetMaxHealth())
-            {
-                health.Heal(shrineHealRate);
-            }
-            if (Input.GetButton("Interact"))
-            {
-                GameControl.saveState.Save();
-            }
-        }
-    }
+
 }
