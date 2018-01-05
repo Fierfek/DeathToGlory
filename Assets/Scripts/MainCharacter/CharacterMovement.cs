@@ -60,11 +60,7 @@ public class CharacterMovement : MonoBehaviour {
 				rollDirection = moveDirection;
 			}
 
-			if (Input.GetAxisRaw("Move Horizontal") != 0 || Input.GetAxisRaw("Move Vertical") != 0) {
-				if(!hook) {
-					RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
-				}
-			}
+			
 
 			if (jump) {
 				moveDirection.y += jumpSpeed;
@@ -85,6 +81,13 @@ public class CharacterMovement : MonoBehaviour {
 				}
 			}
 		}
+
+		if (Input.GetAxisRaw("Move Horizontal") != 0 || Input.GetAxisRaw("Move Vertical") != 0) {
+			if (!hook) {
+				RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
+			}
+		}
+		
 
 		resetFlags();
 		if (!grav) {

@@ -39,7 +39,7 @@ public class MainCharacter : MonoBehaviour {
 			cm.Sprint();
 		}
 
-		if (Input.GetButtonDown("Jump")) {
+		if (Input.GetButton("Jump")) {
 			cm.Jump();
 		}
 
