@@ -16,6 +16,8 @@ public class MainCharacter : MonoBehaviour {
 
 	LayerMask mask = 1 << 2;
 
+	//All things hook related
+	[Header("Hook")]
 	private RaycastHit hit;
 	private bool throwing, spinup, hitSomething;
 	private float hookAxis = 0f;
@@ -49,39 +51,47 @@ public class MainCharacter : MonoBehaviour {
 			//roll
 		}
 
+		if (Input.GetButtonDown("Shotgun")) {
+			shotgun.Fire();
+		}
+			
+
 		if (Input.GetAxis("Hook Throw") > hookAxis && spinup && hitSomething) {
 			spinup = false;
 			throwing = true;
 			//TODO: change transform.position to the hand's position;
 			hook.throwHook(transform.position + pCamera.transform.forward, hit.point, 10f);
-			print(hit.collider.gameObject.name);
 		}
 
 		hookAxis = Input.GetAxis("Hook Throw");
+		CheckHook();
+	}
 
+	//This should most likely be done in hook?
+	private void CheckHook() {
 		if (hookAxis < 0 || throwing) {
 			spinup = true;
 			pCamera.ThrowHook();
 			cm.HookShot();
-			if(!throwing) {
+			if (!throwing) {
 				if (Physics.Raycast(pCamera.transform.position, pCamera.transform.forward, out hit, 15f, mask)) {
 					hitSomething = true;
 					reticle.SetActive(true);
-					reticle.transform.position = hit.point; 
+					reticle.transform.position = hit.point;
 				} else {
 					hitSomething = false;
 					reticle.SetActive(false);
 				}
 			}
 
-			if(hook.Done()) {
+			if (hook.Done()) {
 				throwing = false;
 			} else {
 				cm.gravityOff();
 			}
 		}
 
-		if(hitSomething)
+		if (hitSomething)
 			Debug.DrawRay(pCamera.transform.position, pCamera.transform.forward * hit.distance, Color.black); //Debug only
 	}
 

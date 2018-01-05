@@ -22,10 +22,4 @@ public class Grunt : Enemy {
 			//Die
 		}
 	}
-
-	//Derivitives of enemy need this and a collider with trigger checked to work properly.
-	private void OnTriggerEnter(Collider other) {
-		print(name + " has been hit");
-		//take damage
-	}
 }

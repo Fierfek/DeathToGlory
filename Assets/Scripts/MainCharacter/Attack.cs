@@ -3,24 +3,34 @@
 //All damage according to character orientation. Character orientations should be halted druing attacks.
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(BoxCollider))]
 
 public class Attack : MonoBehaviour {
 
 	Rigidbody rigidbody;
+	BoxCollider collider;
+
+	//pathing
 	public GameObject[] path;
 	float transitionTime, t, percent;
 	int i, length;
 	bool active;
 
+	private float damage;
+
 	// Use this for initialization
 	void Start () {
 		rigidbody = gameObject.GetComponent<Rigidbody>();
+		collider = gameObject.GetComponent<BoxCollider>();
+
 		rigidbody.useGravity = false;
 		rigidbody.isKinematic = true;
+
+		collider.isTrigger = true;
 	}
 
 
-	public void DoAttack(GameObject[] pathData, float time) {
+	public void DoAttack(GameObject[] pathData, float time, float damage) {
 		path = pathData;
 		length = path.Length;
 		transitionTime = time / length;
@@ -55,6 +65,7 @@ public class Attack : MonoBehaviour {
 			} else {
 				percent = t / transitionTime;
 
+
 				/*transform.localPosition = (2.0f * t * t * t - 3.0f * t * t + 1.0f) * p0
 						 + (t * t * t - 2.0f * t * t + t) * m0
 						 + (-2.0f * t * t * t + 3.0f * t * t) * p1
@@ -64,6 +75,12 @@ public class Attack : MonoBehaviour {
 				transform.localEulerAngles = new Vector3(Mathf.LerpAngle(path[i].transform.eulerAngles.x, path[i + 1].transform.eulerAngles.x, percent), Mathf.LerpAngle(path[i].transform.eulerAngles.y, path[i + 1].transform.eulerAngles.y, percent), Mathf.LerpAngle(path[i].transform.eulerAngles.z, path[i + 1].transform.eulerAngles.z, percent));
 				transform.localScale = Vector3.Lerp(path[i].transform.localScale, path[i + 1].transform.localScale, percent);
 			}			
+		}
+	}
+
+	private void OnTriggerEnter(Collider other) {
+		if(other.tag.Equals("Enemy")) {
+			other.gameObject.GetComponent<Health>().TakeDamage(damage);
 		}
 	}
 }
