@@ -10,6 +10,7 @@ public class MainCharacter : MonoBehaviour {
 	
 	public static bool updateStats;
 	public Attack attack;
+	public Shotgun shotgun;
 	public PlayerCamera pCamera;
     public float shrineHealRate;
 
