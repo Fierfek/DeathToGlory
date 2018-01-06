@@ -10,14 +10,11 @@ public class Hook : MonoBehaviour {
 	private bool throwing, done;
 	private Vector3 start, end;
 	public GameObject player;
-
-	//If collision problems occur in the future, consider a capsule cast
-	//if (Physics.CapsuleCast(p1, p2, charContr.radius, transform.forward, out hit, 10))
-	//		distanceToObstacle = hit.distance;
+	CharacterController cc;
 
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
@@ -32,8 +29,10 @@ public class Hook : MonoBehaviour {
 			if(done) {
 				gameObject.SetActive(false);
 			} else {
-				player.transform.position = Vector3.MoveTowards(player.transform.position, transform.position, speed);
-				if(Vector3.Distance(player.transform.position, end) <= 1.2f) {
+				cc.Move(Vector3.MoveTowards(player.transform.position, end, speed) - player.transform.position);
+				
+				//For the specific case that the main character class doesn't catch the collision. .3f is so it detects it after main character would.
+				if(Vector3.Distance(cc.ClosestPointOnBounds(end), end) <= .3f) {
 					done = true;
 				}
 			}
@@ -47,6 +46,11 @@ public class Hook : MonoBehaviour {
 
 		transform.position = start;
 
+		if(cc == null) {
+			cc = player.GetComponent<CharacterController>();
+			gameObject.GetComponent<SphereCollider>().isTrigger = true;
+		}
+
 		gameObject.SetActive(true);
 		done = false;
 		throwing = true;
@@ -56,6 +60,10 @@ public class Hook : MonoBehaviour {
 		return done;
 	}
 
+	public bool Throwing() {
+		return throwing;
+	}
+
 	public void Stop() {
 		done = true;
 	}
@@ -63,6 +71,9 @@ public class Hook : MonoBehaviour {
 	private void OnCollisionEnter(Collision collision) {
 		if (!collision.gameObject.tag.Equals("Player")) {
 			throwing = false;
+			if(collision.gameObject.tag.Equals("Enemy")) {
+				//Check weight module
+			}
 		}
 	}
 }

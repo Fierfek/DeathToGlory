@@ -2,11 +2,13 @@
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(CharacterMovement))]
+[RequireComponent(typeof(CharacterController))]
 
 public class MainCharacter : MonoBehaviour {
 
 	Health health;
 	CharacterMovement cm;
+	CharacterController cc;
 	
 	public static bool updateStats;
 	public Attack attack;
@@ -25,8 +27,10 @@ public class MainCharacter : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		health = GetComponent<Health>();
-		health.SetHealth(100);
 		cm = GetComponent<CharacterMovement>();
+		cc = GetComponent<CharacterController>();
+
+		health.SetHealth(100);		
 		mask = ~mask;
     }
 	
@@ -72,7 +76,7 @@ public class MainCharacter : MonoBehaviour {
 					reticle.SetActive(false);
 				}
 			}
-
+				
 			if(hook.Done()) {
 				throwing = false;
 			} else {
@@ -80,26 +84,18 @@ public class MainCharacter : MonoBehaviour {
 			}
 		}
 
-		if(hitSomething)
-			Debug.DrawRay(transform.position, pCamera.transform.forward * hit.distance, Color.black); //Debug only
+		//if(hitSomething)
+		//	Debug.DrawRay(transform.position, pCamera.transform.forward * hit.distance, Color.black); //Debug only
 	}
 
 	public void BasicAttack() {
 		attack.DoAttack(.5f);
 	}
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Shrine")
-        {
-            while(health.GetHealth() < health.GetMaxHealth())
-            {
-                health.Heal(shrineHealRate);
-            }
-            if (Input.GetButton("Interact"))
-            {
-                GameControl.saveState.Save();
-            }
-        }
-    }
+	//This checks if you collide with something before getting to the point you hooked;
+	void OnControllerColliderHit(ControllerColliderHit hit) {
+		if(!cc.isGrounded && !hook.Throwing() && hook.isActiveAndEnabled) {
+			hook.Stop();
+		}
+	}
 }
