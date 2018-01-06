@@ -53,8 +53,7 @@ public class MainCharacter : MonoBehaviour {
 			spinup = false;
 			throwing = true;
 			//TODO: change transform.position to the hand's position;
-			hook.throwHook(transform.position + pCamera.transform.forward, hit.point, 10f);
-			print(hit.collider.gameObject.name);
+			hook.throwHook(transform.position, hit.point, 10f);
 		}
 
 		hookAxis = Input.GetAxis("Hook Throw");
@@ -64,7 +63,7 @@ public class MainCharacter : MonoBehaviour {
 			pCamera.ThrowHook();
 			cm.HookShot();
 			if(!throwing) {
-				if (Physics.Raycast(pCamera.transform.position, pCamera.transform.forward, out hit, 15f, mask)) {
+				if (Physics.Raycast(transform.position, pCamera.transform.forward, out hit, 15f, mask)) {
 					hitSomething = true;
 					reticle.SetActive(true);
 					reticle.transform.position = hit.point; 
@@ -82,7 +81,7 @@ public class MainCharacter : MonoBehaviour {
 		}
 
 		if(hitSomething)
-			Debug.DrawRay(pCamera.transform.position, pCamera.transform.forward * hit.distance, Color.black); //Debug only
+			Debug.DrawRay(transform.position, pCamera.transform.forward * hit.distance, Color.black); //Debug only
 	}
 
 	public void BasicAttack() {
