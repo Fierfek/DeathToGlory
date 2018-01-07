@@ -85,6 +85,105 @@ ModelImporter:
     100154: Neck.001_end
     100156: //RootNode
     100158: woman
+    100160: arm_left_ik
+    100162: arm_left_ik_end
+    100164: arm_right_ik
+    100166: arm_right_ik_end
+    100168: elbow_left_pole
+    100170: elbow_left_pole_end
+    100172: elbow_right_pole
+    100174: elbow_right_pole_end
+    100176: Foot_Left
+    100178: foot_left_ik
+    100180: foot_left_ik_end
+    100182: Foot_Right
+    100184: foot_right_ik
+    100186: foot_right_ik_end
+    100188: Head
+    100190: Head_end
+    100192: Heel_Left
+    100194: Heel_Right
+    100196: Hip_Left
+    100198: Hip_Left.001
+    100200: Hip_Right
+    100202: Index_A_Left
+    100204: Index_A_Right
+    100206: Index_B_Left
+    100208: Index_B_Right
+    100210: Index_C_Left
+    100212: Index_C_Left_end
+    100214: Index_C_Right
+    100216: Index_C_Right_end
+    100218: knee_left_pole
+    100220: knee_left_pole_end
+    100222: knee_right_pole
+    100224: knee_right_pole_end
+    100226: Lower_Arm_Left
+    100228: Lower_Arm_Right
+    100230: Lower_Leg_Left
+    100232: Lower_Leg_Right
+    100234: Lower_Spine_Control
+    100236: Lower_Spine_Control_end
+    100238: Middle_A_Left
+    100240: Middle_A_Right
+    100242: Middle_B_Left
+    100244: Middle_B_Right
+    100246: Middle_C_Left
+    100248: Middle_C_Left_end
+    100250: Middle_C_Right
+    100252: Middle_C_Right_end
+    100254: Pinky_A_Left
+    100256: Pinky_A_Right
+    100258: Pinky_B_Left
+    100260: Pinky_B_Right
+    100262: Pinky_C_Left
+    100264: Pinky_C_Left_end
+    100266: Pinky_C_Right
+    100268: Pinky_C_Right_end
+    100270: Ring_A_Left
+    100272: Ring_A_Right
+    100274: Ring_B_Left
+    100276: Ring_B_Right
+    100278: Ring_C_Left
+    100280: Ring_C_Left_end
+    100282: Ring_C_Right
+    100284: Ring_C_Right_end
+    100286: Shoulder_Left
+    100288: Shoulder_Right
+    100290: Spine_A
+    100292: Spine_B
+    100294: Spine_B.001
+    100296: Spine_C
+    100298: Spine_C.001
+    100300: Spine_D
+    100302: Spine_D.001
+    100304: Spine_D.002
+    100306: Thumb_A_Left
+    100308: Thumb_A_Right
+    100310: Thumb_B_Left
+    100312: Thumb_B_Left_end
+    100314: Thumb_B_Right
+    100316: Thumb_B_Right_end
+    100318: Toes_Left
+    100320: Toes_Left_end
+    100322: Toes_Right
+    100324: Toes_Right_end
+    100326: Upper Spine Control
+    100328: Upper Spine Control_end
+    100330: Upper_Arm_Left
+    100332: Upper_Arm_Right
+    100334: Upper_Leg_Left
+    100336: Upper_Leg_Right
+    100338: Wrist_Index_Left
+    100340: Wrist_Index_Right
+    100342: Wrist_Middle_Left
+    100344: Wrist_Middle_Right
+    100346: Wrist_Pinky_Left
+    100348: Wrist_Pinky_Right
+    100350: Wrist_Ring_Left
+    100352: Wrist_Ring_Right
+    100354: Wrist_Thumb_Left
+    100356: Wrist_Thumb_Right
     400000: Armature
     400002: Bone
     400004: Bone.001
@@ -165,6 +264,105 @@ ModelImporter:
     400154: Neck.001_end
     400156: //RootNode
     400158: woman
+    400160: arm_left_ik
+    400162: arm_left_ik_end
+    400164: arm_right_ik
+    400166: arm_right_ik_end
+    400168: elbow_left_pole
+    400170: elbow_left_pole_end
+    400172: elbow_right_pole
+    400174: elbow_right_pole_end
+    400176: Foot_Left
+    400178: foot_left_ik
+    400180: foot_left_ik_end
+    400182: Foot_Right
+    400184: foot_right_ik
+    400186: foot_right_ik_end
+    400188: Head
+    400190: Head_end
+    400192: Heel_Left
+    400194: Heel_Right
+    400196: Hip_Left
+    400198: Hip_Left.001
+    400200: Hip_Right
+    400202: Index_A_Left
+    400204: Index_A_Right
+    400206: Index_B_Left
+    400208: Index_B_Right
+    400210: Index_C_Left
+    400212: Index_C_Left_end
+    400214: Index_C_Right
+    400216: Index_C_Right_end
+    400218: knee_left_pole
+    400220: knee_left_pole_end
+    400222: knee_right_pole
+    400224: knee_right_pole_end
+    400226: Lower_Arm_Left
+    400228: Lower_Arm_Right
+    400230: Lower_Leg_Left
+    400232: Lower_Leg_Right
+    400234: Lower_Spine_Control
+    400236: Lower_Spine_Control_end
+    400238: Middle_A_Left
+    400240: Middle_A_Right
+    400242: Middle_B_Left
+    400244: Middle_B_Right
+    400246: Middle_C_Left
+    400248: Middle_C_Left_end
+    400250: Middle_C_Right
+    400252: Middle_C_Right_end
+    400254: Pinky_A_Left
+    400256: Pinky_A_Right
+    400258: Pinky_B_Left
+    400260: Pinky_B_Right
+    400262: Pinky_C_Left
+    400264: Pinky_C_Left_end
+    400266: Pinky_C_Right
+    400268: Pinky_C_Right_end
+    400270: Ring_A_Left
+    400272: Ring_A_Right
+    400274: Ring_B_Left
+    400276: Ring_B_Right
+    400278: Ring_C_Left
+    400280: Ring_C_Left_end
+    400282: Ring_C_Right
+    400284: Ring_C_Right_end
+    400286: Shoulder_Left
+    400288: Shoulder_Right
+    400290: Spine_A
+    400292: Spine_B
+    400294: Spine_B.001
+    400296: Spine_C
+    400298: Spine_C.001
+    400300: Spine_D
+    400302: Spine_D.001
+    400304: Spine_D.002
+    400306: Thumb_A_Left
+    400308: Thumb_A_Right
+    400310: Thumb_B_Left
+    400312: Thumb_B_Left_end
+    400314: Thumb_B_Right
+    400316: Thumb_B_Right_end
+    400318: Toes_Left
+    400320: Toes_Left_end
+    400322: Toes_Right
+    400324: Toes_Right_end
+    400326: Upper Spine Control
+    400328: Upper Spine Control_end
+    400330: Upper_Arm_Left
+    400332: Upper_Arm_Right
+    400334: Upper_Leg_Left
+    400336: Upper_Leg_Right
+    400338: Wrist_Index_Left
+    400340: Wrist_Index_Right
+    400342: Wrist_Middle_Left
+    400344: Wrist_Middle_Right
+    400346: Wrist_Pinky_Left
+    400348: Wrist_Pinky_Right
+    400350: Wrist_Ring_Left
+    400352: Wrist_Ring_Right
+    400354: Wrist_Thumb_Left
+    400356: Wrist_Thumb_Right
     2000000: Camera
     4300000: woman
     9500000: //RootNode
@@ -214,7 +412,7 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
-    tangentImportMode: 0
+    tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

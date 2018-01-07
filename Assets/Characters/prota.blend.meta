@@ -1,0 +1,253 @@
+fileFormatVersion: 2
+guid: 3ac645f46719d844eb28faa1ade6bb5f
+timeCreated: 1515286465
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: arm_left_ik
+    100002: arm_right_ik
+    100004: Armature
+    100006: ChainArm
+    100008: elbow_left_pole
+    100010: elbow_right_pole
+    100012: Foot_Left
+    100014: foot_left_ik
+    100016: Foot_Right
+    100018: foot_right_ik
+    100020: front
+    100022: Head
+    100024: Heel_Left
+    100026: Heel_Right
+    100028: Hip_Left
+    100030: Hip_Left_001
+    100032: Hip_Right
+    100034: Index_A_Left
+    100036: Index_A_Right
+    100038: Index_B_Left
+    100040: Index_B_Right
+    100042: Index_C_Left
+    100044: Index_C_Right
+    100046: knee_left_pole
+    100048: knee_right_pole
+    100050: Lower_Arm_Left
+    100052: Lower_Arm_Right
+    100054: Lower_Leg_Left
+    100056: Lower_Leg_Right
+    100058: Lower_Spine_Control
+    100060: middle
+    100062: Middle_A_Left
+    100064: Middle_A_Right
+    100066: Middle_B_Left
+    100068: Middle_B_Right
+    100070: Middle_C_Left
+    100072: Middle_C_Right
+    100074: Neck
+    100076: Pinky_A_Left
+    100078: Pinky_A_Right
+    100080: Pinky_B_Left
+    100082: Pinky_B_Right
+    100084: Pinky_C_Left
+    100086: Pinky_C_Right
+    100088: //RootNode
+    100090: rear
+    100092: Rear_Link
+    100094: Ring_A_Left
+    100096: Ring_A_Right
+    100098: Ring_B_Left
+    100100: Ring_B_Right
+    100102: Ring_C_Left
+    100104: Ring_C_Right
+    100106: Shoulder_Left
+    100108: Shoulder_Right
+    100110: Spine_A
+    100112: Spine_B
+    100114: Spine_B_001
+    100116: Spine_C
+    100118: Spine_C_001
+    100120: Spine_D
+    100122: Spine_D_001
+    100124: Spine_D_002
+    100126: Thumb_A_Left
+    100128: Thumb_A_Right
+    100130: Thumb_B_Left
+    100132: Thumb_B_Right
+    100134: Toes_Left
+    100136: Toes_Right
+    100138: Upper_Arm_Left
+    100140: Upper_Arm_Right
+    100142: Upper_Leg_Left
+    100144: Upper_Leg_Right
+    100146: Upper_Spine_Control
+    100148: woman
+    100150: Wrist_Index_Left
+    100152: Wrist_Index_Right
+    100154: Wrist_Middle_Left
+    100156: Wrist_Middle_Right
+    100158: Wrist_Pinky_Left
+    100160: Wrist_Pinky_Right
+    100162: Wrist_Ring_Left
+    100164: Wrist_Ring_Right
+    100166: Wrist_Thumb_Left
+    100168: Wrist_Thumb_Right
+    400000: arm_left_ik
+    400002: arm_right_ik
+    400004: Armature
+    400006: ChainArm
+    400008: elbow_left_pole
+    400010: elbow_right_pole
+    400012: Foot_Left
+    400014: foot_left_ik
+    400016: Foot_Right
+    400018: foot_right_ik
+    400020: front
+    400022: Head
+    400024: Heel_Left
+    400026: Heel_Right
+    400028: Hip_Left
+    400030: Hip_Left_001
+    400032: Hip_Right
+    400034: Index_A_Left
+    400036: Index_A_Right
+    400038: Index_B_Left
+    400040: Index_B_Right
+    400042: Index_C_Left
+    400044: Index_C_Right
+    400046: knee_left_pole
+    400048: knee_right_pole
+    400050: Lower_Arm_Left
+    400052: Lower_Arm_Right
+    400054: Lower_Leg_Left
+    400056: Lower_Leg_Right
+    400058: Lower_Spine_Control
+    400060: middle
+    400062: Middle_A_Left
+    400064: Middle_A_Right
+    400066: Middle_B_Left
+    400068: Middle_B_Right
+    400070: Middle_C_Left
+    400072: Middle_C_Right
+    400074: Neck
+    400076: Pinky_A_Left
+    400078: Pinky_A_Right
+    400080: Pinky_B_Left
+    400082: Pinky_B_Right
+    400084: Pinky_C_Left
+    400086: Pinky_C_Right
+    400088: //RootNode
+    400090: rear
+    400092: Rear_Link
+    400094: Ring_A_Left
+    400096: Ring_A_Right
+    400098: Ring_B_Left
+    400100: Ring_B_Right
+    400102: Ring_C_Left
+    400104: Ring_C_Right
+    400106: Shoulder_Left
+    400108: Shoulder_Right
+    400110: Spine_A
+    400112: Spine_B
+    400114: Spine_B_001
+    400116: Spine_C
+    400118: Spine_C_001
+    400120: Spine_D
+    400122: Spine_D_001
+    400124: Spine_D_002
+    400126: Thumb_A_Left
+    400128: Thumb_A_Right
+    400130: Thumb_B_Left
+    400132: Thumb_B_Right
+    400134: Toes_Left
+    400136: Toes_Right
+    400138: Upper_Arm_Left
+    400140: Upper_Arm_Right
+    400142: Upper_Leg_Left
+    400144: Upper_Leg_Right
+    400146: Upper_Spine_Control
+    400148: woman
+    400150: Wrist_Index_Left
+    400152: Wrist_Index_Right
+    400154: Wrist_Middle_Left
+    400156: Wrist_Middle_Right
+    400158: Wrist_Pinky_Left
+    400160: Wrist_Pinky_Right
+    400162: Wrist_Ring_Left
+    400164: Wrist_Ring_Right
+    400166: Wrist_Thumb_Left
+    400168: Wrist_Thumb_Right
+    4300000: woman
+    4300002: Rear_Link
+    7400000: Default Take
+    9500000: //RootNode
+    13700000: Rear_Link
+    13700002: woman
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

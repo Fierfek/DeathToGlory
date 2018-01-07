@@ -59,9 +59,7 @@ public class CharacterMovement : MonoBehaviour {
 				rolling = true;
 				rollDirection = moveDirection;
 			}
-
 			
-
 			if (jump) {
 				moveDirection.y += jumpSpeed;
 			}
@@ -84,7 +82,9 @@ public class CharacterMovement : MonoBehaviour {
 
 		if (Input.GetAxisRaw("Move Horizontal") != 0 || Input.GetAxisRaw("Move Vertical") != 0) {
 			if (!hook) {
+				cameraRotation = cameraAnchor.transform.rotation;
 				RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
+				cameraAnchor.transform.rotation = cameraRotation;
 			}
 		}
 		
