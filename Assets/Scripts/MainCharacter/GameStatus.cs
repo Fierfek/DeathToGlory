@@ -39,6 +39,9 @@ public class GameStatus : MonoBehaviour {
         gs.x = playerTransform.position.x;
         gs.y = playerTransform.position.y;
         gs.z = playerTransform.position.z;
+        gs.rotX = playerTransform.eulerAngles.x;
+        gs.rotY = playerTransform.eulerAngles.y;
+        gs.rotZ = playerTransform.eulerAngles.z;
         //gs.playerRotation = playerTransform.rotation.eulerAngles;
 
         return gs;
@@ -68,7 +71,9 @@ public class GameStatus : MonoBehaviour {
         Heimdallr = gs.Heimdallr;
         playerHealth.SetHealth(gs.playerHealth);
         playerTransform.position = new Vector3 (gs.x, gs.y, gs.z);
-        //playerTransform.rotation = gs.playerRotation.;
+        Vector3 direction = new Vector3(gs.rotX, gs.rotY, gs.rotZ);
+        playerTransform.Rotate(direction, Space.Self);
+       
     }
 
 }
@@ -90,6 +95,7 @@ public class GameState
 
 
     public float x, y, z;
+    public float rotX, rotY, rotZ;
     //public Vector3 playerRotation;
     public float playerHealth;
 
