@@ -14,7 +14,7 @@ public class MainCharacter : MonoBehaviour {
 	public Attack attack;
 	public Shotgun shotgun;
 	public PlayerCamera pCamera;
-    public float shrineHealRate;
+
 
 	LayerMask mask = 1 << 2;
 
@@ -23,6 +23,8 @@ public class MainCharacter : MonoBehaviour {
 	private float hookAxis = 0f;
 	public Hook hook;
 	public GameObject reticle;
+
+
 
 	// Use this for initialization
 	void Start() {
@@ -44,7 +46,7 @@ public class MainCharacter : MonoBehaviour {
 			cm.Sprint();
 		}
 
-		if (Input.GetButtonDown("Jump")) {
+		if (Input.GetButton("Jump")) {
 			cm.Jump();
 		}
 
