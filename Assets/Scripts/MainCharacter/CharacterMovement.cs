@@ -89,10 +89,11 @@ public class CharacterMovement : MonoBehaviour {
 		}
 		
 
-		resetFlags();
 		if (!grav) {
 			moveDirection.y -= gravity * Time.deltaTime;
 		}
+
+		resetFlags();
 
 		cc.Move(moveDirection * Time.deltaTime);
 	}

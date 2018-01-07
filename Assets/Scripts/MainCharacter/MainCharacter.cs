@@ -24,8 +24,6 @@ public class MainCharacter : MonoBehaviour {
 	public Hook hook;
 	public GameObject reticle;
 
-
-
 	// Use this for initialization
 	void Start() {
 		health = GetComponent<Health>();
@@ -57,18 +55,17 @@ public class MainCharacter : MonoBehaviour {
 
 		if (Input.GetAxis("Hook Throw") > hookAxis && spinup && hitSomething) {
 			spinup = false;
-			throwing = true;
 			//TODO: change transform.position to the hand's position;
 			hook.throwHook(transform.position, hit.point, 10f);
 		}
 
 		hookAxis = Input.GetAxis("Hook Throw");
 
-		if (hookAxis < 0 || throwing) {
+		if (hookAxis < 0 || hook.Throwing()) {
 			spinup = true;
 			pCamera.ThrowHook();
 			cm.HookShot();
-			if(!throwing) {
+			if(!hook.Throwing()) {
 				if (Physics.Raycast(transform.position, pCamera.transform.forward, out hit, 15f, mask)) {
 					hitSomething = true;
 					reticle.SetActive(true);
@@ -79,9 +76,7 @@ public class MainCharacter : MonoBehaviour {
 				}
 			}
 				
-			if(hook.Done()) {
-				throwing = false;
-			} else {
+			if(!hook.Throwing() && !hook.Done() && hook.isActiveAndEnabled && !cc.isGrounded) {
 				cm.gravityOff();
 			}
 		}
