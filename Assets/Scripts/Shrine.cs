@@ -23,7 +23,7 @@ public class Shrine : MonoBehaviour {
         {
 
 
-            other.GetComponent<Health>().Heal(shrineHealRate);
+            other.GetComponent<Health>().Heal(shrineHealRate * Time.deltaTime);
 
 
         }

@@ -29,7 +29,7 @@ public class GameControl : MonoBehaviour {
     private void Start()
     {
         data = GetComponent<GameStatus>();
-        //Load(); Test if load works.
+        //Load(); //Test if load works.
     }
 
     public void Save()
