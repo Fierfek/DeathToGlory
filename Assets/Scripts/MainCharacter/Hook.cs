@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Hook : MonoBehaviour {
 
-	private float speed = 20f, distance;
+	private float speed = 10f, distance;
 	private bool throwing, done;
 	private Vector3 start, end;
 	public GameObject player;
@@ -16,13 +16,15 @@ public class Hook : MonoBehaviour {
 	Rigidbody rigidbody;
 	public GameObject chainSection;
 	GameObject[] chains;
-	int i = 0;
+	int i = 0, numChains = 50;
 	Vector3 offset;
+
+	private Vector3 storagePoint;
 	
 
 	// Use this for initialization
 	void Start () {
-		chains = new GameObject[50];
+		chains = new GameObject[numChains];
 
 		cc = player.GetComponent<CharacterController>();
 		rigidbody = GetComponent<Rigidbody>();
@@ -31,28 +33,39 @@ public class Hook : MonoBehaviour {
 		rigidbody.useGravity = false;
 		rigidbody.isKinematic = true;
 
+		storagePoint = new Vector3(100, 100, 100);
+		transform.position = storagePoint;
+
 		offset = new Vector3(0,  -0.05f, 0);
 
+		GenerateChain();
+	}
+
+	private void GenerateChain() {
 		for (i = 0; i < chains.Length; i++) {
 			chains[i] = Instantiate(chainSection);
 			if (i == 0) {
 				chains[i].GetComponent<CharacterJoint>().connectedBody = rigidbody;
-				chains[i].transform.position = transform.position;
-				chains[i].GetComponent<CharacterJoint>().autoConfigureConnectedAnchor = false;
-				chains[0].GetComponent<CharacterJoint>().connectedAnchor = new Vector3(0, 0, 0);
+				chains[i].GetComponent<CharacterJoint>().connectedAnchor = new Vector3(0, 0, 0);
+
 			} else {
 				chains[i].transform.SetParent(chains[i - 1].transform);
-				chains[i].transform.localPosition = offset;
 				chains[i].GetComponent<CharacterJoint>().connectedBody = chains[i - 1].GetComponent<Rigidbody>();
+				chains[i].GetComponent<CharacterJoint>().connectedAnchor = new Vector3(0, 0, 0);
 			}
-
-			chains[i].SetActive(false);
 		}
 
-		chains[chains.Length - 1].AddComponent<Follow>();
-		chains[chains.Length - 1].GetComponent<Follow>().Setup(player.transform);
+		chains[0].transform.position = storagePoint;
 
-		//gameObject.SetActive(false);
+		chains[chains.Length - 1].AddComponent<HingeJoint>();
+		HingeJoint joint = chains[chains.Length - 1].GetComponent<HingeJoint>();
+		joint.autoConfigureConnectedAnchor = false;
+		joint.anchor = new Vector3(0, -0.023f, 0);
+		joint.axis = new Vector3(0, 1, 0);
+		joint.connectedAnchor = new Vector3(0, 0, 0);
+		joint.connectedBody = player.GetComponent<Rigidbody>();
+
+		ResetChain();
 	}
 	
 	// Update is called once per frame
@@ -67,7 +80,6 @@ public class Hook : MonoBehaviour {
 		} else {
 			if (done) {
 				ResetChain();
-				//gameObject.SetActive(false);
 			} else {
 				cc.Move(Vector3.MoveTowards(player.transform.position, end, speed * Time.deltaTime) - player.transform.position);
 
@@ -80,16 +92,37 @@ public class Hook : MonoBehaviour {
 	}
 
 	private void AddChain() {
-		for (int i = 0; i < chains.Length; i++) {
-			chains[i].SetActive(true);
-		}
 
-		chains[chains.Length - 1].GetComponent<Follow>().SetFollow(true);
+		for (int i = 0; i < chains.Length; i++) {
+			chains[i].GetComponent<Rigidbody>().useGravity = true;
+			chains[i].GetComponent<Rigidbody>().isKinematic = false;
+		}
 	}
 
 	private void ResetChain() {
+
+		
+
 		for (int i = 0; i < chains.Length; i++) {
-			chains[i].SetActive(false);
+			//chains[i].SetActive(false);
+
+			chains[i].GetComponent<Rigidbody>().useGravity = false;
+			chains[i].GetComponent<Rigidbody>().isKinematic = true;
+
+			chains[i].transform.localPosition = offset;
+			chains[i].transform.eulerAngles = new Vector3(90, 0, 0);
+
+			
+		}
+
+		transform.position = storagePoint;
+		chains[0].transform.position = storagePoint;
+
+		for (int i = 0; i < chains.Length; i++) {
+			//chains[i].SetActive(true);
+
+			if (i > 0)
+				chains[i].GetComponent<CharacterJoint>().connectedBody = chains[i - 1].GetComponent<Rigidbody>();
 		}
 	}
 

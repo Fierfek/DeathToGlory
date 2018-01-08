@@ -75,8 +75,10 @@ public class MainCharacter : MonoBehaviour {
 					reticle.SetActive(false);
 				}
 			}
-				
-			if(!hook.Throwing() && !hook.Done() && hook.isActiveAndEnabled && !cc.isGrounded) {
+		}
+
+		if (hook.isActiveAndEnabled ) {
+			if(!hook.Throwing() && !hook.Done() && !cc.isGrounded) {
 				cm.gravityOff();
 			}
 		}
@@ -95,4 +97,6 @@ public class MainCharacter : MonoBehaviour {
 			hook.Stop();
 		}
 	}
+
+	
 }
