@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(CharacterMovement))]
@@ -15,6 +16,7 @@ public class MainCharacter : MonoBehaviour {
 	public Shotgun shotgun;
 	public PlayerCamera pCamera;
 
+    //public Slider healthSlider;
 
 	LayerMask mask = 1 << 2;
 
