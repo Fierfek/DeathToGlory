@@ -4,12 +4,14 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(CharacterMovement))]
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Rigidbody))]
 
 public class MainCharacter : MonoBehaviour {
 
 	Health health;
 	CharacterMovement cm;
 	CharacterController cc;
+	Rigidbody r;
 	
 	public static bool updateStats;
 	public Attack attack;
@@ -31,9 +33,11 @@ public class MainCharacter : MonoBehaviour {
 		health = GetComponent<Health>();
 		cm = GetComponent<CharacterMovement>();
 		cc = GetComponent<CharacterController>();
+		r = GetComponent<Rigidbody>();
 
 		health.SetHealth(100);		
 		mask = ~mask;
+		r.isKinematic = true;
     }
 	
 	// Update is called once per frame
