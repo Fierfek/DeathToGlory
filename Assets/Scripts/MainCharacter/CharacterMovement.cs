@@ -7,27 +7,32 @@
 
 public class CharacterMovement : MonoBehaviour {
 
-	public Vector3 moveDirection;
-	public float moveSpeed = 1;
-	public float sprintSpeed = 2;
+	[Header("Movement")]
+	public float moveSpeed = 5;
+	public float sprintSpeed = 10;
 	public float jumpSpeed = 1;
-	public float gravity = 1;
+	public float gravity = 15;
+	public float turnRate = .75f;
 
 	private bool jump, sprint, roll, hook, grav, rolling;
 
 	CharacterController cc;
 	MouseRotationX mrx;
+	private Vector3 moveDirection;
 
+	[Header("Camera")]
 	public GameObject cameraAnchor;
 	private float radToDeg = 180 / Mathf.PI;
 	private Quaternion cameraRotation;
 	private Vector3 forward, right;
 
 	private float currentRotation;
-	public float turnRate = .75f;
+	private Vector3 temp;
 
-	public float rollTime, rollStart, rollSpeed;
-	private float rollPause;
+	[Header("Roll")]
+	public float rollTime = .5f;
+	public float rollSpeed = 5;
+	private float rollPause, rollStart;
 	private Vector3 rollDirection;
 
 
@@ -35,6 +40,8 @@ public class CharacterMovement : MonoBehaviour {
 		cc = GetComponent<CharacterController>();
 		mrx = GetComponent<MouseRotationX>();
 		jump = sprint = roll = hook = grav = rolling = false;
+
+		temp = new Vector3();
 	}
 
 	// Update is called once per frame
@@ -59,18 +66,20 @@ public class CharacterMovement : MonoBehaviour {
 				rolling = true;
 				rollDirection = moveDirection;
 			}
-			
+
 			if (jump) {
 				moveDirection.y += jumpSpeed;
 			}
 
-			if(sprint) {
-				moveDirection *= sprintSpeed;
+			if (sprint) {
+				temp.Set(moveDirection.x * sprintSpeed, moveDirection.y * moveSpeed, moveDirection.z * sprintSpeed);
 			} else {
-				moveDirection *= moveSpeed;
+				temp.Set(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed, moveDirection.z * moveSpeed);
 			}
 
-			if(rolling) {
+			moveDirection = temp;
+
+			if (rolling) {
 				if(Time.time <= rollStart + rollTime) {
 					moveDirection = Vector3.zero;
 					moveDirection = rollDirection * rollSpeed;
@@ -87,7 +96,7 @@ public class CharacterMovement : MonoBehaviour {
 				cameraAnchor.transform.rotation = cameraRotation;
 			}
 		}
-		
+
 
 		if (!grav) {
 			moveDirection.y -= gravity * Time.deltaTime;
