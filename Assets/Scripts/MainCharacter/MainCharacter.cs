@@ -18,7 +18,7 @@ public class MainCharacter : MonoBehaviour {
 	public Shotgun shotgun;
 	public PlayerCamera pCamera;
 
-    //public Slider healthSlider;
+    
 
 	LayerMask mask = 1 << 2;
 
