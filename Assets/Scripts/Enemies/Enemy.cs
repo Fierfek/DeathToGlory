@@ -8,14 +8,16 @@ public class Enemy : MonoBehaviour {
 
 	
 	protected Health health;			//All enemies should have health or sometype of damage taking system
+    protected float damageAmount;       //amount of damage done to player on each attack hit
     protected NavMeshAgent agent;		//nav mesh agent on object 
     protected Transform target;			//the transform of the target to move towards
     protected bool isAttacking;         //true if this enemy is in their attack animation
-    protected GameObject weapon;
+    
 
 	//Enemy attributes
     protected float movementSpeed;		//speed of character
 	protected float aggroRange;			//Distance at which the player is noticed and we exit the idle state.
+    protected float attackRange;        //distance at which this enemy attacks
 
 	// Use this for initialization
 	void Awake() {
@@ -26,13 +28,16 @@ public class Enemy : MonoBehaviour {
         isAttacking = false;
     }
 
+    //finds the distance between character and grunt
+    protected float getDistToPlayer()
+    {
+        return (-transform.position + target.position).magnitude;
+    }
+
     //if player is in trigger collider and not already attacking it will attack
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.transform == target && !isAttacking)
-        {
-            isAttacking = true;
-        }
+        
     }
 
     //if collision occurs while attacking subtract health.
