@@ -4,19 +4,20 @@
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(MouseRotationX))]
+[RequireComponent(typeof(Animator))]
 
 public class CharacterMovement : MonoBehaviour {
 
 	public Vector3 moveDirection;
-	public float moveSpeed = 1;
-	public float sprintSpeed = 2;
-	public float jumpSpeed = 1;
-	public float gravity = 1;
+	public float jumpSpeed;
+	private float velocity, acceleration;
+	public float gravity = 8f;
 
 	private bool jump, sprint, roll, hook, grav, rolling;
 
 	CharacterController cc;
 	MouseRotationX mrx;
+	Animator animator;
 
 	public GameObject cameraAnchor;
 	private float radToDeg = 180 / Mathf.PI;
@@ -26,7 +27,7 @@ public class CharacterMovement : MonoBehaviour {
 	private float currentRotation;
 	public float turnRate = .75f;
 
-	public float rollTime, rollStart, rollSpeed;
+	public float rollTime = .5f, rollStart = 0, rollSpeed = 10f;
 	private float rollPause;
 	private Vector3 rollDirection;
 
@@ -34,6 +35,8 @@ public class CharacterMovement : MonoBehaviour {
 	private void Start() {
 		cc = GetComponent<CharacterController>();
 		mrx = GetComponent<MouseRotationX>();
+		animator = GetComponent<Animator>();
+
 		jump = sprint = roll = hook = grav = rolling = false;
 	}
 
@@ -55,47 +58,36 @@ public class CharacterMovement : MonoBehaviour {
 			//set the movements direction
 			moveDirection = Input.GetAxis("Move Horizontal") * right + Input.GetAxis("Move Vertical") * forward;
 
-			if (roll) {
-				rolling = true;
-				rollDirection = moveDirection;
-			}
-			
-			if (jump) {
-				moveDirection.y += jumpSpeed;
-			}
-
-			if(sprint) {
-				moveDirection *= sprintSpeed;
-			} else {
-				moveDirection *= moveSpeed;
-			}
-
-			if(rolling) {
-				if(Time.time <= rollStart + rollTime) {
-					moveDirection = Vector3.zero;
-					moveDirection = rollDirection * rollSpeed;
-				} else {
-					rolling = false;
+			if (Input.GetAxisRaw("Move Horizontal") != 0 || Input.GetAxisRaw("Move Vertical") != 0) {
+				if (!hook) {
+					cameraRotation = cameraAnchor.transform.rotation;
+					RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
+					cameraAnchor.transform.rotation = cameraRotation;
 				}
 			}
-		}
 
-		if (Input.GetAxisRaw("Move Horizontal") != 0 || Input.GetAxisRaw("Move Vertical") != 0) {
-			if (!hook) {
-				cameraRotation = cameraAnchor.transform.rotation;
-				RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
-				cameraAnchor.transform.rotation = cameraRotation;
+			velocity = moveDirection.magnitude;
+
+			moveDirection.Set(0, 0, 0);
+
+			if(jump) {
+				//moveDirection.y += jumpSpeed;
 			}
-		}
-		
 
-		if (!grav) {
-			moveDirection.y -= gravity * Time.deltaTime;
+			//moveDirection.y -= gravity;
+
+			animator.SetFloat("speed", velocity);
+		}
+
+		animator.SetBool("jump", jump);
+		animator.SetBool("grounded", cc.isGrounded);
+
+		AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+		if(info.IsName("Falling")) {
+			cc.Move(Vector3.down * gravity * Time.deltaTime);
 		}
 
 		resetFlags();
-
-		cc.Move(moveDirection * Time.deltaTime);
 	}
 
 	public void gravityOff() {
