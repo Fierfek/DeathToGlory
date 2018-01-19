@@ -21,7 +21,7 @@ half4 BRDF2_Unity_Toon (half3 diffColor, half3 specColor, half oneMinusReflectiv
 {
     half3 halfDir = Unity_SafeNormalize (light.dir + viewDir);
 
-    half nl = smoothstep(0.0 , 0.05, saturate(dot(normal, light.dir)));
+    half nl = smoothstep(0.0 , 0.01, saturate(dot(normal, light.dir)));
     half nh = saturate(dot(normal, halfDir));
     half nv = saturate(dot(normal, viewDir));
     half lh = saturate(dot(light.dir, halfDir));

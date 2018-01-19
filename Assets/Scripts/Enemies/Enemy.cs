@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour {
 
 	
-	protected Health health;			//All enemies should have health or sometype of damage taking system
+	protected Health health, playerHealth;			//All enemies should have health or sometype of damage taking system
     protected float damageAmount;       //amount of damage done to player on each attack hit
     protected NavMeshAgent agent;		//nav mesh agent on object 
     protected Transform target;			//the transform of the target to move towards
@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour {
 		health = GetComponent<Health>();
 		agent = GetComponent<NavMeshAgent>();                   //set agent to this objects agent
 		target = GameObject.Find("Main Character").transform;    //set target to main character
+        playerHealth = target.gameObject.GetComponent<Health>();
 		tag = "Enemy";
         isAttacking = false;
     }
@@ -34,22 +35,8 @@ public class Enemy : MonoBehaviour {
         return (-transform.position + target.position).magnitude;
     }
 
-    //if player is in trigger collider and not already attacking it will attack
-    private void OnTriggerStay(Collider other)
-    {
-        
-    }
 
-    //if collision occurs while attacking subtract health.
-    //*refine once animation is in place*
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (isAttacking)
-        {
-            //subtract player health
-            isAttacking = false;
-        }
-    }
+
 
 
 }

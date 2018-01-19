@@ -6,15 +6,17 @@ public class Grunt : Enemy {
 
 
     float timer;
+    Animator anim;
+
     // Use this for initialization
     void Start () {
 		movementSpeed = 3.5f;
         damageAmount = 1;
         aggroRange = 10;
-        attackRange = 3;
+        attackRange = 1.5f;
         name = "Grunt";
 
-
+        anim = GetComponent<Animator>();
 		agent.speed = movementSpeed;
 		health.SetHealth(10f);
 
@@ -26,20 +28,27 @@ public class Grunt : Enemy {
         //Check for death
         if (health.GetHealth() <= 0)
         {
-            //Die
+            isAttacking = false;
+            anim.SetTrigger("gruntDeath");
+ 
         }
         //if enemy is in attack animation is won't move
-        else if (isAttacking)
-        {
-            attack(); //temp "anim" for testing
-        }
         else if (checkAgro())
         {
-            if(getDistToPlayer() <= attackRange)
+            if (getDistToPlayer() <= attackRange)
             {
+                
+                    anim.SetTrigger("gruntHit");
                 isAttacking = true;
+            } else
+            {
+                isAttacking = false;
+                anim.SetTrigger("gruntRun");
+                
             }
-            agent.SetDestination(target.position);  //update agent destination to target location
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Run"))
+                agent.SetDestination(target.position);  //update agent destination to target location
+                
         }
 		
 	}
@@ -69,6 +78,16 @@ public class Grunt : Enemy {
         transform.Rotate(transform.eulerAngles + new Vector3(0, .1f, 0));
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.transform == target)
+            playerHealth.TakeDamage(damageAmount);
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.transform == target)
+            playerHealth.TakeDamage(damageAmount);
+    }
 
 }

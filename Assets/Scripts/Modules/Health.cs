@@ -5,7 +5,7 @@
 
 [System.Serializable]
 public class Health : MonoBehaviour {
-	float currentHealth = 1;
+	public float currentHealth = 1;
 	float startingHealth;
 	float maxHealth;
 	private float tempHealth;
