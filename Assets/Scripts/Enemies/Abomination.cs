@@ -23,11 +23,48 @@ public class Abomination : Enemy {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        //Check for death
+        if (health.GetHealth() <= 0)
+        {
+            isAttacking = false;
+            anim.SetTrigger("gruntDeath");
+
+        }
+        //if enemy is in attack animation is won't move
+        else if (CheckAgro())
+        {
+            if (getDistToPlayer() <= attackRange)
+            {
+
+                anim.SetTrigger("AbomThrow");
+                isAttacking = true;
+            }
+            else
+            {
+                isAttacking = false;
+                anim.SetTrigger("AbomRun");
+
+            }
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walking"))
+                agent.SetDestination(target.position);  //update agent destination to target location
+
+        }
+    }
+
+    bool CheckAgro()
+    {
+        return aggroRange > getDistToPlayer();
+    }
+
+    void FireMaul()
+    {
+        timer += Time.deltaTime;
+        
+    }
 
     void ThrowBomb()
     {
+        timer += Time.deltaTime;
         GameObject bomb = Instantiate(grenadePrefab, transform.position, transform.rotation);
         Rigidbody rb = bomb.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);

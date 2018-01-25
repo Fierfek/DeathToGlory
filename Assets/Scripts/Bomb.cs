@@ -7,6 +7,8 @@ public class Bomb : MonoBehaviour {
     public float delay = 3f;
     public float blastRadius = 5f;
     public float explosionForce = 4f;
+    public float explosionDamage = 5f;
+    
 
     public GameObject explosionEffects;
     float countdown;
@@ -33,14 +35,18 @@ public class Bomb : MonoBehaviour {
 
         foreach (Collider nearbyObject in colliders)
         {
+            nearbyObject.GetComponent<Health>().TakeDamage(explosionDamage);
             Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
             if(rb != null)
             {
                 rb.AddExplosionForce(explosionForce, transform.position, blastRadius);
+
             }
         }
 
         hasExploded = true;
         Destroy(gameObject);
     }
+
+
 }
