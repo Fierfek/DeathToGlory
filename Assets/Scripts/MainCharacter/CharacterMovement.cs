@@ -8,8 +8,10 @@
 
 public class CharacterMovement : MonoBehaviour {
 
+	public float moveSpeed = 5;
+	public float sprintSpeed = 10;
 	public Vector3 moveDirection;
-	public float jumpSpeed;
+	public float jumpSpeed = 1;
 	private float velocity, acceleration;
 	public float gravity = 8f;
 
@@ -30,6 +32,7 @@ public class CharacterMovement : MonoBehaviour {
 	public float rollTime = .5f, rollStart = 0, rollSpeed = 10f;
 	private float rollPause;
 	private Vector3 rollDirection;
+	private Vector3 temp;
 
 
 	private void Start() {
@@ -38,6 +41,7 @@ public class CharacterMovement : MonoBehaviour {
 		animator = GetComponent<Animator>();
 
 		jump = sprint = roll = hook = grav = rolling = false;
+		temp = new Vector3();
 	}
 
 	// Update is called once per frame
@@ -58,36 +62,54 @@ public class CharacterMovement : MonoBehaviour {
 			//set the movements direction
 			moveDirection = Input.GetAxis("Move Horizontal") * right + Input.GetAxis("Move Vertical") * forward;
 
-			if (Input.GetAxisRaw("Move Horizontal") != 0 || Input.GetAxisRaw("Move Vertical") != 0) {
-				if (!hook) {
-					cameraRotation = cameraAnchor.transform.rotation;
-					RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
-					cameraAnchor.transform.rotation = cameraRotation;
+			velocity = moveDirection.magnitude;
+			animator.SetFloat("speed", velocity);
+
+			if (roll) {
+				rolling = true;
+				rollDirection = moveDirection;
+			}
+
+			if (jump) {
+				moveDirection.y += jumpSpeed;
+			}
+
+			if (sprint) {
+				temp.Set(moveDirection.x * sprintSpeed, moveDirection.y * moveSpeed, moveDirection.z * sprintSpeed);
+			} else {
+				temp.Set(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed, moveDirection.z * moveSpeed);
+			}
+
+			moveDirection = temp;
+
+			if (rolling) {
+				if (Time.time <= rollStart + rollTime) {
+					moveDirection = Vector3.zero;
+					moveDirection = rollDirection * rollSpeed;
+				} else {
+					rolling = false;
 				}
 			}
+		}
 
-			velocity = moveDirection.magnitude;
-
-			moveDirection.Set(0, 0, 0);
-
-			if(jump) {
-				//moveDirection.y += jumpSpeed;
+		if (Input.GetAxisRaw("Move Horizontal") != 0 || Input.GetAxisRaw("Move Vertical") != 0) {
+			if (!hook) {
+				cameraRotation = cameraAnchor.transform.rotation;
+				RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
+				cameraAnchor.transform.rotation = cameraRotation;
 			}
+		}
 
-			//moveDirection.y -= gravity;
-
-			animator.SetFloat("speed", velocity);
+		if (!grav) {
+			moveDirection.y -= gravity * Time.deltaTime;
 		}
 
 		animator.SetBool("jump", jump);
 		animator.SetBool("grounded", cc.isGrounded);
 
-		AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
-		if(info.IsName("Falling")) {
-			cc.Move(Vector3.down * gravity * Time.deltaTime);
-		}
-
 		resetFlags();
+
+		cc.Move(moveDirection * Time.deltaTime);
 	}
 
 	public void gravityOff() {

@@ -81,7 +81,7 @@ public class MainCharacter : MonoBehaviour {
 
 		if (hook.isActiveAndEnabled ) {
 			if(!hook.Throwing() && !hook.Done() && !cc.isGrounded) {
-				cm.gravityOff();
+				//cm.gravityOff();
 			}
 		}
 
