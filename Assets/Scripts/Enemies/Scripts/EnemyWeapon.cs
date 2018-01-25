@@ -5,7 +5,10 @@ using UnityEngine;
 //checks for collision of main character and this object
 public class EnemyWeapon : MonoBehaviour {
 
-
+    void OnCollisionEnter(Collision collision)
+    {
+        transform.root.gameObject.SendMessage("OnCollisionEnter", collision);
+    }
 
 
 }

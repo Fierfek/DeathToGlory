@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Grunt : Enemy {
+public class Draugr : Enemy {
 
 
     float timer;
@@ -13,8 +13,8 @@ public class Grunt : Enemy {
 		movementSpeed = 3.5f;
         damageAmount = 1;
         aggroRange = 10;
-        attackRange = 1.5f;
-        name = "Grunt";
+        attackRange = agent.stoppingDistance;
+        name = "Draugr";
 
         anim = GetComponent<Animator>();
 		agent.speed = movementSpeed;
@@ -29,27 +29,28 @@ public class Grunt : Enemy {
         if (health.GetHealth() <= 0)
         {
             isAttacking = false;
-            anim.SetTrigger("gruntDeath");
- 
+            //die
+
         }
         //if enemy is in attack animation is won't move
         else if (checkAgro())
         {
             if (getDistToPlayer() <= attackRange)
             {
-                
-                    anim.SetTrigger("gruntHit");
-                isAttacking = true;
-            } else
+                anim.SetTrigger("attack");
+                isAttacking = true;              
+            }
+            else if(getDistToPlayer() > attackRange)
             {
                 isAttacking = false;
-                anim.SetTrigger("gruntRun");
-                
+                anim.SetTrigger("running");
             }
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Run"))
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Running"))
                 agent.SetDestination(target.position);  //update agent destination to target location
-                
+
         }
+        else
+            anim.SetTrigger("idle");
 		
 	}
 
@@ -80,7 +81,7 @@ public class Grunt : Enemy {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.transform == target)
+        if (collision.gameObject.Equals(target.gameObject))
             playerHealth.TakeDamage(damageAmount);
     }
 
