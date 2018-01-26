@@ -11,9 +11,9 @@ public class CharacterMovement : MonoBehaviour {
 	public float moveSpeed = 5;
 	public float sprintSpeed = 10;
 	public Vector3 moveDirection;
-	public float jumpSpeed = 1;
+	public float jumpSpeed = 5;
 	private float velocity, acceleration;
-	public float gravity = 8f;
+	public float gravity = 10;
 
 	private bool jump, sprint, roll, hook, grav, rolling;
 
@@ -34,6 +34,8 @@ public class CharacterMovement : MonoBehaviour {
 	private Vector3 rollDirection;
 	private Vector3 temp;
 
+	private Vector3 bottom;
+
 
 	private void Start() {
 		cc = GetComponent<CharacterController>();
@@ -52,7 +54,7 @@ public class CharacterMovement : MonoBehaviour {
 			mrx.enabled = false;
 		}
 
-		if (cc.isGrounded) {
+		if (isGrounded()) {
 
 			//Find the foreward relative to the camera
 			forward = cameraAnchor.transform.forward.normalized;
@@ -75,9 +77,9 @@ public class CharacterMovement : MonoBehaviour {
 			}
 
 			if (sprint) {
-				temp.Set(moveDirection.x * sprintSpeed, moveDirection.y * moveSpeed, moveDirection.z * sprintSpeed);
+				temp.Set(moveDirection.x * sprintSpeed, moveDirection.y, moveDirection.z * sprintSpeed);
 			} else {
-				temp.Set(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed, moveDirection.z * moveSpeed);
+				temp.Set(moveDirection.x * moveSpeed, moveDirection.y, moveDirection.z * moveSpeed);
 			}
 
 			moveDirection = temp;
@@ -105,7 +107,7 @@ public class CharacterMovement : MonoBehaviour {
 		}
 
 		animator.SetBool("jump", jump);
-		animator.SetBool("grounded", cc.isGrounded);
+		animator.SetBool("grounded", isGrounded());
 
 		resetFlags();
 
@@ -143,5 +145,23 @@ public class CharacterMovement : MonoBehaviour {
 	private void RotateTo(float angle) {
 		currentRotation = transform.eulerAngles.y;
 		transform.eulerAngles = new Vector3(0, Mathf.LerpAngle(currentRotation, angle, turnRate), 0);
+	}
+	
+	public bool isGrounded() {
+		if(cc.isGrounded) {
+			return true;
+		}
+
+		bottom = cc.transform.position + cc.center + Vector3.down * (cc.height / 2);
+
+		RaycastHit h;
+		if (Physics.Raycast(bottom, Vector3.down, out h, 0.175f)) {
+
+			Debug.DrawRay(bottom, Vector3.down * h.distance, Color.black); //Debug only
+			cc.Move(Vector3.down * h.distance);
+			return true;
+		}
+
+		return false;
 	}
 }

@@ -13,7 +13,7 @@ public class QuickDraugr : Enemy {
         movementSpeed = 4.5f;
         damageAmount = 1;
         aggroRange = 20;
-        attackRange = 3;
+        attackRange = 1.5f;
         name = "QuickDraugr";
 
         anim = GetComponent<Animator>();
@@ -32,7 +32,6 @@ public class QuickDraugr : Enemy {
         {
             isAttacking = false;
             //die
-
         }
         //if enemy is in attack animation is won't move
         else if (checkAgro())
@@ -58,14 +57,6 @@ public class QuickDraugr : Enemy {
 
     }
 
-    //true is in aggro range
-    private bool checkAgro()
-    {
-        return aggroRange > getDistToPlayer();
-    }
-
-
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.Equals(target.gameObject))
@@ -74,7 +65,8 @@ public class QuickDraugr : Enemy {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.transform == target)
-            playerHealth.TakeDamage(damageAmount);
+		if (anim.GetCurrentAnimatorStateInfo(0).IsName("attack"))
+			if (other.gameObject.transform == target)
+				playerHealth.TakeDamage(damageAmount);
     }
 }

@@ -52,15 +52,7 @@ public class Draugr : Enemy {
         else
             anim.SetTrigger("idle");
 		
-	}
-
-    //true is in aggro range
-    private bool checkAgro()
-    {
-        return aggroRange > getDistToPlayer(); 
-    }
-
-    
+	}    
 
     //temporary attack "animation" for testing
     private void attack()
@@ -90,5 +82,4 @@ public class Draugr : Enemy {
         if (other.gameObject.transform == target)
             playerHealth.TakeDamage(damageAmount);
     }
-
 }

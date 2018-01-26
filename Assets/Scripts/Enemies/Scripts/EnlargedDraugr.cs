@@ -56,13 +56,6 @@ public class EnlargedDraugr : Enemy {
 
     }
 
-    //true is in aggro range
-    private bool checkAgro()
-    {
-        return aggroRange > getDistToPlayer();
-    }
-
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.Equals(target.gameObject))

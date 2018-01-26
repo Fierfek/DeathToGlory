@@ -99,6 +99,4 @@ public class MainCharacter : MonoBehaviour {
 			hook.Stop();
 		}
 	}
-
-	
 }
