@@ -191,19 +191,218 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: 
+    rigImportErrors: "Invalid copied Avatar Rig Configuration:\n\tNo human bone found.
+      Ensure both rig type match\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Default Take
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 249
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/arm_left_ik
+        weight: 1
+      - path: Armature/arm_right_ik
+        weight: 1
+      - path: Armature/elbow_left_pole
+        weight: 1
+      - path: Armature/elbow_right_pole
+        weight: 1
+      - path: Armature/foot_left_ik
+        weight: 1
+      - path: Armature/foot_right_ik
+        weight: 1
+      - path: Armature/Hip_Left_001
+        weight: 1
+      - path: Armature/Hip_Left_001/Hip_Left
+        weight: 1
+      - path: Armature/Hip_Left_001/Hip_Left/Upper_Leg_Left
+        weight: 1
+      - path: Armature/Hip_Left_001/Hip_Left/Upper_Leg_Left/Lower_Leg_Left
+        weight: 1
+      - path: Armature/Hip_Left_001/Hip_Left/Upper_Leg_Left/Lower_Leg_Left/Heel_Left
+        weight: 1
+      - path: Armature/Hip_Left_001/Hip_Left/Upper_Leg_Left/Lower_Leg_Left/Heel_Left/Foot_Left
+        weight: 1
+      - path: Armature/Hip_Left_001/Hip_Left/Upper_Leg_Left/Lower_Leg_Left/Heel_Left/Foot_Left/Toes_Left
+        weight: 1
+      - path: Armature/Hip_Left_001/Hip_Right
+        weight: 1
+      - path: Armature/Hip_Left_001/Hip_Right/Upper_Leg_Right
+        weight: 1
+      - path: Armature/Hip_Left_001/Hip_Right/Upper_Leg_Right/Lower_Leg_Right
+        weight: 1
+      - path: Armature/Hip_Left_001/Hip_Right/Upper_Leg_Right/Lower_Leg_Right/Heel_Right
+        weight: 1
+      - path: Armature/Hip_Left_001/Hip_Right/Upper_Leg_Right/Lower_Leg_Right/Heel_Right/Foot_Right
+        weight: 1
+      - path: Armature/Hip_Left_001/Hip_Right/Upper_Leg_Right/Lower_Leg_Right/Heel_Right/Foot_Right/Toes_Right
+        weight: 1
+      - path: Armature/knee_left_pole
+        weight: 1
+      - path: Armature/knee_right_pole
+        weight: 1
+      - path: Armature/Lower_Spine_Control
+        weight: 1
+      - path: Armature/Spine_D_002
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Neck
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Neck/Head
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Index_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Index_Left/Index_A_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Index_Left/Index_A_Left/Index_B_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Index_Left/Index_A_Left/Index_B_Left/Index_C_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Middle_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Middle_Left/Middle_A_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Middle_Left/Middle_A_Left/Middle_B_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Middle_Left/Middle_A_Left/Middle_B_Left/Middle_C_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Pinky_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Pinky_Left/Pinky_A_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Pinky_Left/Pinky_A_Left/Pinky_B_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Pinky_Left/Pinky_A_Left/Pinky_B_Left/Pinky_C_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Ring_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Ring_Left/Ring_A_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Ring_Left/Ring_A_Left/Ring_B_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Ring_Left/Ring_A_Left/Ring_B_Left/Ring_C_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Thumb_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Thumb_Left/Thumb_A_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Left/Upper_Arm_Left/Lower_Arm_Left/Wrist_Thumb_Left/Thumb_A_Left/Thumb_B_Left
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Index_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Index_Right/Index_A_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Index_Right/Index_A_Right/Index_B_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Index_Right/Index_A_Right/Index_B_Right/Index_C_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Middle_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Middle_Right/Middle_A_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Middle_Right/Middle_A_Right/Middle_B_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Middle_Right/Middle_A_Right/Middle_B_Right/Middle_C_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Pinky_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Pinky_Right/Pinky_A_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Pinky_Right/Pinky_A_Right/Pinky_B_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Pinky_Right/Pinky_A_Right/Pinky_B_Right/Pinky_C_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Ring_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Ring_Right/Ring_A_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Ring_Right/Ring_A_Right/Ring_B_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Ring_Right/Ring_A_Right/Ring_B_Right/Ring_C_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Thumb_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Thumb_Right/Thumb_A_Right
+        weight: 1
+      - path: Armature/Spine_D_002/Spine_D/Spine_D_001/Spine_C/Spine_C_001/Spine_B/Spine_B_001/Spine_A/Shoulder_Right/Upper_Arm_Right/Lower_Arm_Right/Wrist_Thumb_Right/Thumb_A_Right/Thumb_B_Right
+        weight: 1
+      - path: Armature/Upper_Spine_Control
+        weight: 1
+      - path: ChainArm
+        weight: 1
+      - path: ChainArm/front
+        weight: 1
+      - path: ChainArm/middle
+        weight: 1
+      - path: ChainArm/rear
+        weight: 1
+      - path: Rear_Link
+        weight: 1
+      - path: woman
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -227,7 +426,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
   importAnimation: 1
-  copyAvatar: 0
+  copyAvatar: 1
   humanDescription:
     serializedVersion: 2
     human: []
@@ -242,7 +441,7 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
