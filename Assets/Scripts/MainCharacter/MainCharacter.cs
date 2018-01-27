@@ -3,15 +3,16 @@
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(CharacterMovement))]
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Animator))]
 
 public class MainCharacter : MonoBehaviour {
 
 	Health health;
 	CharacterMovement cm;
 	CharacterController cc;
+	Animator animator;
 	
 	public static bool updateStats;
-	public Attack attack;
 	public Shotgun shotgun;
 	public PlayerCamera pCamera;
 
@@ -29,6 +30,7 @@ public class MainCharacter : MonoBehaviour {
 		health = GetComponent<Health>();
 		cm = GetComponent<CharacterMovement>();
 		cc = GetComponent<CharacterController>();
+		animator = GetComponent<Animator>();
 
 		health.SetHealth(100);		
 		mask = ~mask;
@@ -79,7 +81,7 @@ public class MainCharacter : MonoBehaviour {
 
 		if (hook.isActiveAndEnabled ) {
 			if(!hook.Throwing() && !hook.Done() && !cc.isGrounded) {
-				cm.gravityOff();
+				//cm.gravityOff();
 			}
 		}
 
@@ -88,7 +90,7 @@ public class MainCharacter : MonoBehaviour {
 	}
 
 	public void BasicAttack() {
-		attack.DoAttack(.5f);
+
 	}
 
 	//This checks if you collide with something before getting to the point you hooked;
@@ -97,6 +99,4 @@ public class MainCharacter : MonoBehaviour {
 			hook.Stop();
 		}
 	}
-
-	
 }

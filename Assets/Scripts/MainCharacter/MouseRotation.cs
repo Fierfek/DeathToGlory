@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MouseRotation : MonoBehaviour {
 
-	public float rotationSpeedX, rotationSpeedY;
-	public float yMin = -20f, yMax = 80f;
+	public float rotationSpeedX = 3f, rotationSpeedY = 3f;
+	public float yMin = -80f, yMax = 80f;
 
 	private Quaternion rotation;
 	private float x, y;
