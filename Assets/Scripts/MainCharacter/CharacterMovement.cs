@@ -35,6 +35,7 @@ public class CharacterMovement : MonoBehaviour {
 	private Vector3 temp;
 
 	private Vector3 bottom;
+	bool jumping = false;
 
 
 	private void Start() {
@@ -55,7 +56,6 @@ public class CharacterMovement : MonoBehaviour {
 		}
 
 		if (isGrounded()) {
-
 			//Find the foreward relative to the camera
 			forward = cameraAnchor.transform.forward.normalized;
 			forward.y = 0;
@@ -149,17 +149,27 @@ public class CharacterMovement : MonoBehaviour {
 	
 	public bool isGrounded() {
 		if(cc.isGrounded) {
+
+			if (jumping)
+				jumping = false;
+
 			return true;
 		}
 
-		bottom = cc.transform.position + cc.center + Vector3.down * (cc.height / 2);
+		if(jump) {
+			jumping = true;
+		}
 
-		RaycastHit h;
-		if (Physics.Raycast(bottom, Vector3.down, out h, 0.175f)) {
+		if(!jumping) {
+			bottom = cc.transform.position + cc.center + Vector3.down * (cc.height / 2);
 
-			Debug.DrawRay(bottom, Vector3.down * h.distance, Color.black); //Debug only
-			cc.Move(Vector3.down * h.distance);
-			return true;
+			RaycastHit h;
+			if (Physics.Raycast(bottom, Vector3.down, out h, .3f)) {
+
+				Debug.DrawRay(bottom, Vector3.down * h.distance, Color.black); //Debug only
+				cc.Move(Vector3.down * h.distance);
+				return true;
+			}
 		}
 
 		return false;
