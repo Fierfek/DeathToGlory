@@ -27,9 +27,7 @@ public class CharacterMovement : MonoBehaviour {
 	private float radToDeg = 180 / Mathf.PI;
 	private Quaternion cameraRotation;
 	private Vector3 forward, right;
-
 	private float currentRotation;
-	private Vector3 temp;
 
 	[Header("Roll")]
 	public float rollTime = .5f;
@@ -148,7 +146,7 @@ public class CharacterMovement : MonoBehaviour {
 
 	private void RotateTo(float angle) {
 		currentRotation = transform.eulerAngles.y;
-		transform.eulerAngles = new Vector3(0, Mathf.LerpAngle(currentRotation, angle, turnRate), 0);
+		transform.eulerAngles = new Vector3(0, Mathf.LerpAngle(currentRotation, angle, .75f), 0);
 	}
 	
 	public bool isGrounded() {
