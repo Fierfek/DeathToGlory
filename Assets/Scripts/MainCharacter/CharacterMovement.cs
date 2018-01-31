@@ -4,21 +4,23 @@
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(MouseRotationX))]
+[RequireComponent(typeof(Animator))]
 
 public class CharacterMovement : MonoBehaviour {
 
 	[Header("Movement")]
 	public float moveSpeed = 5;
 	public float sprintSpeed = 10;
-	public float jumpSpeed = 1;
-	public float gravity = 15;
-	public float turnRate = .75f;
+	public Vector3 moveDirection;
+	public float jumpSpeed = 5;
+	private float velocity, acceleration;
+	public float gravity = 10;
 
 	private bool jump, sprint, roll, hook, grav, rolling;
 
 	CharacterController cc;
 	MouseRotationX mrx;
-	private Vector3 moveDirection;
+	Animator animator;
 
 	[Header("Camera")]
 	public GameObject cameraAnchor;
@@ -34,13 +36,18 @@ public class CharacterMovement : MonoBehaviour {
 	public float rollSpeed = 5;
 	private float rollPause, rollStart;
 	private Vector3 rollDirection;
+	private Vector3 temp;
+
+	private Vector3 bottom;
+	bool jumping = false;
 
 
 	private void Start() {
 		cc = GetComponent<CharacterController>();
 		mrx = GetComponent<MouseRotationX>();
-		jump = sprint = roll = hook = grav = rolling = false;
+		animator = GetComponent<Animator>();
 
+		jump = sprint = roll = hook = grav = rolling = false;
 		temp = new Vector3();
 	}
 
@@ -52,8 +59,7 @@ public class CharacterMovement : MonoBehaviour {
 			mrx.enabled = false;
 		}
 
-		if (cc.isGrounded) {
-
+		if (isGrounded()) {
 			//Find the foreward relative to the camera
 			forward = cameraAnchor.transform.forward.normalized;
 			forward.y = 0;
@@ -61,6 +67,9 @@ public class CharacterMovement : MonoBehaviour {
 
 			//set the movements direction
 			moveDirection = Input.GetAxis("Move Horizontal") * right + Input.GetAxis("Move Vertical") * forward;
+
+			velocity = moveDirection.magnitude;
+			animator.SetFloat("speed", velocity);
 
 			if (roll) {
 				rolling = true;
@@ -72,15 +81,15 @@ public class CharacterMovement : MonoBehaviour {
 			}
 
 			if (sprint) {
-				temp.Set(moveDirection.x * sprintSpeed, moveDirection.y * moveSpeed, moveDirection.z * sprintSpeed);
+				temp.Set(moveDirection.x * sprintSpeed, moveDirection.y, moveDirection.z * sprintSpeed);
 			} else {
-				temp.Set(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed, moveDirection.z * moveSpeed);
+				temp.Set(moveDirection.x * moveSpeed, moveDirection.y, moveDirection.z * moveSpeed);
 			}
 
 			moveDirection = temp;
 
 			if (rolling) {
-				if(Time.time <= rollStart + rollTime) {
+				if (Time.time <= rollStart + rollTime) {
 					moveDirection = Vector3.zero;
 					moveDirection = rollDirection * rollSpeed;
 				} else {
@@ -97,10 +106,12 @@ public class CharacterMovement : MonoBehaviour {
 			}
 		}
 
-
 		if (!grav) {
 			moveDirection.y -= gravity * Time.deltaTime;
 		}
+
+		animator.SetBool("jump", jump);
+		animator.SetBool("grounded", isGrounded());
 
 		resetFlags();
 
@@ -138,5 +149,33 @@ public class CharacterMovement : MonoBehaviour {
 	private void RotateTo(float angle) {
 		currentRotation = transform.eulerAngles.y;
 		transform.eulerAngles = new Vector3(0, Mathf.LerpAngle(currentRotation, angle, turnRate), 0);
+	}
+	
+	public bool isGrounded() {
+		if(cc.isGrounded) {
+
+			if (jumping)
+				jumping = false;
+
+			return true;
+		}
+
+		if(jump) {
+			jumping = true;
+		}
+
+		if(!jumping) {
+			bottom = cc.transform.position + cc.center + Vector3.down * (cc.height / 2);
+
+			RaycastHit h;
+			if (Physics.Raycast(bottom, Vector3.down, out h, .3f)) {
+
+				Debug.DrawRay(bottom, Vector3.down * h.distance, Color.black); //Debug only
+				cc.Move(Vector3.down * h.distance);
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
