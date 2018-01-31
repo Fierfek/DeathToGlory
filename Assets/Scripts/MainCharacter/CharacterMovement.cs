@@ -8,6 +8,7 @@
 
 public class CharacterMovement : MonoBehaviour {
 
+	[Header("Movement")]
 	public float moveSpeed = 5;
 	public float sprintSpeed = 10;
 	public Vector3 moveDirection;
@@ -21,16 +22,19 @@ public class CharacterMovement : MonoBehaviour {
 	MouseRotationX mrx;
 	Animator animator;
 
+	[Header("Camera")]
 	public GameObject cameraAnchor;
 	private float radToDeg = 180 / Mathf.PI;
 	private Quaternion cameraRotation;
 	private Vector3 forward, right;
 
 	private float currentRotation;
-	public float turnRate = .75f;
+	private Vector3 temp;
 
-	public float rollTime = .5f, rollStart = 0, rollSpeed = 10f;
-	private float rollPause;
+	[Header("Roll")]
+	public float rollTime = .5f;
+	public float rollSpeed = 5;
+	private float rollPause, rollStart;
 	private Vector3 rollDirection;
 	private Vector3 temp;
 
