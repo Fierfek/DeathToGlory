@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(SphereCollider))]
 public class Bomb : MonoBehaviour {
 
     public float delay = 3f;
     public float blastRadius = 5f;
     public float explosionForce = 4f;
     public float explosionDamage = 5f;
+    public bool explodeOnImpact = false;
+
     
 
-    public GameObject explosionEffects;
+    //public GameObject explosionEffects;
     float countdown;
     bool hasExploded = false;
 	// Use this for initialization
@@ -26,10 +31,33 @@ public class Bomb : MonoBehaviour {
             Explode(); 
         }
 	}
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //if Bombs hit player, boom.
+        if(other.tag == "Player")
+        {
+            Explode();
+        }
+
+        //when explodeOnImpact is on, bombs go boom on environment surface.
+        if(other.tag == "Environment" && explodeOnImpact)
+        {
+            Explode();
+        }
+
+        //If bombs are hit with shockwave, explode.
+        if(other.tag == "Shockwave")
+        {
+            Explode();
+        }
+
+
+    }
+
     void Explode()
     {
-        Instantiate(explosionEffects, transform.position, transform.rotation);
+        //Instantiate(explosionEffects, transform.position, transform.rotation);
 
         Collider [] colliders = Physics.OverlapSphere(transform.position, blastRadius);
 
