@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Abomination2 : Enemy {
+public class Abomination : Enemy {
 
+    public float throwForce = 20f;
     public float timer;
-    public float fireRate;
-
     Animator anim;
-    public GameObject bulletPrefab;
-    public GameObject shockwave;
-    public Transform bulletSpawn;
-    // Use this for initialization
-    void Start()
-    {
+    public GameObject grenadePrefab;
+	// Use this for initialization
+	void Start () {
         movementSpeed = 2.0f;
         damageAmount = 3;
         aggroRange = 8;
@@ -24,10 +20,9 @@ public class Abomination2 : Enemy {
         agent.speed = movementSpeed;
         health.SetHealth(20f);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
+	
+	// Update is called once per frame
+	void Update () {
         //Check for death
         if (health.GetHealth() <= 0)
         {
@@ -41,10 +36,8 @@ public class Abomination2 : Enemy {
             if (getDistToPlayer() <= attackRange)
             {
 
-                anim.SetTrigger("FireGun");
+                anim.SetTrigger("AbomThrow");
                 isAttacking = true;
-                //Attacks GattlingGun/Melee
-                //Animation with attack
             }
             else
             {
@@ -63,30 +56,17 @@ public class Abomination2 : Enemy {
         return aggroRange > getDistToPlayer();
     }
 
-    
-    void GattlingGun()
+    void FireMaul()
     {
-        //Rotation and firing. Should have a rate of fire somewhere.
-    }
-    void Melee()
-    {
-        //Creates meleebox infront of Abomination
+        timer += Time.deltaTime;
+        
     }
 
-    //Using this to work out how to do bullets.
-    //https://unity3d.com/learn/tutorials/temas/multiplayer-networking/shooting-single-player
-    void Fire()
+    void ThrowBomb()
     {
-        // Create the Bullet from the Bullet Prefab
-        var bullet = (GameObject)Instantiate(
-            bulletPrefab,
-            bulletSpawn.position,
-            bulletSpawn.rotation);
-
-        // Add velocity to the bullet
-        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
-
-        // Destroy the bullet after 2 seconds
-        Destroy(bullet, 2.0f);
+        timer += Time.deltaTime;
+        GameObject bomb = Instantiate(grenadePrefab, transform.position, transform.rotation);
+        Rigidbody rb = bomb.GetComponent<Rigidbody>();
+        rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
     }
 }
