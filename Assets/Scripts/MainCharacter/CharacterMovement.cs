@@ -3,8 +3,6 @@
 //Handles the control input
 
 [RequireComponent(typeof(CharacterController))]
-[RequireComponent(typeof(MouseRotationX))]
-[RequireComponent(typeof(Animator))]
 
 public class CharacterMovement : MonoBehaviour {
 
@@ -16,10 +14,9 @@ public class CharacterMovement : MonoBehaviour {
 	private float velocity, acceleration;
 	public float gravity = 10;
 
-	private bool jump, sprint, roll, hook, grav, rolling;
+	private bool jump, sprint, roll, grav, rolling, hook;
 
 	CharacterController cc;
-	MouseRotationX mrx;
 	Animator animator;
 
 	[Header("Camera")]
@@ -37,75 +34,87 @@ public class CharacterMovement : MonoBehaviour {
 	private Vector3 temp;
 
 	private Vector3 bottom;
-	bool jumping = false;
+	bool jumping = false, canJump = true;
+	bool slidding;
+	Vector3 normal;
 
 
 	private void Start() {
 		cc = GetComponent<CharacterController>();
-		mrx = GetComponent<MouseRotationX>();
-		animator = GetComponent<Animator>();
+		animator = GetComponentInChildren<Animator>();
 
-		jump = sprint = roll = hook = grav = rolling = false;
+		jump = sprint = roll = grav = rolling = hook = false;
 		temp = new Vector3();
 	}
 
 	// Update is called once per frame
 	void Update() {
-		if (hook) {
-			mrx.enabled = true;
-		} else {
-			mrx.enabled = false;
-		}
+		if (!slidding) {
+			if (isGrounded()) {
+				//Find the foreward relative to the camera
+				forward = cameraAnchor.transform.forward.normalized;
+				forward.y = 0;
+				right = new Vector3(forward.z, 0, -forward.x);
 
-		if (isGrounded()) {
-			//Find the foreward relative to the camera
-			forward = cameraAnchor.transform.forward.normalized;
-			forward.y = 0;
-			right = new Vector3(forward.z, 0, -forward.x);
+				//set the movements direction
+				moveDirection = Input.GetAxis("Move Horizontal") * right + Input.GetAxis("Move Vertical") * forward;
+				velocity = moveDirection.magnitude;
+				animator.SetFloat("speed", velocity);
 
-			//set the movements direction
-			moveDirection = Input.GetAxis("Move Horizontal") * right + Input.GetAxis("Move Vertical") * forward;
+				moveDirection = moveDirection.normalized * velocity;
 
-			velocity = moveDirection.magnitude;
-			animator.SetFloat("speed", velocity);
+				if (roll) {
+					rolling = true;
+					rollDirection = moveDirection;
+				}
 
-			if (roll) {
-				rolling = true;
-				rollDirection = moveDirection;
-			}
+				if (jump) {
+					moveDirection.y += jumpSpeed;
+				}
 
-			if (jump) {
-				moveDirection.y += jumpSpeed;
-			}
-
-			if (sprint) {
-				temp.Set(moveDirection.x * sprintSpeed, moveDirection.y, moveDirection.z * sprintSpeed);
-			} else {
-				temp.Set(moveDirection.x * moveSpeed, moveDirection.y, moveDirection.z * moveSpeed);
-			}
-
-			moveDirection = temp;
-
-			if (rolling) {
-				if (Time.time <= rollStart + rollTime) {
-					moveDirection = Vector3.zero;
-					moveDirection = rollDirection * rollSpeed;
+				if (sprint) {
+					temp.Set(moveDirection.x * sprintSpeed, moveDirection.y, moveDirection.z * sprintSpeed);
 				} else {
-					rolling = false;
+					temp.Set(moveDirection.x * moveSpeed, moveDirection.y, moveDirection.z * moveSpeed);
+				}
+
+				moveDirection = temp;
+
+				if (rolling) {
+					if (Time.time <= rollStart + rollTime) {
+						moveDirection = Vector3.zero;
+						moveDirection = rollDirection * rollSpeed;
+					} else {
+						rolling = false;
+					}
 				}
 			}
-		}
 
-		if (Input.GetAxisRaw("Move Horizontal") != 0 || Input.GetAxisRaw("Move Vertical") != 0) {
-			if (!hook) {
+			if(!hook) {
+				if (Input.GetAxisRaw("Move Horizontal") != 0 || Input.GetAxisRaw("Move Vertical") != 0) {
+					cameraRotation = cameraAnchor.transform.rotation;
+					RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
+					cameraAnchor.transform.rotation = cameraRotation;
+				}
+			} else {
 				cameraRotation = cameraAnchor.transform.rotation;
-				RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
+				RotateTo(Mathf.Atan2(forward.x, forward.z) * radToDeg);
 				cameraAnchor.transform.rotation = cameraRotation;
 			}
-		}
 
-		if (!grav) {
-			moveDirection.y -= gravity * Time.deltaTime;
+			if (!grav) {
+				moveDirection.y -= gravity * Time.deltaTime;
+			}
+
+		} else {
+			moveDirection = new Vector3(normal.x, normal.y * -1, normal.z);
+			velocity = moveDirection.magnitude;
+			Vector3.OrthoNormalize(ref normal, ref moveDirection);
+			moveDirection *= moveSpeed;
+
+			if(jump) {
+				moveDirection = normal * (jumpSpeed/2);
+			}
 		}
 
 		animator.SetBool("jump", jump);
@@ -120,8 +129,17 @@ public class CharacterMovement : MonoBehaviour {
 		grav = true;
 	}
 
+	public void slide(Vector3 normal) {
+		slidding = true;
+		this.normal = normal;
+	}
+
 	public void Jump() {
 		jump = true;
+	}
+
+	public void Hook() {
+		hook = true;
 	}
 
 	public void Sprint() {
@@ -136,12 +154,9 @@ public class CharacterMovement : MonoBehaviour {
 		}
 	}
 
-	public void HookShot() {
-		hook = true;
-	}
-
 	private void resetFlags() {
-		jump = sprint = roll = hook = grav = false;
+		jump = sprint = roll = grav = hook = false;
+		slidding = false;
 	}
 
 	private void RotateTo(float angle) {
@@ -162,7 +177,7 @@ public class CharacterMovement : MonoBehaviour {
 			jumping = true;
 		}
 
-		if(!jumping) {
+		if(!jumping && !grav) {
 			bottom = cc.transform.position + cc.center + Vector3.down * (cc.height / 2);
 
 			RaycastHit h;

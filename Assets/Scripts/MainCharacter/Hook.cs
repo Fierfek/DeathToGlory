@@ -7,69 +7,105 @@ using UnityEngine;
 
 public class Hook : MonoBehaviour {
 
-	private float speed = 10f, distance;
-	private bool throwing, done;
-	private Vector3 start, end;
+	public float speed = 10f, distance = 15f;
+	private bool throwing, retract, move, done;
+	private Vector3 start, direction, end;
+
 	public GameObject player;
+	public LineRenderer line;
 
 	CharacterController cc;
-	public GameObject chainSection;
-	GameObject[] chains;
-	int i = 0, numChains = 50;
 	Vector3 offset;
 
 	private Vector3 storagePoint;
-	
+	private Vector3[] positions;
+	private int i;
 
 	// Use this for initialization
 	void Start () {
-		chains = new GameObject[numChains];
 
 		cc = player.GetComponent<CharacterController>();
 		gameObject.GetComponent<SphereCollider>().isTrigger = true;
 
 		storagePoint = new Vector3(100, 100, 100);
 		transform.position = storagePoint;
+		positions = new Vector3[100];
+		i = 0;
 
 		offset = new Vector3(0,  -0.05f, 0);
+		gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (throwing) {
-			if (Vector3.Distance(end, transform.position) <= 1f || transform.position == end) {
+			if (Vector3.Distance(player.transform.position, transform.position) >= distance) {
 				throwing = false;
-				i = 0;
+				retract = true;
 			} else {
-				transform.position = Vector3.MoveTowards(transform.position, end, speed * Time.deltaTime);
-			}
-		} else {
-			if (!done) {
-				cc.Move(Vector3.MoveTowards(player.transform.position, end, speed * Time.deltaTime) - player.transform.position);
-
-				//For the specific case that the main character class doesn't catch the collision. .3f is so it detects it after main character would.
-				if (Vector3.Distance(cc.ClosestPointOnBounds(end), end) <= .3f) {
-					done = true;
+				transform.position += direction * speed * Time.deltaTime;
+				if (i < positions.Length) {
+					positions[i] = transform.position;
 				}
 			}
 		}
+
+		if(move) {
+			if(Vector3.Distance(cc.ClosestPointOnBounds(end), end) <= .3f) {
+				move = false;
+				done = true;
+			} else {
+				direction = transform.position - player.transform.position;
+				direction = direction.normalized;
+				cc.Move(direction * speed * Time.deltaTime);
+			}
+		}
+
+		if(retract) {
+			if (Vector3.Distance(transform.position, player.transform.position) < .3) {
+				retract = false;
+				done = true;
+			} else {
+				direction = transform.position - player.transform.position;
+				direction = direction.normalized;
+				transform.position -= direction * speed * 2 * Time.deltaTime;
+			}
+		}
+
+		if(done) {
+			reset();
+			gameObject.SetActive(false);
+		}
+
+		line.SetPosition(0, player.transform.position);
+		line.SetPosition(1, transform.position);
 	}
 
-	public void throwHook(Vector3 start, Vector3 end, float distance) {
-		this.distance = distance;
+	public void throwHook(Vector3 start, Vector3 direction) {
 		this.start = start;
-		this.end = end;
+		this.direction = direction;
 
-		transform.position = start;
+		transform.position = start;	
 
 		gameObject.SetActive(true);
 		throwing = true;
 		done = false;
-		
+		end = storagePoint;
+		line.gameObject.SetActive(true);
+		i = 0;
+	}
+
+	private void reset() {
+		transform.position = storagePoint;
+		line.gameObject.SetActive(false);
 	}
 
 	public bool Done() {
 		return done;
+	}
+
+	public bool Moving() {
+		return move;
 	}
 
 	public bool Throwing() {
@@ -80,11 +116,16 @@ public class Hook : MonoBehaviour {
 		done = true;
 	}
 
-	private void OnCollisionEnter(Collision collision) {
-		if (!collision.gameObject.tag.Equals("Player")) {
-			throwing = false;
-			if(collision.gameObject.tag.Equals("Enemy")) {
-				//Check weight module
+	private void OnTriggerEnter(Collider collider) {
+		if (!collider.gameObject.tag.Equals("Player")) {
+
+			if(collider.gameObject.tag.Equals("Hookable") || collider.gameObject.tag.Equals("Enemy")) {
+				end = transform.position;
+				throwing = false;
+				move = true;
+			} else {
+				throwing = false;
+				retract = true;
 			}
 		}
 	}
