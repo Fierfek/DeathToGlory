@@ -12,10 +12,10 @@ public class Bomb : MonoBehaviour {
     public float explosionForce = 4f;
     public float explosionDamage = 5f;
     public bool explodeOnImpact = false;
-
+    protected Health playerHealth;
     
 
-    //public GameObject explosionEffects;
+    public GameObject explosionEffects;
     float countdown;
     bool hasExploded = false;
 	// Use this for initialization
@@ -32,12 +32,13 @@ public class Bomb : MonoBehaviour {
         }
 	}
 
-    private void OnTriggerEnter(Collider other)
+ private void OnTriggerEnter(Collider other)
     {
         //if Bombs hit player, boom.
         if(other.tag == "Player")
         {
             Explode();
+            playerHealth.TakeDamage(explosionDamage);
         }
 
         //when explodeOnImpact is on, bombs go boom on environment surface.
@@ -57,20 +58,8 @@ public class Bomb : MonoBehaviour {
 
     void Explode()
     {
-        //Instantiate(explosionEffects, transform.position, transform.rotation);
+        Instantiate(explosionEffects, transform.position, transform.rotation);
 
-        Collider [] colliders = Physics.OverlapSphere(transform.position, blastRadius);
-
-        foreach (Collider nearbyObject in colliders)
-        {
-            nearbyObject.GetComponent<Health>().TakeDamage(explosionDamage);
-            Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
-            if(rb != null)
-            {
-                rb.AddExplosionForce(explosionForce, transform.position, blastRadius);
-
-            }
-        }
 
         hasExploded = true;
         Destroy(gameObject);

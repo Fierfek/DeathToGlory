@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class Abomination1 : Enemy {
 
-    public float throwForce = 20f;
-    public float timer;
+    public float throwForce = 10f;
+    public float throwRange = 10f;
+    
 
     Animator anim;
     public GameObject grenadePrefab;
-    public GameObject shockwave;
+    //public GameObject shockwave;
+
+    bool hasThrown = false;
 	// Use this for initialization
 	void Start () {
         movementSpeed = 2.0f;
         damageAmount = 3;
-        aggroRange = 8;
+        aggroRange = 8f;
         attackRange = 4f;
-        name = "Abomination";
+        name = "Abomination 1";
 
         anim = GetComponent<Animator>();
         agent.speed = movementSpeed;
         health.SetHealth(20f);
+        InvokeRepeating("ThrowBomb", 2.0f, 3.0f);
+
     }
 	
 	// Update is called once per frame
@@ -29,7 +34,7 @@ public class Abomination1 : Enemy {
         if (health.GetHealth() <= 0)
         {
             isAttacking = false;
-            anim.SetTrigger("gruntDeath");
+            //anim.SetTrigger("gruntDeath");
 
         }
         //if enemy is in attack animation is won't move
@@ -37,19 +42,28 @@ public class Abomination1 : Enemy {
         {
             if (getDistToPlayer() <= attackRange)
             {
-                
-                anim.SetTrigger("FireMaul");
+
+                //anim.SetTrigger("MaulSwing");
                 isAttacking = true;
-                //Attacks FireMaul/ThrowBomb
-                //Animation then initiate
+
             }
+            else if(getDistToPlayer() <= throwRange)
+            {
+                if (!hasThrown)
+                {
+                    //anim.SetTrigger("ThrowBomb");
+                    //ThrowBomb();
+                    //hasThrown = true;
+                }
+            }
+
             else
             {
                 isAttacking = false;
-                anim.SetTrigger("AbomRun");
+                //anim.SetTrigger("AbomRun");
 
             }
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walking"))
+            //if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walking"))
                 agent.SetDestination(target.position);  //update agent destination to target location
 
         }
@@ -62,15 +76,14 @@ public class Abomination1 : Enemy {
 
     void FireMaul()
     {
-        timer += Time.deltaTime;
-        Instantiate(shockwave);
+        
+        //Instantiate(shockwave);
         //If in shockwave, do damage and trigger nearby bombs
         
     }
 
     void ThrowBomb()
     {
-        timer += Time.deltaTime;
         GameObject bomb = Instantiate(grenadePrefab, transform.position, transform.rotation);
         Rigidbody rb = bomb.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);

@@ -18,7 +18,7 @@ public class Abomination2 : Enemy {
         damageAmount = 3;
         aggroRange = 8;
         attackRange = 4f;
-        name = "Abomination";
+        name = "Abomination 2";
 
         anim = GetComponent<Animator>();
         agent.speed = movementSpeed;
