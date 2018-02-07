@@ -107,12 +107,16 @@ public class CharacterMovement : MonoBehaviour {
 			}
 
 		} else {
-			moveDirection = new Vector3(normal.x, normal.y * -1, normal.z);
+			moveDirection = new Vector3(normal.x, -normal.y, normal.z);
 			velocity = moveDirection.magnitude;
 			Vector3.OrthoNormalize(ref normal, ref moveDirection);
 			moveDirection *= moveSpeed;
 
-			if(jump) {
+			cameraRotation = cameraAnchor.transform.rotation;
+			RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
+			cameraAnchor.transform.rotation = cameraRotation;
+
+			if (jump) {
 				moveDirection = normal * (jumpSpeed/2);
 			}
 		}

@@ -18,7 +18,7 @@ public class MainCharacter : MonoBehaviour {
 
 	private RaycastHit hit;
 	private bool throwing, spinup, hitSomething;
-	private float hookAxis = 0f;
+	private float hookAxis = 0f, angle;
 	public Hook hook;
 	public GameObject reticle;
 	public LineRenderer line;
@@ -106,8 +106,10 @@ public class MainCharacter : MonoBehaviour {
 	//This checks if you collide with something before getting to the point you hooked;
 	void OnControllerColliderHit(ControllerColliderHit hit) {
 		if(hit.gameObject.tag.Equals("Environment")) {
-			if (Vector3.Angle(hit.normal, Vector3.up) > 40) {
+			angle = Vector3.Angle(hit.normal, Vector3.up);
+			if (angle > 40 && angle <= 85) {
 				cm.slide(hit.normal);
+				Debug.Log("Sliding");
 			}
 		}
 
