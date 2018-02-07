@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewDraugr : Enemy {
+public class NewEnlargedDraugr : Enemy {
 
     Animator anim;
 
     // Use this for initialization
     void Start()
     {
-        movementSpeed = 1.5f;
-        damageAmount = 1;
+        movementSpeed = .75f;
+        damageAmount = 5;
         aggroRange = 10;
         attackRange = agent.stoppingDistance;
-        name = "Draugr";
+        name = "Enlarged Draugr";
         state = "idle";
         dead = false;
-        Random.InitState( (int) (Time.time * 10)); //set random seed
+        Random.InitState((int)(Time.time * 10)); //set random seed
 
         anim = GetComponent<Animator>();
         agent.speed = movementSpeed;
@@ -38,18 +38,16 @@ public class NewDraugr : Enemy {
                 anim.SetTrigger("die");
             }
         }
-        else if(Input.GetKeyUp(KeyCode.Alpha9)){
+        else if (Input.GetKeyUp(KeyCode.Alpha9))
+        {
             anim.SetTrigger("hit");
-            
+
         }
         //if enemy is in attack animation is won't move
         else if (checkAgro())
         {
             transform.LookAt(target.position);
-            if(transform.position.x == target.position.x && transform.position.y == target.position.y)
-            {
 
-            }
             if (anim.GetCurrentAnimatorStateInfo(0).IsTag("idle"))
             {
                 anim.SetTrigger("walkForward");
@@ -97,11 +95,11 @@ public class NewDraugr : Enemy {
         }
         else if (temp < .6)
         {
-            anim.SetTrigger("combo1");
+            anim.SetTrigger("attack2");
         }
         else
         {
-            anim.SetTrigger("combo2");
+            anim.SetTrigger("attack2");
         }
     }
 
