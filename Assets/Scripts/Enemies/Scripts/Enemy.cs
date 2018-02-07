@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour {
     protected NavMeshAgent agent;		//nav mesh agent on object 
     protected Transform target;			//the transform of the target to move towards
     protected bool isAttacking;         //true if this enemy is in their attack animation
+    protected string state;
+    protected bool dead;
     
 
 	//Enemy attributes
