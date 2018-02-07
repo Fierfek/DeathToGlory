@@ -8,6 +8,7 @@
 
 public class CharacterMovement : MonoBehaviour {
 
+	[Header("Movement")]
 	public float moveSpeed = 5;
 	public float sprintSpeed = 10;
 	public Vector3 moveDirection;
@@ -21,20 +22,22 @@ public class CharacterMovement : MonoBehaviour {
 	MouseRotationX mrx;
 	Animator animator;
 
+	[Header("Camera")]
 	public GameObject cameraAnchor;
 	private float radToDeg = 180 / Mathf.PI;
 	private Quaternion cameraRotation;
 	private Vector3 forward, right;
-
 	private float currentRotation;
-	public float turnRate = .75f;
 
-	public float rollTime = .5f, rollStart = 0, rollSpeed = 10f;
-	private float rollPause;
+	[Header("Roll")]
+	public float rollTime = .5f;
+	public float rollSpeed = 5;
+	private float rollPause, rollStart;
 	private Vector3 rollDirection;
 	private Vector3 temp;
 
 	private Vector3 bottom;
+	bool jumping = false;
 
 
 	private void Start() {
@@ -55,7 +58,6 @@ public class CharacterMovement : MonoBehaviour {
 		}
 
 		if (isGrounded()) {
-
 			//Find the foreward relative to the camera
 			forward = cameraAnchor.transform.forward.normalized;
 			forward.y = 0;
@@ -144,22 +146,32 @@ public class CharacterMovement : MonoBehaviour {
 
 	private void RotateTo(float angle) {
 		currentRotation = transform.eulerAngles.y;
-		transform.eulerAngles = new Vector3(0, Mathf.LerpAngle(currentRotation, angle, turnRate), 0);
+		transform.eulerAngles = new Vector3(0, Mathf.LerpAngle(currentRotation, angle, .75f), 0);
 	}
 	
 	public bool isGrounded() {
 		if(cc.isGrounded) {
+
+			if (jumping)
+				jumping = false;
+
 			return true;
 		}
 
-		bottom = cc.transform.position + cc.center + Vector3.down * (cc.height / 2);
+		if(jump) {
+			jumping = true;
+		}
 
-		RaycastHit h;
-		if (Physics.Raycast(bottom, Vector3.down, out h, 0.175f)) {
+		if(!jumping) {
+			bottom = cc.transform.position + cc.center + Vector3.down * (cc.height / 2);
 
-			Debug.DrawRay(bottom, Vector3.down * h.distance, Color.black); //Debug only
-			cc.Move(Vector3.down * h.distance);
-			return true;
+			RaycastHit h;
+			if (Physics.Raycast(bottom, Vector3.down, out h, .3f)) {
+
+				Debug.DrawRay(bottom, Vector3.down * h.distance, Color.black); //Debug only
+				cc.Move(Vector3.down * h.distance);
+				return true;
+			}
 		}
 
 		return false;

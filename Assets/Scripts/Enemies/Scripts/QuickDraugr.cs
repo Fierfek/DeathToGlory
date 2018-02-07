@@ -6,6 +6,7 @@ public class QuickDraugr : Enemy {
 
     float timer;
     Animator anim;
+    const float INITIAL_HEALTH = 10f;
 
     // Use this for initialization
     void Start()
@@ -19,7 +20,7 @@ public class QuickDraugr : Enemy {
         anim = GetComponent<Animator>();
         agent.speed = movementSpeed;
         agent.stoppingDistance = .5f;
-        health.SetHealth(10f);
+        health.SetHealth(INITIAL_HEALTH);
 
 
     }

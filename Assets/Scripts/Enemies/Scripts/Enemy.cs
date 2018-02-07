@@ -39,4 +39,10 @@ public class Enemy : MonoBehaviour {
 	protected bool checkAgro() {
 		return aggroRange > getDistToPlayer();
 	}
+
+    //return true if alive
+    public bool getStatus()
+    {
+        return health.currentHealth > 0;
+    }
 }

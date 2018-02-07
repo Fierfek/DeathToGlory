@@ -7,6 +7,7 @@ public class EnlargedDraugr : Enemy {
 
     float timer;
     Animator anim;
+    const float INITIAL_HEALTH = 20f;
 
     // Use this for initialization
     void Start()
@@ -19,7 +20,7 @@ public class EnlargedDraugr : Enemy {
 
         anim = GetComponent<Animator>();
         agent.speed = movementSpeed;
-        health.SetHealth(20f);
+        health.SetHealth(INITIAL_HEALTH);
 
 
     }

@@ -7,6 +7,8 @@ public class Draugr : Enemy {
 
     float timer;
     Animator anim;
+    const float INITIAL_HEALTH = 10f;
+
 
     // Use this for initialization
     void Start () {
@@ -18,7 +20,7 @@ public class Draugr : Enemy {
 
         anim = GetComponent<Animator>();
 		agent.speed = movementSpeed;
-		health.SetHealth(10f);
+		health.SetHealth(INITIAL_HEALTH);
 
         
 	}
@@ -37,7 +39,10 @@ public class Draugr : Enemy {
         {
             if (getDistToPlayer() <= attackRange)
             {
+                agent.SetDestination(transform.position);
+                
                 anim.SetTrigger("attack");
+                transform.LookAt(target.position);
                 isAttacking = true;              
             }
             else if(getDistToPlayer() > attackRange)
@@ -55,21 +60,7 @@ public class Draugr : Enemy {
 	}    
 
     //temporary attack "animation" for testing
-    private void attack()
-    {
-        timer += Time.deltaTime;
-        target.gameObject.GetComponent<Health>().TakeDamage(damageAmount);
-        spin();
-        if(timer >= 2)
-        {
-            isAttacking = false;
-        }
-    }
-
-    private void spin()
-    {
-        transform.Rotate(transform.eulerAngles + new Vector3(0, .1f, 0));
-    }
+   
 
     private void OnCollisionEnter(Collision collision)
     {
