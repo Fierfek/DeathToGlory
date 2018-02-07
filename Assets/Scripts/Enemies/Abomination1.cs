@@ -5,8 +5,9 @@ using UnityEngine;
 public class Abomination1 : Enemy {
 
     public float throwForce = 10f;
+    public float throwForce2 = 5f;
     public float throwRange = 10f;
-    
+
 
     Animator anim;
     public GameObject grenadePrefab;
@@ -76,17 +77,20 @@ public class Abomination1 : Enemy {
 
     void FireMaul()
     {
-        
-        //Instantiate(shockwave);
+
+        //GameObject firemaul = (GameObject) Instantiate(shockwave);
+
         //If in shockwave, do damage and trigger nearby bombs
         
     }
 
-    void ThrowBomb()
+    void ThrowBomb(float forceThrow)
     {
         GameObject bomb = Instantiate(grenadePrefab, transform.position, transform.rotation);
         Rigidbody rb = bomb.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
+        rb.AddForce(transform.forward * forceThrow, ForceMode.VelocityChange);
     }
+
+
 
 }

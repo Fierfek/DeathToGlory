@@ -41,12 +41,6 @@ public class Bomb : MonoBehaviour {
             playerHealth.TakeDamage(explosionDamage);
         }
 
-        //when explodeOnImpact is on, bombs go boom on environment surface.
-        if(other.tag == "Environment" && explodeOnImpact)
-        {
-            Explode();
-        }
-
         //If bombs are hit with shockwave, explode.
         if(other.tag == "Shockwave")
         {

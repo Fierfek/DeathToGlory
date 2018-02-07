@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 8abdfdeaccc0cd24ea0b067ddf0d4720
-timeCreated: 1517451973
+guid: 2226245bd67038246b1aa9b2f2a1f603
+timeCreated: 1517978429
 licenseType: Pro
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: Material_001
+    2100000: unnamed
     2300000: //RootNode
     3300000: //RootNode
     4300000: Torus
