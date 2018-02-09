@@ -101,6 +101,11 @@ public class NewDraugr : Enemy {
             }
 
         }
+        else
+        {
+            state = "idle";
+            anim.SetTrigger("idle");
+        }
         
     }
 

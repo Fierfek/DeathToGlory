@@ -54,10 +54,9 @@ public class QuickDraugr : Enemy {
         //if enemy is in attack animation is won't move
         else if (checkAgro())
         {
-            transform.LookAt(target.position);
-            if (transform.position.x == target.position.x && transform.position.y == target.position.y)
+            if (!tooClose())
             {
-
+                transform.LookAt(target.position);
             }
             if (anim.GetCurrentAnimatorStateInfo(0).IsTag("idle"))
             {
@@ -90,6 +89,11 @@ public class QuickDraugr : Enemy {
         }
 
 
+    }
+
+    private bool tooClose()
+    {
+        return ((transform.position.x - target.position.x) < .25) && ((transform.position.z - target.position.z) < .25);
     }
 
     private void selectAttack()
