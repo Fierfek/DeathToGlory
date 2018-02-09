@@ -29,34 +29,53 @@ public class NewEnlargedDraugr : Enemy {
     void Update()
     {
         //Check for death
-        if (state.Equals("die") || Input.GetKeyUp(KeyCode.Alpha0))//health.GetHealth() <= 0)
+        if (Input.GetKeyUp(KeyCode.Alpha0) || health.GetHealth() <= 0)
         {
-            state = "die";
+            agent.SetDestination(transform.position);
             if (!dead)
             {
                 dead = true;
                 anim.SetTrigger("die");
+                health.TakeDamage(10);
             }
+        }
+        else if (dead)
+        {
+            dead = false;
+            state = "idle";
+            anim.SetTrigger("idle");
         }
         else if (Input.GetKeyUp(KeyCode.Alpha9))
         {
+            agent.SetDestination(transform.position);
             anim.SetTrigger("hit");
 
         }
         //if enemy is in attack animation is won't move
         else if (checkAgro())
         {
-            transform.LookAt(target.position);
+            if (!tooClose())
+            {
+                transform.LookAt(target.position);
+            }
 
             if (anim.GetCurrentAnimatorStateInfo(0).IsTag("idle"))
             {
-                anim.SetTrigger("walkForward");
-                state = "walkForward";
-                if (getDistToPlayer() <= attackRange)
+                if (getDistToPlayer() < agent.stoppingDistance)
                 {
-                    state = "attack";
-                    anim.SetTrigger("attack");
+                    anim.SetTrigger("walkBack");
+                    agent.SetDestination(-transform.forward.normalized * 2);
+                }
+                else
+                {
+                    anim.SetTrigger("walkForward");
+                    state = "walkForward";
+                    if (getDistToPlayer() <= attackRange)
+                    {
+                        state = "attack";
+                        anim.SetTrigger("attack");
 
+                    }
                 }
 
             }
@@ -81,9 +100,13 @@ public class NewEnlargedDraugr : Enemy {
             }
 
         }
-        else
-            anim.SetTrigger("idle");
 
+
+    }
+
+    private bool tooClose()
+    {
+        return ((transform.position.x - target.position.x) < .25) && ((transform.position.z - target.position.z) < .25);
     }
 
     private void selectAttack()

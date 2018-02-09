@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour {
         return (-transform.position + target.position).magnitude;
     }
 
+
 	//true is in aggro range
 	protected bool checkAgro() {
 		return aggroRange > getDistToPlayer();
