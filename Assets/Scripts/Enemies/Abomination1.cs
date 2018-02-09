@@ -90,8 +90,8 @@ public class Abomination1 : Enemy {
     void FireMaul()
     {
 
-        GameObject firemaul = (GameObject) Instantiate(shockwave, transform.position, transform.rotation);
-
+        GameObject firemaul = (GameObject) Instantiate(shockwave, transform.position + new Vector3(0, -1 , 0), transform.rotation);
+        firemaul.transform.eulerAngles = new Vector3(90, 0, 0);
         //If in shockwave, do damage and trigger nearby bombs
         
     }
