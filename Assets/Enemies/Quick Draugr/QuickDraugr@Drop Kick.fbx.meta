@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 0a90ff995a5543148901494d0a780a4d
-timeCreated: 1516855722
+guid: c56c122df252fba43b14628fe377128a
+timeCreated: 1518156047
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
@@ -57,7 +57,7 @@ ModelImporter:
     400046: mixamorig:Spine
     400048: mixamorig:Spine1
     400050: mixamorig:Spine2
-    7400000: Attack
+    7400000: Drop Kick
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -83,10 +83,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Attack
+      name: Drop Kick
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 167
+      lastFrame: 174
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -100,7 +100,7 @@ ModelImporter:
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
