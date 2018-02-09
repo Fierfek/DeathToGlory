@@ -7,14 +7,15 @@ public class Abomination1 : Enemy {
     public float throwForce = 10f;
     public float throwForce2 = 5f;
     public float throwRange = 10f;
-    public float throwFrequency = 2f;
+    public float throwsPerPeriod = 2f;
     public float period = 5f;
 
 
     Animator anim;
     public GameObject grenadePrefab;
-    //public GameObject shockwave;
+    public GameObject shockwave;
 
+    bool hasBashed = false;
     bool hasThrown = false;
 	// Use this for initialization
 	void Start () {
@@ -27,7 +28,7 @@ public class Abomination1 : Enemy {
         anim = GetComponent<Animator>();
         agent.speed = movementSpeed;
         health.SetHealth(20f);
-        InvokeRepeating("ThrowBomb", 2.0f, throwFrequency);
+        //InvokeRepeating("ThrowBomb", 2.0f, 1f);
 
     }
 	
@@ -43,9 +44,10 @@ public class Abomination1 : Enemy {
         //if enemy is in attack animation is won't move
         else if (CheckAgro())
         {
-            if (getDistToPlayer() <= attackRange)
+            if (getDistToPlayer() <= attackRange && !hasBashed)
             {
-
+                FireMaul();
+                hasBashed = true;
                 //anim.SetTrigger("MaulSwing");
                 isAttacking = true;
 
@@ -58,6 +60,10 @@ public class Abomination1 : Enemy {
                     //BombBarrage();
                     //hasThrown = true;
                 }
+                else
+                {
+
+                }
             }
 
             else
@@ -67,7 +73,11 @@ public class Abomination1 : Enemy {
 
             }
             //if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walking"))
-                agent.SetDestination(target.position);  //update agent destination to target location
+            if(getDistToPlayer() >= 2f)
+            {
+            //agent.SetDestination(target.position);  //update agent destination to target location
+            }
+
 
         }
     }
@@ -80,7 +90,7 @@ public class Abomination1 : Enemy {
     void FireMaul()
     {
 
-        //GameObject firemaul = (GameObject) Instantiate(shockwave);
+        GameObject firemaul = (GameObject) Instantiate(shockwave, transform.position, transform.rotation);
 
         //If in shockwave, do damage and trigger nearby bombs
         
@@ -88,20 +98,24 @@ public class Abomination1 : Enemy {
 
     void ThrowBomb()
     {
-        //transform.Rotate(transform.eulerAngles + new Vector3(0, 2, 0));
+        transform.Rotate(new Vector3(0, 90 * Time.deltaTime, 0));
         GameObject bomb = Instantiate(grenadePrefab, transform.position, transform.rotation);
         Rigidbody rb = bomb.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
+    }
+
+    void ThrowBomb2()
+    {
+
     }
 
     void BombBarrage(int frequency, float throw1, float throw2)
     {
         float spinAngle = 360f / frequency;
         transform.Rotate(new Vector3(0, spinAngle * Time.deltaTime, 0));
-        for(int i = 0; i < frequency; i++)
-        {
-            ThrowBomb();
-        }
+
+        ThrowBomb();
+
     }
 
 }

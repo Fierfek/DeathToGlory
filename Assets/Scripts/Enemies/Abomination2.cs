@@ -16,13 +16,14 @@ public class Abomination2 : Enemy {
     public GameObject melee;
     public Transform bulletSpawn;
     bool hasFired = false;
+    bool hasMeleed = false;
     // Use this for initialization
     void Start()
     {
         movementSpeed = 2.0f;
         damageAmount = 3;
         aggroRange = 8;
-        attackRange = 2f;
+        attackRange = 3f;
         name = "Abomination 2";
 
         anim = GetComponent<Animator>();
@@ -43,21 +44,27 @@ public class Abomination2 : Enemy {
         //if enemy is in attack animation is won't move
         else if (CheckAgro())
         {
+           
             if(getDistToPlayer() <= gunRange && !hasFired)
             {
 
-                //Fire();
+                Fire();
                 hasFired = true;
             }
-            if (getDistToPlayer() <= attackRange)
-            {
+           
 
+            if (getDistToPlayer() <= attackRange && !hasMeleed)
+            {
+                Melee();
+                hasMeleed = true;
                 /*anim.SetTrigger("FireGun");
                 isAttacking = true;
                 //Attacks GattlingGun/Melee
                 //Animation with attack
                 */
             }
+
+
             else
             {
 
@@ -67,7 +74,11 @@ public class Abomination2 : Enemy {
                 */
             }
             //if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walking"))
+            if(getDistToPlayer() > 4f)
+            {
                 //agent.SetDestination(target.position);  //update agent destination to target location
+            }
+ 
 
         }
     }
@@ -81,7 +92,7 @@ public class Abomination2 : Enemy {
 
     void Melee()
     {
-        GameObject gunSwing = Instantiate(melee, transform.position, transform.rotation);
+        GameObject gunSwing = Instantiate(melee, transform.position + (new Vector3(0, 0, 2f)), transform.rotation);
         Destroy(gunSwing,1f);
         //Creates meleebox infront of Abomination
     }
@@ -91,7 +102,7 @@ public class Abomination2 : Enemy {
     void Fire()
     {
         float spinAngle = 360 / frequency;
-       GameObject bullet = (GameObject) Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+       GameObject bullet = (GameObject) Instantiate(bulletPrefab, bulletSpawn.position + (new Vector3 (0, 0, 4.25f)), bulletSpawn.rotation);
 
         for (int i = 0; i< frequency; i++)
         {
