@@ -11,7 +11,7 @@ public class QuickDraugr : Enemy {
     {
         movementSpeed = 1.5f;
         damageAmount = 1;
-        aggroRange = 10;
+        aggroRange = 4;
         attackRange = agent.stoppingDistance;
         name = "Quick Draugr";
         state = "idle";
@@ -65,7 +65,7 @@ public class QuickDraugr : Enemy {
                 if (getDistToPlayer() <= attackRange)
                 {
                     state = "attack";
-                    anim.SetTrigger("attack");
+                    //anim.SetTrigger("attack");
 
                 }
 
@@ -76,13 +76,14 @@ public class QuickDraugr : Enemy {
                 if (getDistToPlayer() <= attackRange)
                 {
                     state = "attack";
-                    anim.SetTrigger("attack");
+                    //anim.SetTrigger("attack");
 
                 }
             }
             else if (state.Equals("attack"))
             {
-                //selectAttack();
+               selectAttack();
+                
                 state = "idle";
             }
 
@@ -104,17 +105,13 @@ public class QuickDraugr : Enemy {
     private void selectAttack()
     {
         float temp = Random.value;
-        if (temp < .3)
+        if (temp < .5)
         {
-            anim.SetTrigger("attack1");
-        }
-        else if (temp < .6)
-        {
-            anim.SetTrigger("combo1");
+            anim.SetTrigger("attack");
         }
         else
         {
-            anim.SetTrigger("combo2");
+            anim.SetTrigger("kick");
         }
     }
 
