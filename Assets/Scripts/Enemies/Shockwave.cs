@@ -14,7 +14,7 @@ public class Shockwave : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.localScale += new Vector3(expansionFactor * Time.deltaTime, expansionFactor * Time.deltaTime, (Time.deltaTime * 1.1f));
+        transform.localScale += new Vector3(expansionFactor * Time.deltaTime, expansionFactor * Time.deltaTime, (Time.deltaTime * 1.5f));
 	}
 
     private void OnTriggerEnter(Collider other)

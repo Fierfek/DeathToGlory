@@ -38,7 +38,6 @@ public class Bomb : MonoBehaviour {
         if(other.tag == "Player")
         {
             Explode();
-            playerHealth.TakeDamage(explosionDamage);
         }
 
         //If bombs are hit with shockwave, explode.
@@ -54,7 +53,7 @@ public class Bomb : MonoBehaviour {
     {
         Instantiate(explosionEffects, transform.position, transform.rotation);
 
-
+        Debug.Log("Explode");
         hasExploded = true;
         Destroy(gameObject);
     }

@@ -7,6 +7,8 @@ public class Abomination1 : Enemy {
     public float throwForce = 10f;
     public float throwForce2 = 5f;
     public float throwRange = 10f;
+    public float throwFrequency = 2f;
+    public float period = 5f;
 
 
     Animator anim;
@@ -25,7 +27,7 @@ public class Abomination1 : Enemy {
         anim = GetComponent<Animator>();
         agent.speed = movementSpeed;
         health.SetHealth(20f);
-        InvokeRepeating("ThrowBomb", 2.0f, 3.0f);
+        InvokeRepeating("ThrowBomb", 2.0f, throwFrequency);
 
     }
 	
@@ -53,7 +55,7 @@ public class Abomination1 : Enemy {
                 if (!hasThrown)
                 {
                     //anim.SetTrigger("ThrowBomb");
-                    //ThrowBomb();
+                    //BombBarrage();
                     //hasThrown = true;
                 }
             }
@@ -84,13 +86,22 @@ public class Abomination1 : Enemy {
         
     }
 
-    void ThrowBomb(float forceThrow)
+    void ThrowBomb()
     {
+        //transform.Rotate(transform.eulerAngles + new Vector3(0, 2, 0));
         GameObject bomb = Instantiate(grenadePrefab, transform.position, transform.rotation);
         Rigidbody rb = bomb.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * forceThrow, ForceMode.VelocityChange);
+        rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
     }
 
-
+    void BombBarrage(int frequency, float throw1, float throw2)
+    {
+        float spinAngle = 360f / frequency;
+        transform.Rotate(new Vector3(0, spinAngle * Time.deltaTime, 0));
+        for(int i = 0; i < frequency; i++)
+        {
+            ThrowBomb();
+        }
+    }
 
 }
