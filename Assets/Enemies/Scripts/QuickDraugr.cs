@@ -87,6 +87,11 @@ public class QuickDraugr : Enemy {
             }
 
         }
+        else
+        {
+            state = "idle";
+            anim.SetTrigger("idle");
+        }
 
 
     }

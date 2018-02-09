@@ -102,7 +102,10 @@ public class Shaman : Enemy {
 
         }
         else
+        {
+            state = "idle";
             anim.SetTrigger("idle");
+        }
 
     }
 
