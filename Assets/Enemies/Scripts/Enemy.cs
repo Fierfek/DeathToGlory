@@ -17,9 +17,9 @@ public class Enemy : MonoBehaviour {
     
 
 	//Enemy attributes
-    protected float movementSpeed;		//speed of character
-	protected float aggroRange;			//Distance at which the player is noticed and we exit the idle state.
-    protected float attackRange;        //distance at which this enemy attacks
+    public float movementSpeed;		//speed of character
+	public float aggroRange;			//Distance at which the player is noticed and we exit the idle state.
+    public float attackRange;        //distance at which this enemy attacks
 
 	// Use this for initialization
 	void Awake() {
@@ -35,6 +35,11 @@ public class Enemy : MonoBehaviour {
     protected float getDistToPlayer()
     {
         return (-transform.position + target.position).magnitude;
+    }
+
+    protected Vector3 vectorToTarget()
+    {
+        return (-transform.position + target.position);
     }
 
 
