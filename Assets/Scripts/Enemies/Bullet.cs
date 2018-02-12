@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour {
 
     public float bulletDamage = 3f;
     public GameObject gunPosition;
+    public bool direction = false;
     protected Health playerHealth;
 	// Use this for initialization
 	void Start () {
@@ -17,19 +18,26 @@ public class Bullet : MonoBehaviour {
         Spin();
 	}
 
+    //
     private void OnTriggerEnter(Collider other)
     {
         //playerHealth.TakeDamage(bulletDamage); 
         Debug.Log("Bullet Damage");
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        
-    }
+    //This is where the bullet object spins. 
 
-    void Spin()
+    
+void Spin()
     {
-        transform.RotateAround(gunPosition.transform.position, Vector3.down, 90 * Time.deltaTime);
+        if (direction)
+        {
+            transform.RotateAround(gunPosition.transform.position, Vector3.down, -90 * Time.deltaTime);
+        }
+        else
+        {
+            transform.RotateAround(gunPosition.transform.position, Vector3.down, 90 * Time.deltaTime);
+        }
+
     }
 }

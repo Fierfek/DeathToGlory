@@ -9,14 +9,16 @@ public class Abomination1 : Enemy {
     public float throwRange = 10f;
     public float throwsPerPeriod = 2f;
     public float period = 5f;
+    public float counter = 4f;
+    float timer;
+    public int bombCount = 0;
 
 
     Animator anim;
     public GameObject grenadePrefab;
     public GameObject shockwave;
 
-    bool hasBashed = false;
-    bool hasThrown = false;
+    bool hasAttacked = false;
 	// Use this for initialization
 	void Start () {
         movementSpeed = 2.0f;
@@ -28,6 +30,8 @@ public class Abomination1 : Enemy {
         anim = GetComponent<Animator>();
         agent.speed = movementSpeed;
         health.SetHealth(20f);
+
+        //This is just for testing purposes with throwing bombs.
         //InvokeRepeating("ThrowBomb", 2.0f, 1f);
 
     }
@@ -44,38 +48,45 @@ public class Abomination1 : Enemy {
         //if enemy is in attack animation is won't move
         else if (CheckAgro())
         {
-            if (getDistToPlayer() <= attackRange && !hasBashed)
+            if(timer <= 0)
             {
-                FireMaul();
-                hasBashed = true;
-                //anim.SetTrigger("MaulSwing");
+                hasAttacked = false;
+            }
+            
+            else if(getDistToPlayer() <= throwRange && !hasAttacked && bombCount <20)
+            {
+
+                ThrowBomb();
+                hasAttacked = true;
+                //Animation goes here
+
+            }
+            else if (getDistToPlayer() <= attackRange && !hasAttacked)
+            {
+
+                if(bombCount == 20)
+                {
+                    FireMaul();
+                    //Maul animation.
+                    bombCount = 0;
+                    hasAttacked = true;
+                }
+
+                //anim.SetTrigger("MaulSwing"); This is where the animation should be
                 isAttacking = true;
 
             }
-            else if(getDistToPlayer() <= throwRange)
-            {
-                if (!hasThrown)
-                {
-                    //anim.SetTrigger("ThrowBomb");
-                    //BombBarrage();
-                    //hasThrown = true;
-                }
-                else
-                {
-
-                }
-            }
-
             else
             {
                 isAttacking = false;
                 //anim.SetTrigger("AbomRun");
 
             }
-            //if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walking"))
-            if(getDistToPlayer() >= 2f)
+            //if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) 
+            //
+            if(getDistToPlayer() >= 4f)
             {
-            //agent.SetDestination(target.position);  //update agent destination to target location
+                //agent.SetDestination(target.position);  //update agent destination to target location
             }
 
 
@@ -96,19 +107,17 @@ public class Abomination1 : Enemy {
         
     }
 
+    //This is self explanatory. You throw a bomb with a certain amount of force. The bomb detonates after 
     void ThrowBomb()
     {
-        transform.Rotate(new Vector3(0, 90 * Time.deltaTime, 0));
+        //transform.Rotate(new Vector3(0, 90 * Time.deltaTime, 0));
         GameObject bomb = Instantiate(grenadePrefab, transform.position, transform.rotation);
         Rigidbody rb = bomb.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
     }
 
-    void ThrowBomb2()
-    {
 
-    }
-
+    //Was working on throwing bombs around abomination, but having trouble making it spin and throw at a good interval.
     void BombBarrage(int frequency, float throw1, float throw2)
     {
         float spinAngle = 360f / frequency;
