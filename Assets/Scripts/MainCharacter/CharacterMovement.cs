@@ -13,6 +13,7 @@ public class CharacterMovement : MonoBehaviour {
 	public float jumpSpeed = 5;
 	private float velocity, acceleration;
 	public float gravity = 10;
+	private float x, y;
 
 	private bool jump, sprint, roll, grav, rolling, hook;
 
@@ -52,16 +53,21 @@ public class CharacterMovement : MonoBehaviour {
 		if (!slidding) {
 			if (isGrounded()) {
 				//Find the foreward relative to the camera
-				forward = cameraAnchor.transform.forward.normalized;
+				forward = cameraAnchor.transform.forward;
 				forward.y = 0;
+				forward = forward.normalized;
 				right = new Vector3(forward.z, 0, -forward.x);
+				right = right.normalized;
 
-				//set the movements direction
-				moveDirection = Input.GetAxis("Move Horizontal") * right + Input.GetAxis("Move Vertical") * forward;
+				x = Input.GetAxis("Move Horizontal");
+				y = Input.GetAxis("Move Vertical");
+				moveDirection = x * right + y * forward;
+
 				velocity = moveDirection.magnitude;
-				animator.SetFloat("speed", velocity);
 
-				moveDirection = moveDirection.normalized * velocity;
+				moveDirection = moveDirection.normalized;
+
+				animator.SetFloat("speed", velocity);
 
 				if (roll) {
 					rolling = true;
@@ -73,12 +79,10 @@ public class CharacterMovement : MonoBehaviour {
 				}
 
 				if (sprint) {
-					temp.Set(moveDirection.x * sprintSpeed, moveDirection.y, moveDirection.z * sprintSpeed);
+					moveDirection.Set(moveDirection.x * sprintSpeed, moveDirection.y, moveDirection.z * sprintSpeed);
 				} else {
-					temp.Set(moveDirection.x * moveSpeed, moveDirection.y, moveDirection.z * moveSpeed);
+					moveDirection.Set(moveDirection.x * moveSpeed, moveDirection.y, moveDirection.z * moveSpeed);
 				}
-
-				moveDirection = temp;
 
 				if (rolling) {
 					if (Time.time <= rollStart + rollTime) {
