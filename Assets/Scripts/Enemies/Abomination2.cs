@@ -97,7 +97,7 @@ public class Abomination2 : Enemy {
                 */
             }
             //if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walking"))
-            //Movement needs work
+            //Tried attacks with movement
             if(getDistToPlayer() > 4f)
             {
                 //agent.SetDestination(target.position);  //update agent destination to target location

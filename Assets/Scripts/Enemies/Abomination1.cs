@@ -64,13 +64,12 @@ public class Abomination1 : Enemy {
             else if (getDistToPlayer() <= attackRange && !hasAttacked)
             {
 
-                if(bombCount == 20)
-                {
-                    FireMaul();
-                    //Maul animation.
-                    bombCount = 0;
-                    hasAttacked = true;
-                }
+
+                FireMaul();
+                //Maul animation.
+
+                hasAttacked = true;
+
 
                 //anim.SetTrigger("MaulSwing"); This is where the animation should be
                 isAttacking = true;
@@ -83,7 +82,7 @@ public class Abomination1 : Enemy {
 
             }
             //if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) 
-            //
+            // Was testing how it worked with movement
             if(getDistToPlayer() >= 4f)
             {
                 //agent.SetDestination(target.position);  //update agent destination to target location
