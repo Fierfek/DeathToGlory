@@ -9,7 +9,7 @@ public class NewEnlargedDraugr : Enemy {
     // Use this for initialization
     void Start()
     {
-        movementSpeed = .75f;
+        movementSpeed = 1.5f;
         damageAmount = 5;
         aggroRange = 10;
         attackRange = agent.stoppingDistance;
@@ -61,10 +61,11 @@ public class NewEnlargedDraugr : Enemy {
 
             if (anim.GetCurrentAnimatorStateInfo(0).IsTag("idle"))
             {
-                if (getDistToPlayer() < agent.stoppingDistance)
+                if ((getDistToPlayer() < agent.stoppingDistance) && checkBack())
                 {
                     anim.SetTrigger("walkBack");
-                    agent.SetDestination(-transform.forward.normalized * 2);
+                    state = "walkBack";
+                    agent.SetDestination(transform.TransformVector(2 * vectorToTarget()));
                 }
                 else
                 {

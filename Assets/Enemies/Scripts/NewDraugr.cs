@@ -62,10 +62,11 @@ public class NewDraugr : Enemy {
 
             if (anim.GetCurrentAnimatorStateInfo(0).IsTag("idle"))
             {
-                if (getDistToPlayer() < agent.stoppingDistance)
+                if ((getDistToPlayer() < agent.stoppingDistance) && checkBack())
                 {
                     anim.SetTrigger("walkBack");
-                    agent.SetDestination(-transform.forward.normalized * 2);
+                    state = "walkBack";
+                    agent.SetDestination(transform.TransformVector(2 * vectorToTarget()));
                 }
                 else
                 {
@@ -108,6 +109,8 @@ public class NewDraugr : Enemy {
         }
         
     }
+
+    
 
     private bool tooClose()
     {

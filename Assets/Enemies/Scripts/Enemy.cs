@@ -42,9 +42,14 @@ public class Enemy : MonoBehaviour {
         return (-transform.position + target.position);
     }
 
+    protected bool checkBack()
+    {
+        return Physics.Raycast(transform.position, -transform.forward, 2);
+    }
 
-	//true is in aggro range
-	protected bool checkAgro() {
+
+    //true is in aggro range
+    protected bool checkAgro() {
 		return aggroRange > getDistToPlayer();
 	}
 }
