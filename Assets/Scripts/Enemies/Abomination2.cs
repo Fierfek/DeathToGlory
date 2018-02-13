@@ -49,8 +49,8 @@ public class Abomination2 : Enemy {
         //if enemy is in attack animation is won't move
         else if (CheckAgro())
         {
-           
-            if(timer <= 0)
+            timer -= Time.deltaTime;
+            if(timer <= 0)//Controls attack cooldown
             {
                 hasAttacked = false;
             }
