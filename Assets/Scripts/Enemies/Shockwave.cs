@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shockwave : MonoBehaviour {
 
-    public float timeToDestroy = 4f;
+    public float timeToDestroy = 8f;
 
     public float expansionFactor = 2f;
 	// Use this for initialization
@@ -29,6 +29,8 @@ public class Shockwave : MonoBehaviour {
         {
             Debug.Log("Bomb in Shockwave");
         }
+
+
     }
 
     void DestroyShock()

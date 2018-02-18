@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(SphereCollider))]
 public class Bomb : MonoBehaviour {
 
-    public float delay = 10f;
+    public float delay = 12f;
     public float blastRadius = 5f;
     public float explosionForce = 4f;
     public float explosionDamage = 5f;

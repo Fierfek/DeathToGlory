@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Abomination2 : Enemy {
 
-    public float timer = 5f; //Starting 
+    public float timer = 10f; //Starting 
     float cooldown; //Attack cooldown timer.
     public float fireRate;
-    public float gunRange = 15f;
+    public float gunRange = 5f;
     
-    public int frequency = 4;
+    public int period = 4;
     //With frequency = 4, then it creates one revolution.
     //90 degrees per second.
     bool direction = false;
@@ -27,7 +27,7 @@ public class Abomination2 : Enemy {
         movementSpeed = 2.0f;
         damageAmount = 3;
         aggroRange = 8;
-        attackRange = 3f;
+        attackRange = 4f;
         name = "Abomination 2";
 
         anim = GetComponent<Animator>();
@@ -43,65 +43,76 @@ public class Abomination2 : Enemy {
         if (health.GetHealth() <= 0)
         {
             isAttacking = false;
-            anim.SetTrigger("gruntDeath");
+            anim.SetTrigger("abomGunDeath");
 
         }
         //if enemy is in attack animation is won't move
         else if (CheckAgro())
         {
-            timer -= Time.deltaTime;
-            if(timer <= 0)//Controls attack cooldown
+            //transform.LookAt(new Vector3(target.position.x, 1, target.position.z));
+            if(cooldown <= 0)//Controls attack cooldown
             {
                 hasAttacked = false;
             }
- 
-           else if (getDistToPlayer() <= attackRange && !hasAttacked)
+            cooldown -= Time.deltaTime;
+            if (getDistToPlayer() <= attackRange && !hasAttacked)
             {
                 //While in melee, abomination should be standing still.
+                anim.SetTrigger("melee");
                 Melee();
-                hasAttacked = true;
-                /*anim.SetTrigger("FireGun");
+
                 isAttacking = true;
                 //Attacks GattlingGun/Melee
                 //Animation with attack
-                */
-                timer = cooldown;
-            }
-           else if(getDistToPlayer() <= gunRange && !hasAttacked)
-            {
-
-                //This part switches the shooting direction.
-                //While shooting, abomination should not move.
                 if (direction)
                 {
                     Fire();
                     direction = false;
-                    //animation
+                    anim.SetTrigger("fireGun");
                 }
                 else
                 {
                     Fire2();
                     direction = true;
-                    //animation
+                    anim.SetTrigger("fireGun");
                 }
-                timer = cooldown;
+                hasAttacked = true;
+                cooldown = timer;
+            }
+           else if(getDistToPlayer() <= gunRange && !hasAttacked)
+            {
+ 
+                //This part switches the shooting direction.
+                //While shooting, abomination should not move.
+                if (direction)
+                {
+                    anim.SetTrigger("fireGun");
+                    Fire();
+                    direction = false;
+                }
+                else
+                {
+                    anim.SetTrigger("fireGun");
+                    Fire2();
+                    direction = true;
+                }
+                cooldown = timer;
                 hasAttacked = true;
             }
 
-            else
+            if(getDistToPlayer() > gunRange)
             {
 
-                /*
+            
                 isAttacking = false;
-                anim.SetTrigger("AbomRun");
-                */
+                anim.SetTrigger("abomGunWalk");
+             
             }
-            //if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walking"))
-            //Tried attacks with movement
-            if(getDistToPlayer() > 4f)
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walking"))
             {
-                //agent.SetDestination(target.position);  //update agent destination to target location
+                   agent.SetDestination(target.position);  //update agent destination to target location
             }
+
  
 
         }
@@ -116,7 +127,9 @@ public class Abomination2 : Enemy {
 
     void Melee()
     {
-        GameObject gunSwing = Instantiate(melee, transform.position + (new Vector3(0, 0, 2f)), transform.rotation);
+        Vector3 lookPosition = transform.localPosition;
+        GameObject gunSwing = Instantiate(melee, lookPosition + (new Vector3(0, 1, 0)), transform.rotation);
+        
         Destroy(gunSwing,1f);
         //Creates meleebox infront of Abomination
     }
@@ -124,31 +137,30 @@ public class Abomination2 : Enemy {
     //Fires bullet in one spin direction.
     void Fire()
     {
-        float spinAngle = 360 / frequency;
+     
 
        // Create the Bullet from the Bullet Prefab
-       GameObject bullet = (GameObject) Instantiate(bulletPrefab, bulletSpawn.position + (new Vector3 (0, 0, 4.25f)), bulletSpawn.rotation);
-
+       GameObject bullet = (GameObject) Instantiate(bulletPrefab, transform.position + transform.forward  *4.25f + new Vector3(0,1,0), bulletSpawn.rotation);
+        bullet.transform.Rotate(90,0,0);
 
         // Destroy the bullet after frequency number of seconds
-        //Adjust the frequency, adjust the number of revolutions.
-        Destroy(bullet, frequency);
+        //Adjust the period, adjust the number of revolutions.
+        Destroy(bullet, period);
 
     }
 
     //Fires bullet in the other spin direction
     void Fire2()
     {
-           
-        float spinAngle = 360 / frequency;
+        
 
-       // Create the Bullet from the Bullet Prefab
-       GameObject bullet = (GameObject) Instantiate(bulletPrefab2, bulletSpawn.position + (new Vector3 (0, 0, 4.25f)), bulletSpawn.rotation);
-
+        // Create the Bullet from the Bullet Prefab
+        GameObject bullet = (GameObject) Instantiate(bulletPrefab2, bulletSpawn.position + transform.forward *4.25f + (new Vector3 (0, 1, 0)), bulletSpawn.rotation);
+        bullet.transform.Rotate(90, 0, 0);
 
         // Destroy the bullet after frequency number of seconds
-        //Adjust the frequency, adjust the number of revolutions.
-        Destroy(bullet, frequency);
+        //Adjust the period, adjust the number of revolutions.
+        Destroy(bullet, period);
 
     }
 }

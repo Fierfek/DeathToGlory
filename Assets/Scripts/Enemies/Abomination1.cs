@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Abomination1 : Enemy {
 
-    public float throwForce = 10f;
-    public float throwForce2 = 5f;
+    public float throwForce = 12f;
+
     public float throwRange = 10f;
-    public float throwsPerPeriod = 2f;
+
     public float cooldown = 5f;//Attack Cooldown period
     float timer;//Attack timer
-
+    public Vector3 shockWaveTransform = new Vector3(0, .2f, 3f);
 
     public int bombCount = 0;
 
@@ -24,7 +24,7 @@ public class Abomination1 : Enemy {
 	void Start () {
         movementSpeed = 2.0f;
         damageAmount = 3;
-        aggroRange = 8f;
+        aggroRange = 15f;
         attackRange = 4f;
         name = "Abomination 1";
 
@@ -44,20 +44,24 @@ public class Abomination1 : Enemy {
         if (health.GetHealth() <= 0)
         {
             isAttacking = false;
-            //anim.SetTrigger("gruntDeath");
+            anim.SetTrigger("abomBombDeath");
 
         }
         //if enemy is in attack animation is won't move
         else if (CheckAgro())
         {
-            timer -= Time.deltaTime;
-           if(timer <= 0)//This part controls attack cooldown
+
+            if (timer <= 0)//This part controls attack cooldown
             {
                 hasAttacked = false;
             }
-            if (getDistToPlayer() <= attackRange && !hasAttacked)
-            {
+            timer -= Time.deltaTime;
 
+
+             if (getDistToPlayer() < attackRange && !hasAttacked)
+            {
+                //transform.LookAt(target);
+                anim.SetTrigger("AbomBombMaul");
                 FireMaul();
 
                 //animation
@@ -66,30 +70,33 @@ public class Abomination1 : Enemy {
                 timer = 4f;
             }
 
-            else if(getDistToPlayer() <= throwRange && !hasAttacked && bombCount <20)
+            else if(getDistToPlayer() < throwRange && !hasAttacked)
             {
-
+                transform.LookAt(target);
+                anim.SetTrigger("AbomBombThrow");
                 ThrowBomb();
                 //Animation goes here
                 isAttacking = true;
                 hasAttacked = true;
-                timer = 1f;
+                timer = .5f;
             }
 
-            else
+            if(getDistToPlayer() > throwRange)
             {
                 isAttacking = false;
-                //anim.SetTrigger("AbomRun");
+                anim.SetTrigger("AbomBombWalking");
 
             }
-            //if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")) 
-            // Was testing how it worked with movement
-            if(getDistToPlayer() >= 4f)
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walking"))
             {
-                //agent.SetDestination(target.position);  //update agent destination to target location
+                agent.SetDestination(target.position);  //update agent destination to target location
             }
+           
 
-
+        }
+        else
+        {
+            anim.SetTrigger("AbomBombIdle");
         }
     }
 
@@ -101,7 +108,7 @@ public class Abomination1 : Enemy {
     void FireMaul()
     {
 
-        GameObject firemaul = (GameObject) Instantiate(shockwave, transform.position + new Vector3(0, -1 , 0), transform.rotation);
+        GameObject firemaul = (GameObject) Instantiate(shockwave, transform.position + transform.forward * 2 + transform.up *.5f , transform.rotation);
         firemaul.transform.eulerAngles = new Vector3(90, 0, 0);
         //If in shockwave, do damage and trigger nearby bombs
         
@@ -111,7 +118,7 @@ public class Abomination1 : Enemy {
     void ThrowBomb()
     {
         //transform.Rotate(new Vector3(0, 90 * Time.deltaTime, 0));
-        GameObject bomb = Instantiate(grenadePrefab, transform.position, transform.rotation);
+        GameObject bomb = Instantiate(grenadePrefab, transform.position + transform.forward *1 + transform.up, transform.rotation);
         Rigidbody rb = bomb.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
     }
