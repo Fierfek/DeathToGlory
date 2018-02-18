@@ -3,12 +3,14 @@
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(CharacterMovement))]
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(LedgeControlls))]
 
 public class MainCharacter : MonoBehaviour {
 
 	Health health;
 	CharacterMovement cm;
 	CharacterController cc;
+	LedgeControlls lc;
 	
 	public static bool updateStats;
 	public Shotgun shotgun;
@@ -23,11 +25,17 @@ public class MainCharacter : MonoBehaviour {
 	public GameObject reticle;
 	public LineRenderer line;
 
+	private bool hanging;
+
 	// Use this for initialization
 	void Start() {
 		health = GetComponent<Health>();
 		cm = GetComponent<CharacterMovement>();
 		cc = GetComponent<CharacterController>();
+		lc = GetComponent<LedgeControlls>();
+		lc.enabled = false;
+
+		hanging = false;
 
 		health.SetHealth(100);
 		mask = ~mask;
@@ -44,6 +52,9 @@ public class MainCharacter : MonoBehaviour {
 		}
 
 		if (Input.GetButton("Jump")) {
+			if(hanging) {
+
+			}
 			cm.Jump();
 		}
 
@@ -109,12 +120,22 @@ public class MainCharacter : MonoBehaviour {
 			angle = Vector3.Angle(hit.normal, Vector3.up);
 			if (angle > 40 && angle <= 85) {
 				cm.slide(hit.normal);
-				Debug.Log("Sliding");
 			}
 		}
 
 		//if(!cc.isGrounded && !hook.Throwing() && hook.isActiveAndEnabled) {
 		//	hook.Stop();
-				
+	}
+
+	void OnTriggerEnter(Collider c) {
+
+		if(c.tag.Equals("Ledge") && !hanging) {
+
+			cm.enabled = false;
+			lc.enabled = true;
+
+			hanging = true;
+			lc.setLedge(c.GetComponentInParent<Ledge>(), c);
+		}
 	}
 }
