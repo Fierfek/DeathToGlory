@@ -11,6 +11,7 @@ public class MainCharacter : MonoBehaviour {
 	CharacterMovement cm;
 	CharacterController cc;
 	LedgeControlls lc;
+	MouseRotation mr;
 	
 	public static bool updateStats;
 	public Shotgun shotgun;
@@ -34,6 +35,7 @@ public class MainCharacter : MonoBehaviour {
 		cc = GetComponent<CharacterController>();
 		lc = GetComponent<LedgeControlls>();
 		lc.enabled = false;
+		mr = GetComponentInChildren<MouseRotation>();
 
 		hanging = false;
 
@@ -53,9 +55,10 @@ public class MainCharacter : MonoBehaviour {
 
 		if (Input.GetButton("Jump")) {
 			if(hanging) {
-
+				lc.Jump();
+			} else {
+				cm.Jump();
 			}
-			cm.Jump();
 		}
 
 		if (Input.GetButton("Roll")) {
@@ -116,6 +119,10 @@ public class MainCharacter : MonoBehaviour {
 
 	//This checks if you collide with something before getting to the point you hooked;
 	void OnControllerColliderHit(ControllerColliderHit hit) {
+		if(lc.enabled) {
+			
+		}
+
 		if(hit.gameObject.tag.Equals("Environment")) {
 			angle = Vector3.Angle(hit.normal, Vector3.up);
 			if (angle > 40 && angle <= 85) {
@@ -129,13 +136,21 @@ public class MainCharacter : MonoBehaviour {
 
 	void OnTriggerEnter(Collider c) {
 
-		if(c.tag.Equals("Ledge") && !hanging) {
+		if(c.tag.Equals("Ledge")) {
 
-			cm.enabled = false;
-			lc.enabled = true;
+			if (!hanging) {
+				cm.enabled = false;
+				lc.enabled = true;
+				mr.enabled = false;
+				mr.transform.rotation = Quaternion.Euler(Vector3.zero);
 
-			hanging = true;
-			lc.setLedge(c.GetComponentInParent<Ledge>(), c);
+				hanging = true;
+				lc.setLedge(c.GetComponentInParent<Ledge>(), c);
+			} else {
+				if(lc.getJumping()) {
+					lc.setLedge(c.GetComponentInParent<Ledge>(), c);
+				}
+			}
 		}
 	}
 }

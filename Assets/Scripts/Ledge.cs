@@ -32,6 +32,6 @@ public class Ledge : MonoBehaviour {
 	}
 
 	public BoxCollider getCollider() {
-		return GetComponent<BoxCollider>();
+		return GetComponentInChildren<BoxCollider>();
 	}
 }
