@@ -80,3 +80,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 *.ide
+.vs/DeathToGlory/v15/Server/sqlite3/storage.ide-shm
+.vs/DeathToGlory/v15/Server/sqlite3/storage.ide-wal
+ProjectSettings/ProjectVersion_REMOTE_11404.txt
+ProjectSettings/ProjectVersion_LOCAL_11404.txt
+ProjectSettings/ProjectVersion_BASE_11404.txt
+ProjectSettings/ProjectVersion_BACKUP_11404.txt
