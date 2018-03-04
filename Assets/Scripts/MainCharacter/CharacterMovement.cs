@@ -40,6 +40,10 @@ public class CharacterMovement : MonoBehaviour {
 	Vector3 normal;
 
 
+	void Awake() {
+
+	}
+
 	private void Start() {
 		cc = GetComponent<CharacterController>();
 		animator = GetComponentInChildren<Animator>();
@@ -152,6 +156,10 @@ public class CharacterMovement : MonoBehaviour {
 
 	public void Sprint() {
 		sprint = true;
+	}
+
+	public void stopHanging(Vector3 movement) {
+		moveDirection = movement;
 	}
 
 	public void Roll() {

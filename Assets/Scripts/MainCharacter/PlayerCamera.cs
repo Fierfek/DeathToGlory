@@ -46,4 +46,8 @@ public class PlayerCamera : MonoBehaviour {
 	public void ThrowHook() {
 		hook = true;
 	}
+
+	public Transform getAnchorTransform() {
+		return anchor;
+	}
 }

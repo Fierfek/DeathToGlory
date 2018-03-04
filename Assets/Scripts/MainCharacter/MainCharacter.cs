@@ -12,7 +12,7 @@ public class MainCharacter : MonoBehaviour {
 	CharacterController cc;
 	LedgeControlls lc;
 	MouseRotation mr;
-	
+			
 	public static bool updateStats;
 	public Shotgun shotgun;
 	public PlayerCamera pCamera;
@@ -134,15 +134,24 @@ public class MainCharacter : MonoBehaviour {
 		//	hook.Stop();
 	}
 
+	public void stopHanging(Vector3 movement) {
+		lc.enabled = false;
+		cm.enabled = true;
+		mr.enabled = true;
+
+		cm.stopHanging(movement);
+
+		hanging = false;
+	}
+
 	void OnTriggerEnter(Collider c) {
 
 		if(c.tag.Equals("Ledge")) {
 
 			if (!hanging) {
 				cm.enabled = false;
-				lc.enabled = true;
 				mr.enabled = false;
-				mr.transform.rotation = Quaternion.Euler(Vector3.zero);
+				lc.enabled = true;
 
 				hanging = true;
 				lc.setLedge(c.GetComponentInParent<Ledge>(), c);

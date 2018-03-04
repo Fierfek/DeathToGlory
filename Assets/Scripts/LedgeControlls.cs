@@ -5,8 +5,11 @@ using UnityEngine;
 public class LedgeControlls : MonoBehaviour {
 
 	private CharacterController cc;
+	private MainCharacter mc;
 
 	public float moveSpeed, jumpSpeed, gravity;
+
+	public Transform cameraAnchor;
 
 	private Ledge currentLedge;
 	private Transform[] nodes;
@@ -16,6 +19,9 @@ public class LedgeControlls : MonoBehaviour {
 	private Vector3 hangOffset;
 	private float length;
 
+	private float drop;
+	private bool dropping;
+
 	private float x;
 	private Vector3 direction, lhs;
 
@@ -24,23 +30,23 @@ public class LedgeControlls : MonoBehaviour {
 
 	private bool jump, jumping, climbUp;
 
-	// Use this for initialization
-	void Awake () {
-
-	}
-
-	void Start() {
+	void Awake() {
 		cc = GetComponent<CharacterController>();
+		mc = GetComponent<MainCharacter>();		
 
-		hangOffset = transform.position - hangPoint.position;
 		mask = ~mask;
 		jump = false;
-		climbUp = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (currentLedge != null) {
+
+			float drop = Input.GetAxisRaw("Roll");
+
+			if(drop != 0 || dropping) {
+				mc.stopHanging(direction);
+			}
 
 			if (jump || jumping) {
 				if(jump && !jumping) {
@@ -68,6 +74,7 @@ public class LedgeControlls : MonoBehaviour {
 				
 				if(jumping) {
 					direction.y -= gravity * Time.deltaTime;
+					//mc.stopHanging(direction);
 				}
 
 				if(climbUp) {
@@ -125,14 +132,18 @@ public class LedgeControlls : MonoBehaviour {
 	}
 
 	public void setLedge(Ledge l, Collider c) {
+
 		currentLedge = l;
 		jumping = false;
+
+		transform.rotation = Quaternion.Euler(new Vector3(0, l.transform.rotation.eulerAngles.y, 0));
+		cameraAnchor.localRotation = Quaternion.Euler(Vector3.zero);
+
+		hangOffset = transform.position - hangPoint.position;
 
 		transform.position = c.ClosestPoint(hangPoint.position) + hangOffset;
 		nodes = l.getNodes();
 
 		length = Vector3.Distance(nodes[0].position, nodes[1].position);
-
-		transform.rotation = Quaternion.Euler(new Vector3(0 ,l.transform.rotation.eulerAngles.y, 0));
 	}
 }
