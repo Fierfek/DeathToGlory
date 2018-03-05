@@ -25,6 +25,7 @@ public class MainCharacter : MonoBehaviour {
 	public Hook hook;
 	public GameObject reticle;
 	public LineRenderer line;
+	public SkinnedMeshRenderer axe, gun;
 
 	private bool hanging;
 
@@ -63,7 +64,6 @@ public class MainCharacter : MonoBehaviour {
 
 		if (Input.GetButton("Roll")) {
 			cm.Roll();
-			//roll
 		}
 
 		if (Input.GetAxis("Hook Throw") > hookAxis && spinup) {
@@ -141,13 +141,15 @@ public class MainCharacter : MonoBehaviour {
 
 		cm.stopHanging(movement);
 
+		axe.enabled = true;
+		gun.enabled = true;
+
 		hanging = false;
 	}
 
 	void OnTriggerEnter(Collider c) {
 
 		if(c.tag.Equals("Ledge")) {
-
 			if (!hanging) {
 				cm.enabled = false;
 				mr.enabled = false;
