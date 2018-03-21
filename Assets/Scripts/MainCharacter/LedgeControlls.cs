@@ -32,6 +32,9 @@ public class LedgeControlls : MonoBehaviour {
 
 	public SkinnedMeshRenderer axe, shotgun;
 
+	private Vector3 climbUpPoint;
+	private float climbUpTime, climbUpDistance;
+
 	void Awake() {
 		if(firstTime) {
 			cc = GetComponent<CharacterController>();
@@ -55,7 +58,7 @@ public class LedgeControlls : MonoBehaviour {
 				mc.stopHanging(direction);
 			}
 
-			if (jump || jumping) {
+			if (jump || jumping || climbUp) {
 				if(jump && !jumping) {
 
 					x = Input.GetAxis("Move Horizontal");
@@ -69,13 +72,20 @@ public class LedgeControlls : MonoBehaviour {
 
 					//Raycast to determine if climb over edge or go up.
 					if (!Physics.Raycast(hangPoint.position + Vector3.up, transform.forward, out hit, 1f, mask)) {
-						//Climb up
-						//anim.Trigger("ClimbUp");
-						Debug.Log("climb");
-						climbUp = true;
+						if (!climbUp) {
+							//Climb up
+							//anim.Trigger("ClimbUp");
+							Debug.Log("climb");
+							climbUp = true;
+
+							climbUpPoint = transform.position + (transform.forward * 2) + (Vector3.up * 2);
+							climbUpTime = Time.time + 1f;
+							climbUpDistance = Vector3.Distance(transform.position, climbUpPoint);
+						}
+						
 					} else {
 
-						Debug.Log("Jump");	
+						Debug.Log("Jump");
 
 						//Jump up
 						direction.y = jumpSpeed;
@@ -87,10 +97,18 @@ public class LedgeControlls : MonoBehaviour {
 
 					direction.y -= gravity * Time.deltaTime;
 					mc.stopHanging(direction);
+					currentLedge = null;
 				}
 
 				if(climbUp) {
-
+					Debug.Log(Time.time <= climbUpTime);
+					if(Time.time <= climbUpTime) {
+						direction = (climbUpPoint - transform.position).normalized * climbUpDistance * (moveSpeed/2);
+					} else {
+						climbUp = false;
+						mc.stopHanging(direction);
+						currentLedge = null;
+					}
 				}
 
 				cc.Move(direction * Time.deltaTime);
@@ -136,7 +154,9 @@ public class LedgeControlls : MonoBehaviour {
 	}
 
 	public void Jump() {
-		jump = true;
+		if(!jumping) {
+			jump = true;
+		}
 	}
 
 	public bool getJumping() {

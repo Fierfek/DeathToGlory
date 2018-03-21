@@ -28,6 +28,7 @@ public class MainCharacter : MonoBehaviour {
 	public SkinnedMeshRenderer axe, gun;
 
 	private bool hanging;
+	private float timer;
 
 	// Use this for initialization
 	void Start() {
@@ -57,6 +58,7 @@ public class MainCharacter : MonoBehaviour {
 		if (Input.GetButton("Jump")) {
 			if(hanging) {
 				lc.Jump();
+				timer = Time.time + 1f;
 			} else {
 				cm.Jump();
 			}
@@ -119,17 +121,14 @@ public class MainCharacter : MonoBehaviour {
 
 	//This checks if you collide with something before getting to the point you hooked;
 	void OnControllerColliderHit(ControllerColliderHit hit) {
-		if(lc.enabled) {
-			
-		}
-
-		if(hit.gameObject.tag.Equals("Environment")) {
-			angle = Vector3.Angle(hit.normal, Vector3.up);
-			if (angle > 40 && angle <= 85) {
-				cm.slide(hit.normal);
+		if(!lc.enabled) {
+			if (hit.gameObject.tag.Equals("Environment")) {
+				angle = Vector3.Angle(hit.normal, Vector3.up);
+				if (angle > 40 && angle <= 85) {
+					cm.slide(hit.normal);
+				}
 			}
 		}
-
 		//if(!cc.isGrounded && !hook.Throwing() && hook.isActiveAndEnabled) {
 		//	hook.Stop();
 	}
@@ -150,15 +149,14 @@ public class MainCharacter : MonoBehaviour {
 	void OnTriggerEnter(Collider c) {
 
 		if(c.tag.Equals("Ledge")) {
-			if (!hanging) {
-				cm.enabled = false;
-				mr.enabled = false;
-				lc.enabled = true;
+			Debug.Log("triggered");
+			if(timer <= Time.time) {
+				if (!hanging) {
+					cm.enabled = false;
+					mr.enabled = false;
+					lc.enabled = true;
 
-				hanging = true;
-				lc.setLedge(c.GetComponentInParent<Ledge>(), c);
-			} else {
-				if(lc.getJumping()) {
+					hanging = true;
 					lc.setLedge(c.GetComponentInParent<Ledge>(), c);
 				}
 			}
