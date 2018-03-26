@@ -6,9 +6,8 @@ public class GraveGolem : Enemy {
 
     public GameObject gruntPrefab;
     public GameObject shockwave;
-    public float shockWavePeriod;
     public GameObject head;
-    public float cooldown = 5f;
+    public float cooldown = 15f;
     float timer;
     public float spawnRange = 8f;
 
@@ -38,7 +37,15 @@ public class GraveGolem : Enemy {
 
         else if (CheckAgro())
         {
-            if(getDistToPlayer() <= attackRange)
+            if(cooldown> 0)
+            {
+                cooldown -= Time.deltaTime;
+            }
+            if(getDistToPlayer() <= 5 && cooldown<=0)
+            {
+
+            }
+            else if(getDistToPlayer() <= attackRange)
             {
                 Shockwave();
             }
@@ -64,7 +71,7 @@ public class GraveGolem : Enemy {
     {
         GameObject poundAttack = Instantiate(shockwave);
 
-        Destroy(poundAttack, shockWavePeriod);
+        
     }
 
     void SpawnEnemy()
@@ -77,4 +84,11 @@ public class GraveGolem : Enemy {
     {
         return aggroRange > getDistToPlayer();
     }
+
+    //This script will throw player at a pillar.
+    void ThrowPlayer()
+    {
+
+    }
+
 }

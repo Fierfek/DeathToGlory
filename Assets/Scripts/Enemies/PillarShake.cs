@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(Rigidbody))]
 public class PillarShake : MonoBehaviour {
 
-    int range = 5;
+    public float shakeSpeed = 5;
+    
 	// Use this for initialization
 	void Start () {
 		
@@ -20,14 +24,17 @@ public class PillarShake : MonoBehaviour {
         if(other.tag == "Shockwave")
         {
             ShakePillar();
+            Debug.Log("Pillar hit with Shockwave");
         }
     }
 
     void ShakePillar()
     {
-        float xChange = transform.rotation.x + Random.Range(-5.0f, 5.0f);
-        float zChange = transform.rotation.z + Random.Range(-5.0f, 5.0f);
-        transform.Rotate(xChange, 0, zChange);
+        float xChange = transform.rotation.x + Random.Range(-10.0f, 10.0f);
+        float yChange = transform.rotation.y + Random.Range(-10.0f, 10.0f);
+        float zChange = transform.rotation.z + Random.Range(-10.0f, 10.0f);
+        Vector3 change = new Vector3(xChange, yChange, zChange);
+        transform.Rotate(change);
         
     }
 }
