@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestTest : MonoBehaviour {
+public class QuestTestOld : MonoBehaviour {
 
     public GameObject door1;
     public GameObject door2;
@@ -12,6 +12,7 @@ public class QuestTest : MonoBehaviour {
     bool encounter2Strt = false;
     bool encounter1Fin = false;
     bool encounter2Fin = false;
+    public bool isEncounter2 = false;
 
     float counter = 10f;
 
@@ -24,7 +25,7 @@ public class QuestTest : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (encounter1Strt)
+        if (encounter1Strt && !isEncounter2)
         {
             if (counter > 0)
             {
@@ -41,12 +42,7 @@ public class QuestTest : MonoBehaviour {
             
         }
 
-        if (encounter1Fin)
-        {
-            textbox.text = "Encounter Area A Completed!";
-        }
-
-        if (encounter2Strt )
+        if (encounter2Strt && isEncounter2)
         {
 
             if (counter > 0)
@@ -65,39 +61,36 @@ public class QuestTest : MonoBehaviour {
             textbox.text = time;
         }
 
-        if (encounter2Fin)
+        else
         {
-            textbox.text = "Encounter Area B Completed!";
+
         }
-
-
+        
 
 	}
 
-
-    public void RecieveTriggerEnter(string fromObject, Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if(fromObject == "Encounter Area A" && !encounter1Strt)
+        if (other.tag == "Player")
         {
-            if(other.tag == "Player")
+            if (!encounter1Fin  && !isEncounter2)
             {
+                encounter1Strt = true;
                 door1.SetActive(true);
                 door2.SetActive(true);
-                encounter1Strt = true;
-                Debug.Log("Encounter A Starting!");
+                
+                Debug.Log("Entered Zone 1");
             }
-        }
-
-        if(fromObject == "Encounter Area B" && !encounter2Strt)
-        {
-            if(other.tag == "Player")
+            if(!encounter2Fin && isEncounter2)
             {
-                door2.SetActive(true);
                 encounter2Strt = true;
-                Debug.Log("Encounter B Starting!");
+                door2.SetActive(true);
+                Debug.Log("Entered Zone 2");
                 counter = 15f;
             }
         }
     }
+
+
 
 }
