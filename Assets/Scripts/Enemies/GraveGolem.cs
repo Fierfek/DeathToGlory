@@ -70,8 +70,6 @@ public class GraveGolem : Enemy {
     void Shockwave()
     {
         GameObject poundAttack = Instantiate(shockwave);
-
-        
     }
 
     void SpawnEnemy()

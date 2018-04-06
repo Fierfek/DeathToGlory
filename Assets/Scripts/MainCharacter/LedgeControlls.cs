@@ -6,6 +6,7 @@ public class LedgeControlls : MonoBehaviour {
 
 	private CharacterController cc;
 	private MainCharacter mc;
+	private Animator anim;
 
 	public float moveSpeed, jumpSpeed, gravity;
 
@@ -39,6 +40,7 @@ public class LedgeControlls : MonoBehaviour {
 		if(firstTime) {
 			cc = GetComponent<CharacterController>();
 			mc = GetComponent<MainCharacter>();
+			anim = GetComponentInChildren<Animator>();
 
 			mask = ~mask;
 			jump = false;
@@ -55,6 +57,7 @@ public class LedgeControlls : MonoBehaviour {
 			float drop = Input.GetAxisRaw("Roll");
 
 			if(drop != 0 || dropping) {
+				anim.SetTrigger("Hang Drop");
 				mc.stopHanging(direction);
 			}
 
@@ -74,8 +77,7 @@ public class LedgeControlls : MonoBehaviour {
 					if (!Physics.Raycast(hangPoint.position + Vector3.up, transform.forward, out hit, 1f, mask)) {
 						if (!climbUp) {
 							//Climb up
-							//anim.Trigger("ClimbUp");
-							Debug.Log("climb");
+							anim.SetTrigger("Climb Up");
 							climbUp = true;
 
 							climbUpPoint = transform.position + (transform.forward * 2) + (Vector3.up * 2);
@@ -85,7 +87,7 @@ public class LedgeControlls : MonoBehaviour {
 						
 					} else {
 
-						Debug.Log("Jump");
+						anim.SetTrigger("Jump Up");
 
 						//Jump up
 						direction.y = jumpSpeed;
@@ -103,7 +105,7 @@ public class LedgeControlls : MonoBehaviour {
 				if(climbUp) {
 					Debug.Log(Time.time <= climbUpTime);
 					if(Time.time <= climbUpTime) {
-						direction = (climbUpPoint - transform.position).normalized * climbUpDistance * (moveSpeed/2);
+						direction = (climbUpPoint - transform.position).normalized * climbUpDistance * (moveSpeed);
 					} else {
 						climbUp = false;
 						mc.stopHanging(direction);
@@ -115,6 +117,8 @@ public class LedgeControlls : MonoBehaviour {
 
 			} else {
 				x = Input.GetAxis("Move Horizontal");
+
+				anim.SetFloat("Hang X", x);
 
 				if (x != 0) {
 					direction = nodes[1].position - nodes[0].position;
@@ -180,5 +184,7 @@ public class LedgeControlls : MonoBehaviour {
 
 		axe.enabled = false;
 		shotgun.enabled = false;
+
+		anim.SetTrigger("Hang");
 	}
 }
