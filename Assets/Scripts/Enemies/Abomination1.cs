@@ -117,7 +117,7 @@ public class Abomination1 : Enemy {
     //This is self explanatory. You throw a bomb with a certain amount of force. The bomb detonates after 
     void ThrowBomb()
     {
-        //transform.Rotate(new Vector3(0, 90 * Time.deltaTime, 0));
+        
         GameObject bomb = Instantiate(grenadePrefab, transform.position + transform.forward *1 + transform.up, transform.rotation);
         Rigidbody rb = bomb.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);

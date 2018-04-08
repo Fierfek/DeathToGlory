@@ -13,6 +13,8 @@ public class GraveGolem : Enemy {
     public float pillarDetectRnge = 200f; //This is the max pillar detect range for golem;
     public float spawnRange = 8f;
     float timer;
+    int spwnedMobs = 0;
+    bool hasAttacked = false;
 
     Animator anim;
     // Use this for initialization
@@ -39,22 +41,32 @@ public class GraveGolem : Enemy {
 
         else if (CheckAgro())
         {
-            if (cooldown > 0)
+            if (cooldown > 0 && hasAttacked)
             {
                 cooldown -= Time.deltaTime;
+                if(cooldown<= 0)
+                {
+                    hasAttacked = false;
+                }
             }
-            if (getDistToPlayer() <= 2 && cooldown <= 0)
+            if (getDistToPlayer() <= 2 && cooldown <= 0 && !hasAttacked )
             {
                 ThrowPlayer();
+                hasAttacked = true;
             }
-            else if (getDistToPlayer() <= attackRange)
+            else if (getDistToPlayer() <= attackRange && !hasAttacked)
             {
                 Shockwave();
+                hasAttacked = true;
             }
-            else if (getDistToPlayer() <= spawnRange)
+
+        
+            else if (getDistToPlayer() <= spawnRange && spwnedMobs <5)
             {
                 SpawnEnemy();
+                spwnedMobs++;
             }
+            
             else
             {
                 isAttacking = false;
@@ -71,14 +83,16 @@ public class GraveGolem : Enemy {
 
     void Shockwave()
     {
-        GameObject poundAttack = Instantiate(shockwave);
-
+        Vector3 swPos = new Vector3(1, 0, 1);
+        GameObject poundAttack = Instantiate(shockwave, transform.position + swPos , transform.rotation);
+        poundAttack.transform.eulerAngles = new Vector3(90, 0, 0);
 
     }
 
     void SpawnEnemy()
     {
-        GameObject newEnemy = Instantiate(gruntPrefab);
+
+        GameObject newEnemy = Instantiate(gruntPrefab, transform.position + (transform.right * 2), transform.rotation);
 
     }
 
@@ -113,10 +127,10 @@ public class GraveGolem : Enemy {
 
         //Golem turns towards closest pillar
 
-        //Then Throws player at pillar with some force.        
-        Rigidbody playerBody = target.GetComponent<Rigidbody>();
-        playerBody.AddRelativeForce(closestPillar.transform.position * hurlForce, ForceMode.VelocityChange);
+        //Then Throws player at pillar with some force. 
+        Vector3 pillarDirection = closestPillar.transform.position - transform.position;
 
+        GameObject.Find("Main Character").GetComponent<Rigidbody>().AddForce(pillarDirection * hurlForce, ForceMode.VelocityChange);
         //Damage player due to impact or grab.
     }
 
