@@ -19,7 +19,7 @@ public class Abomination1 : Enemy {
     public GameObject grenadePrefab;
     public GameObject shockwave;
 
-    bool hasAttacked = false;
+    bool hasAttacked;
 	// Use this for initialization
 	void Start () {
         movementSpeed = 2.0f;
@@ -32,6 +32,7 @@ public class Abomination1 : Enemy {
         agent.speed = movementSpeed;
         health.SetHealth(20f);
         timer = cooldown;
+        hasAttacked = false;
 
         //This is just for testing purposes with throwing bombs.
         //InvokeRepeating("ThrowBomb", 2.0f, 1f);

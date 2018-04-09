@@ -12,6 +12,7 @@ public class MainCharacter : MonoBehaviour {
 	CharacterController cc;
 	LedgeControlls lc;
 	MouseRotation mr;
+    PlyrThrown pt;
 			
 	public static bool updateStats;
 	public Shotgun shotgun;
@@ -162,4 +163,24 @@ public class MainCharacter : MonoBehaviour {
 			}
 		}
 	}
+
+    public void SetParalyze(bool isParalyzed)
+    {
+        if (isParalyzed)
+        {
+            cm.enabled = false;
+            cc.enabled = false;
+            lc.enabled = false;
+            pt.enabled = true;
+        }
+        else
+        {
+            cm.enabled = true;
+            cc.enabled = true;
+            lc.enabled = false;
+            pt.enabled = false;
+        }
+
+     
+    }
 }

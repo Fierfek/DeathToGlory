@@ -7,6 +7,7 @@ public class GraveGolem : Enemy {
     public GameObject gruntPrefab;
     public GameObject shockwave;
     public GameObject head;
+    public GameObject thrwHand;
     public float cooldown = 20f;
     public float hurlRange = 10f;
     public float hurlForce = 20f;
@@ -14,7 +15,12 @@ public class GraveGolem : Enemy {
     public float spawnRange = 8f;
     float timer;
     int spwnedMobs = 0;
-    bool hasAttacked = false;
+    int spawnAmount = 5;
+    bool hasAttacked;
+
+    public Transform handTransform;
+
+    PlyrThrown pThrow;
 
     Animator anim;
     // Use this for initialization
@@ -29,6 +35,8 @@ public class GraveGolem : Enemy {
         agent.speed = movementSpeed;
         health.SetHealth(20f);
         timer = cooldown;
+        pThrow = target.GetComponent<PlyrThrown>();
+        hasAttacked = false;
     }
 
     // Update is called once per frame
@@ -61,7 +69,7 @@ public class GraveGolem : Enemy {
             }
 
         
-            else if (getDistToPlayer() <= spawnRange && spwnedMobs <5)
+            else if (getDistToPlayer() <= spawnRange && spwnedMobs <spawnAmount)
             {
                 SpawnEnemy();
                 spwnedMobs++;
@@ -104,7 +112,7 @@ public class GraveGolem : Enemy {
     //This script will throw player at a pillar.
     void ThrowPlayer()
     {
-        //Need to figure out how to hold the player for a time.
+
 
         //Check if there is a pillar in range, then throw player to the nearest pillar.
         Collider[] colliders = Physics.OverlapSphere(transform.position, hurlRange);
@@ -130,8 +138,27 @@ public class GraveGolem : Enemy {
         //Then Throws player at pillar with some force. 
         Vector3 pillarDirection = closestPillar.transform.position - transform.position;
 
-        GameObject.Find("Main Character").GetComponent<Rigidbody>().AddForce(pillarDirection * hurlForce, ForceMode.VelocityChange);
-        //Damage player due to impact or grab.
+        Grab(pillarDirection); //This grabs player then throws the player to pillar.
+
+
+    }
+
+    void Grab(Vector3 direction)
+    {
+        if(Vector3.Distance(target.transform.position, transform.position)< 2)
+        {
+
+            target.GetComponent<MainCharacter>().SetParalyze(true);
+            target.transform.parent = handTransform;
+
+            //Set local position to 0,0,0
+            //Possibly rotation also.
+
+            target.transform.parent = null;
+            pThrow.StartThrow(direction);
+
+           
+        }
     }
 
 
