@@ -13,6 +13,7 @@ public class MainCharacter : MonoBehaviour {
 	LedgeControlls lc;
 	MouseRotation mr;
     PlyrThrown pt;
+	Animator anim;
 			
 	public static bool updateStats;
 	public Shotgun shotgun;
@@ -28,7 +29,7 @@ public class MainCharacter : MonoBehaviour {
 	public LineRenderer line;
 	public SkinnedMeshRenderer axe, gun;
 
-	private bool hanging;
+	private bool hanging, attacking;
 	private float timer;
 
 	// Use this for initialization
@@ -37,10 +38,12 @@ public class MainCharacter : MonoBehaviour {
 		cm = GetComponent<CharacterMovement>();
 		cc = GetComponent<CharacterController>();
 		lc = GetComponent<LedgeControlls>();
-		lc.enabled = false;
+		pt = GetComponent<PlyrThrown>();
 		mr = GetComponentInChildren<MouseRotation>();
+		anim = GetComponentInChildren<Animator>();
 
 		hanging = false;
+		lc.enabled = false;
 
 		health.SetHealth(100);
 		mask = ~mask;
@@ -48,8 +51,25 @@ public class MainCharacter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetButton("Basic Attack")) {
-			BasicAttack();
+
+		if (attacking) {
+			cc.Move(anim.deltaPosition);
+
+			if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= .99) {
+				
+				if (Input.GetButton("Basic Attack")) {
+					BasicAttack();
+				} else {
+					attacking = false;
+					SetParalyze(false);
+					anim.SetBool("Attack", false);
+				}
+
+			}
+		} else {
+			if (Input.GetButton("Basic Attack")) {
+				BasicAttack();
+			}
 		}
 
 		if (Input.GetButton("Sprint")) {
@@ -106,7 +126,6 @@ public class MainCharacter : MonoBehaviour {
 				pCamera.ThrowHook();
 				cm.Hook();
 			}
-
 			if(!hook.Throwing() && hook.Moving()) {
 				cm.gravityOff();
 			}
@@ -117,7 +136,10 @@ public class MainCharacter : MonoBehaviour {
 	}
 
 	public void BasicAttack() {
-
+		SetParalyze(true);
+		attacking = true;
+		anim.SetBool("Attack", true);
+		
 	}
 
 	//This checks if you collide with something before getting to the point you hooked;
@@ -169,14 +191,14 @@ public class MainCharacter : MonoBehaviour {
         if (isParalyzed)
         {
             cm.enabled = false;
-            cc.enabled = false;
+            //cc.enabled = false;
             lc.enabled = false;
             pt.enabled = true;
         }
         else
         {
             cm.enabled = true;
-            cc.enabled = true;
+            //cc.enabled = true;
             lc.enabled = false;
             pt.enabled = false;
         }
