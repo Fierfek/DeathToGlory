@@ -12,7 +12,7 @@ public class MainCharacter : MonoBehaviour {
 	CharacterController cc;
 	LedgeControlls lc;
 	MouseRotation mr;
-	Animator anim;
+    PlyrThrown pt;
 			
 	public static bool updateStats;
 	public Shotgun shotgun;
@@ -37,7 +37,6 @@ public class MainCharacter : MonoBehaviour {
 		cm = GetComponent<CharacterMovement>();
 		cc = GetComponent<CharacterController>();
 		lc = GetComponent<LedgeControlls>();
-		anim = GetComponentInChildren<Animator>();
 		lc.enabled = false;
 		mr = GetComponentInChildren<MouseRotation>();
 
@@ -118,7 +117,7 @@ public class MainCharacter : MonoBehaviour {
 	}
 
 	public void BasicAttack() {
-		anim.SetTrigger("Attack");
+
 	}
 
 	//This checks if you collide with something before getting to the point you hooked;
@@ -164,4 +163,24 @@ public class MainCharacter : MonoBehaviour {
 			}
 		}
 	}
+
+    public void SetParalyze(bool isParalyzed)
+    {
+        if (isParalyzed)
+        {
+            cm.enabled = false;
+            cc.enabled = false;
+            lc.enabled = false;
+            pt.enabled = true;
+        }
+        else
+        {
+            cm.enabled = true;
+            cc.enabled = true;
+            lc.enabled = false;
+            pt.enabled = false;
+        }
+
+     
+    }
 }

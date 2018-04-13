@@ -12,8 +12,8 @@ public class Abomination2 : Enemy {
     public int period = 4;
     //With frequency = 4, then it creates one revolution.
     //90 degrees per second.
-    bool direction = false;
-    bool hasAttacked = false;
+    bool direction;
+    bool hasAttacked;
     
     Animator anim;
     public GameObject bulletPrefab;
@@ -34,6 +34,8 @@ public class Abomination2 : Enemy {
         agent.speed = movementSpeed;
         health.SetHealth(20f);
         cooldown = timer;
+        direction = false;
+        hasAttacked = false;
     }
 
     // Update is called once per frame
