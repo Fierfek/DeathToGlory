@@ -47,7 +47,6 @@ public class LedgeControlls : MonoBehaviour {
 			firstTime = false;
 		}
 
-		
 	}
 
 	// Update is called once per frame
