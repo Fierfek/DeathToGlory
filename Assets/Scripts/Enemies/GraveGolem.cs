@@ -151,6 +151,8 @@ public class GraveGolem : Enemy {
             target.GetComponent<MainCharacter>().SetParalyze(true);
             target.transform.parent = handTransform;
 
+            target.transform.position = new Vector3(0, 0, 0);
+            target.rotation = Quaternion.Euler(0, 0, 0);
             //Set local position to 0,0,0
             //Possibly rotation also.
 
