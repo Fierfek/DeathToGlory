@@ -42,6 +42,12 @@ public class Enemy : MonoBehaviour {
         return (-transform.position + target.position);
     }
 
+    //returns target position with y = this enemy y ----- fixes issue with enemy model pivoting up to look at enemy jumping/on ledge
+    protected Vector3 getTargetPosition()
+    {
+        return new Vector3(target.position.x, transform.position.y, target.position.z);
+    }
+
     protected bool checkBack()
     {
         return Physics.Raycast(transform.position, -transform.forward, 2);

@@ -56,7 +56,7 @@ public class NewEnlargedDraugr : Enemy {
         {
             if (!tooClose())
             {
-                transform.LookAt(target.position);
+                transform.LookAt(getTargetPosition());
             }
 
             if (anim.GetCurrentAnimatorStateInfo(0).IsTag("idle"))
@@ -82,7 +82,7 @@ public class NewEnlargedDraugr : Enemy {
             }
             else if (state.Equals("walkForward"))
             {
-                agent.SetDestination(target.position);
+                agent.SetDestination(getTargetPosition());
                 if (getDistToPlayer() <= attackRange)
                 {
                     state = "attack";
