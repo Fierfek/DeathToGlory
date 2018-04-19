@@ -61,11 +61,11 @@ public class NewEnlargedDraugr : Enemy {
 
             if (anim.GetCurrentAnimatorStateInfo(0).IsTag("idle"))
             {
-                if ((getDistToPlayer() < agent.stoppingDistance) && checkBack())
+                if ((getDistToPlayer() < agent.stoppingDistance) && !checkBack())
                 {
                     anim.SetTrigger("walkBack");
                     state = "walkBack";
-                    agent.SetDestination(transform.TransformVector(2 * vectorToTarget()));
+                    agent.SetDestination(transform.TransformVector(vectorToTarget().normalized));
                 }
                 else
                 {

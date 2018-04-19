@@ -50,7 +50,9 @@ public class Enemy : MonoBehaviour {
 
     protected bool checkBack()
     {
-        return Physics.Raycast(transform.position, -transform.forward, 2);
+        bool y = Physics.Raycast(transform.position, -transform.forward, 2);
+        if (y) Debug.DrawRay(transform.position, -transform.forward, Color.yellow);
+        return y;
     }
 
 
