@@ -7,6 +7,12 @@ public class QuestTest : MonoBehaviour {
 
     public GameObject door1;
     public GameObject door2;
+    public GameObject enemyPrefab1;
+    public GameObject enemyPrefab2;
+    public GameObject spawnPoint1;
+    public GameObject spawnPoint2;
+    public GameObject spawnPoint3;
+
     public Text textbox;
     bool encounter1Strt = false;
     bool encounter2Strt = false;
@@ -84,6 +90,8 @@ public class QuestTest : MonoBehaviour {
                 door1.SetActive(true);
                 door2.SetActive(true);
                 encounter1Strt = true;
+                //Enemies spawn
+
                 Debug.Log("Encounter A Starting!");
             }
         }
