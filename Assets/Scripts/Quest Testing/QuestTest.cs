@@ -7,13 +7,11 @@ public class QuestTest : MonoBehaviour {
 
     public GameObject door1;
     public GameObject door2;
-    public GameObject enemyPrefabA;
-    public GameObject enemyPrefabB;
-    public Transform spawnPointA;
-    public Transform spawnPointB;
+    public GameObject [] enemyPrefabA;
+    public GameObject[] enemyPrefabB;
+    public Transform [] spawnPointA;
+    public Transform [] spawnPointB;
 
-    public int enemyAmountA;
-    public int enemyAmountB;
 
     int enemyCounter;
     List<Enemy> enemiesAlive;
@@ -32,6 +30,7 @@ public class QuestTest : MonoBehaviour {
 	void Start () {
         door1.SetActive(false);
         door2.SetActive(false);
+        enemiesAlive = new List<Enemy>();
 	}
 	
 	// Update is called once per frame
@@ -39,13 +38,6 @@ public class QuestTest : MonoBehaviour {
 
         if (encounter1Strt && !encounter1Fin)
         {
-            /*
-            if (counter > 0)
-            {
-                counter -= Time.deltaTime; // For testing the area closing and opening with a timer.
-            }
-            */
-
             if(enemyCounter > 0)
             {
 
@@ -55,6 +47,12 @@ public class QuestTest : MonoBehaviour {
                 
             }
 
+           /*
+            if (counter > 0)
+            {
+                counter -= Time.deltaTime; // For testing the area closing and opening area with a timer.
+            }
+            */
             else
             {
                 encounter1Fin = true;
@@ -72,6 +70,7 @@ public class QuestTest : MonoBehaviour {
         if (encounter1Fin)
         {
             textbox.text = "Encounter Area A Completed!";
+            enemiesAlive.Clear();
         }
 
         if (encounter2Strt && !encounter2Fin)
@@ -106,6 +105,7 @@ public class QuestTest : MonoBehaviour {
         if (encounter2Fin)
         {
             textbox.text = "Encounter Area B Completed!";
+            enemiesAlive.Clear();
         }
 
 
@@ -122,16 +122,16 @@ public class QuestTest : MonoBehaviour {
                 door1.SetActive(true);
                 door2.SetActive(true);
                 encounter1Strt = true;
-                enemyCounter = enemyAmountA;
+                enemyCounter = enemyPrefabA.Length;
                 //Enemies spawn
 
                 //Instantiate using a for loop.
-                for(int i =0; i< enemyAmountA; i++)
+                for(int i =0; i< enemyCounter; i++)
                 {
 
-                    GameObject minion = Instantiate(enemyPrefabA, spawnPointA.transform.position, spawnPointA.rotation);
+                    GameObject minion = Instantiate(enemyPrefabA[i], spawnPointA[i].position, spawnPointA[i].rotation);
                     enemiesAlive.Add(minion.GetComponent<Enemy>());
-
+                    Debug.Log("A minion spawned.");
 
                     //bool isDead = minion.GetComponent<Enemy>().isDead(); //Just checking if the bool works.
                 }
@@ -155,12 +155,12 @@ public class QuestTest : MonoBehaviour {
             {
                 door2.SetActive(true);
                 encounter2Strt = true;
-                enemyCounter = enemyAmountB;
+                enemyCounter = enemyPrefabB.Length;
                 //Enemies spawn
 
                 for (int i = 0; i < enemyCounter; i++)
                 {
-                    GameObject minion = Instantiate(enemyPrefabB, spawnPointB.transform.position, spawnPointB.rotation);
+                    GameObject minion = Instantiate(enemyPrefabA[i], spawnPointB[i], spawnPointB[i]);
                     enemiesAlive.Add(minion.GetComponent<Enemy>());
                 }
 
