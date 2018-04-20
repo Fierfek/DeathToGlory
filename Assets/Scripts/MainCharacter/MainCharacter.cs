@@ -14,6 +14,8 @@ public class MainCharacter : MonoBehaviour {
 	MouseRotation mr;
     PlyrThrown pt;
 	Animator anim;
+
+	CapsuleCollider axeCol;
 			
 	public static bool updateStats;
 	public Shotgun shotgun;
@@ -41,9 +43,11 @@ public class MainCharacter : MonoBehaviour {
 		pt = GetComponent<PlyrThrown>();
 		mr = GetComponentInChildren<MouseRotation>();
 		anim = GetComponentInChildren<Animator>();
+		axeCol = GetComponentInChildren<CapsuleCollider>();
 
 		hanging = false;
 		lc.enabled = false;
+		axeCol.enabled = false;
 
 		health.SetHealth(100);
 		mask = ~mask;
@@ -63,6 +67,7 @@ public class MainCharacter : MonoBehaviour {
 					attacking = false;
 					SetParalyze(false);
 					anim.SetBool("Attack", false);
+					axeCol.enabled = false;
 				}
 
 			}
@@ -139,7 +144,7 @@ public class MainCharacter : MonoBehaviour {
 		SetParalyze(true);
 		attacking = true;
 		anim.SetBool("Attack", true);
-		
+		axeCol.enabled = true;
 	}
 
 	//This checks if you collide with something before getting to the point you hooked;
