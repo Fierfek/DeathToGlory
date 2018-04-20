@@ -19,4 +19,8 @@ public class EncounterTest : MonoBehaviour {
     {
         eventScript.RecieveTriggerEnter(name, other);
     }
+
+
+
+
 }
