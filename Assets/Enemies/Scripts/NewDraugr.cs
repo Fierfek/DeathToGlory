@@ -110,6 +110,8 @@ public class NewDraugr : Enemy {
         
     }
 
+    
+
     private bool tooClose()
     {
         return ((transform.position.x - target.position.x) < .25) && ((transform.position.z - target.position.z) < .25);
