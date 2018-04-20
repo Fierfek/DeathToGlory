@@ -30,6 +30,7 @@ public class GraveGolem : Enemy {
         aggroRange = 8f;
         attackRange = 4f;
         name = "Grave Golem";
+        dead = false;
 
         anim = GetComponent<Animator>();
         agent.speed = movementSpeed;

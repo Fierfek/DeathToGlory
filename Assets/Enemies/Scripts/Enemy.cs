@@ -60,4 +60,9 @@ public class Enemy : MonoBehaviour {
     protected bool checkAgro() {
 		return aggroRange > getDistToPlayer();
 	}
+
+    public bool isDead()
+    {
+        return dead;
+    }
 }
