@@ -97,7 +97,12 @@ public class NewEnlargedDraugr : Enemy {
             }
             else if (state.Equals("attack123"))
             {
-                state = "idle";
+                
+                if (anim.GetCurrentAnimatorStateInfo(0).IsTag("attack")) ;
+                else {
+                    state = "idle";
+                    attack(damageAmount);
+                }
             }
 
         }

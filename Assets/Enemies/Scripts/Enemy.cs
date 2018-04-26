@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour {
 	
 	protected Health health, playerHealth;			//All enemies should have health or sometype of damage taking system
     protected float damageAmount;       //amount of damage done to player on each attack hit
+    protected float timer;
     protected NavMeshAgent agent;		//nav mesh agent on object 
     protected Transform target;			//the transform of the target to move towards
     protected bool isAttacking;         //true if this enemy is in their attack animation
@@ -29,6 +30,7 @@ public class Enemy : MonoBehaviour {
         playerHealth = target.gameObject.GetComponent<Health>();
 		tag = "Enemy";
         isAttacking = false;
+        timer = 0;
     }
 
     //finds the distance between character and grunt
@@ -39,7 +41,8 @@ public class Enemy : MonoBehaviour {
 
     protected Vector3 vectorToTarget()
     {
-        return (-transform.position + target.position);
+       Vector3 yeah = (-transform.position + target.position);
+        return yeah;
     }
 
     //returns target position with y = this enemy y ----- fixes issue with enemy model pivoting up to look at enemy jumping/on ledge
@@ -55,6 +58,10 @@ public class Enemy : MonoBehaviour {
         return y;
     }
 
+    protected void attack(float damageAmnt)
+    {
+        playerHealth.TakeDamage(damageAmnt);
+    }
 
     //true is in aggro range
     protected bool checkAgro() {

@@ -55,13 +55,14 @@ public class NewDraugr : Enemy {
         //if enemy is in attack animation is won't move
         else if (checkAgro())
         {
+            if(!state.Equals("attack123"))
                 transform.LookAt(getTargetPosition());
             
         
 
             if (anim.GetCurrentAnimatorStateInfo(0).IsTag("idle"))
             {
-                if ((getDistToPlayer() < agent.stoppingDistance) && !checkBack())
+                if ((getDistToPlayer() < agent.stoppingDistance -1) && !checkBack())
                 {
                     anim.SetTrigger("walkBack");
                     state = "walkBack";
@@ -94,10 +95,17 @@ public class NewDraugr : Enemy {
             {
                 selectAttack();
                 state = "attack123";
+                
             }
             else if (state.Equals("attack123"))
             {
-                state = "idle";
+                if (anim.GetCurrentAnimatorStateInfo(0).IsTag("attack"))
+                {
+                    if(getDistToPlayer() <= attackRange && vectorToTarget().x < 2 && vectorToTarget().z >= 0)
+                        attack(damageAmount);
+                    state = "idle";
+                    
+                }
             }
 
         }
