@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class EncounterTest : MonoBehaviour {
 
+    //This must be attached to a box collider.
+
     private QuestTest eventScript;
     // Use this for initialization
     void Start () {

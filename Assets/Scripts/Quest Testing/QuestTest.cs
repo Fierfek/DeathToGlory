@@ -7,6 +7,7 @@ public class QuestTest : MonoBehaviour {
 
     public GameObject door1;
     public GameObject door2;
+    public GameObject[] doors;
     public GameObject [] enemyPrefabA;
     public GameObject[] enemyPrefabB;
     public Transform [] spawnPointA;
@@ -142,7 +143,7 @@ public class QuestTest : MonoBehaviour {
 
         if(fromObject == "Encounter Area A" && encounter1Strt) // For removing enemies from list when dead.
         {
-            if(other.tag== "Enemy" && other.GetComponent<Enemy>().isDead())
+            if(other.tag== "Enemy" && other.GetComponent<Enemy>().isDead() && enemiesAlive.Contains(other.GetComponent<Enemy>()))
             {
                 enemiesAlive.Remove(other.GetComponent<Enemy>());
                 Destroy(other, despawnTime);
@@ -169,10 +170,13 @@ public class QuestTest : MonoBehaviour {
             }
         }
 
-        if(fromObject == "Encounter Area B" && encounter2Strt)
+        if(fromObject == "Encounter Area B" && encounter2Strt )
         {
-            enemiesAlive.Remove(other.GetComponent<Enemy>());
-            Destroy(other, despawnTime);
+            if (other.tag == "Enemy" && other.GetComponent<Enemy>().isDead() && enemiesAlive.Contains(other.GetComponent<Enemy>()))
+            {
+                enemiesAlive.Remove(other.GetComponent<Enemy>());
+                Destroy(other, despawnTime);
+            }
         }
     }
 
