@@ -99,9 +99,11 @@ public class NewDraugr : Enemy {
             }
             else if (state.Equals("attack123"))
             {
-                if (anim.GetCurrentAnimatorStateInfo(0).IsTag("attack"))
+                timer += Time.deltaTime;
+                if (anim.GetCurrentAnimatorStateInfo(0).IsTag("attack") && timer >= 1)
                 {
-                    if(getDistToPlayer() <= attackRange && vectorToTarget().x < 2 && vectorToTarget().z >= 0)
+                    timer = 0;
+                    if (getDistToPlayer() <= attackRange)
                         attack(damageAmount);
                     state = "idle";
                     
@@ -127,17 +129,17 @@ public class NewDraugr : Enemy {
     private void selectAttack()
     {
         float temp = Random.value;
-        if (temp < .3)
+        if (temp < .5)
         {
             anim.SetTrigger("attack1");
         }
         else if (temp < .6)
         {
-            anim.SetTrigger("combo1");
+            anim.SetTrigger("attack1");
         }
         else
         {
-            anim.SetTrigger("combo2");
+            anim.SetTrigger("attack1");
         }
     }
 
