@@ -55,17 +55,18 @@ public class NewDraugr : Enemy {
         //if enemy is in attack animation is won't move
         else if (checkAgro())
         {
-                transform.LookAt(getTargetPosition());
-            
-        
+            if (!tooClose())
+            {
+                transform.LookAt(target.position);
+            }
 
             if (anim.GetCurrentAnimatorStateInfo(0).IsTag("idle"))
             {
-                if ((getDistToPlayer() < agent.stoppingDistance) && !checkBack())
+                if ((getDistToPlayer() < agent.stoppingDistance) && checkBack())
                 {
                     anim.SetTrigger("walkBack");
                     state = "walkBack";
-                    agent.SetDestination(transform.TransformVector(vectorToTarget().normalized));
+                    agent.SetDestination(transform.TransformVector(2 * vectorToTarget()));
                 }
                 else
                 {
@@ -82,7 +83,7 @@ public class NewDraugr : Enemy {
             }
             else if (state.Equals("walkForward"))
             {
-                agent.SetDestination(getTargetPosition());
+                agent.SetDestination(target.position);
                 if (getDistToPlayer() <= attackRange)
                 {
                     state = "attack";
@@ -108,6 +109,8 @@ public class NewDraugr : Enemy {
         }
         
     }
+
+    
 
     private bool tooClose()
     {

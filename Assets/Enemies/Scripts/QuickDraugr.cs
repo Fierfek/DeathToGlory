@@ -56,7 +56,7 @@ public class QuickDraugr : Enemy {
         {
             if (!tooClose())
             {
-                transform.LookAt(getTargetPosition());
+                transform.LookAt(target.position);
             }
             if (anim.GetCurrentAnimatorStateInfo(0).IsTag("idle"))
             {

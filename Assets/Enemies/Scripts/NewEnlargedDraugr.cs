@@ -56,16 +56,16 @@ public class NewEnlargedDraugr : Enemy {
         {
             if (!tooClose())
             {
-                transform.LookAt(getTargetPosition());
+                transform.LookAt(target.position);
             }
 
             if (anim.GetCurrentAnimatorStateInfo(0).IsTag("idle"))
             {
-                if ((getDistToPlayer() < agent.stoppingDistance) && !checkBack())
+                if ((getDistToPlayer() < agent.stoppingDistance) && checkBack())
                 {
                     anim.SetTrigger("walkBack");
                     state = "walkBack";
-                    agent.SetDestination(transform.TransformVector(vectorToTarget().normalized));
+                    agent.SetDestination(transform.TransformVector(2 * vectorToTarget()));
                 }
                 else
                 {
@@ -82,7 +82,7 @@ public class NewEnlargedDraugr : Enemy {
             }
             else if (state.Equals("walkForward"))
             {
-                agent.SetDestination(getTargetPosition());
+                agent.SetDestination(target.position);
                 if (getDistToPlayer() <= attackRange)
                 {
                     state = "attack";
