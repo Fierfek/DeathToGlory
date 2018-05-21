@@ -30,7 +30,6 @@ public class GraveGolem : Enemy {
         aggroRange = 8f;
         attackRange = 4f;
         name = "Grave Golem";
-        dead = false;
 
         anim = GetComponent<Animator>();
         agent.speed = movementSpeed;
@@ -60,13 +59,11 @@ public class GraveGolem : Enemy {
             }
             if (getDistToPlayer() <= 2 && cooldown <= 0 && !hasAttacked )
             {
-                anim.SetTrigger("GolemThrow");
                 ThrowPlayer();
                 hasAttacked = true;
             }
             else if (getDistToPlayer() <= attackRange && !hasAttacked)
             {
-                anim.SetTrigger("GolemShock");
                 Shockwave();
                 hasAttacked = true;
             }
@@ -74,7 +71,6 @@ public class GraveGolem : Enemy {
         
             else if (getDistToPlayer() <= spawnRange && spwnedMobs <spawnAmount)
             {
-                anim.SetTrigger("GolemRoar");
                 SpawnEnemy();
                 spwnedMobs++;
             }
@@ -82,14 +78,14 @@ public class GraveGolem : Enemy {
             else
             {
                 isAttacking = false;
-                anim.SetTrigger("GolemIdle");
                 //animation
             }
-             if(anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")){
-               agent.SetDestination(target.position);
+            /*
+             * if(anim.GetCurrentAnimatorStateInfo(0).IsName("Walking")){
+             
             }
 
-            
+             */
         }
     }
 

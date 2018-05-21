@@ -120,9 +120,9 @@ public class CharacterMovement : MonoBehaviour {
 			Vector3.OrthoNormalize(ref normal, ref moveDirection);
 			moveDirection *= moveSpeed;
 
-			cameraRotation = cameraAnchor.transform.rotation;
-			RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
-			cameraAnchor.transform.rotation = cameraRotation;
+			//cameraRotation = cameraAnchor.transform.rotation;
+			//RotateTo(Mathf.Atan2(moveDirection.x, moveDirection.z) * radToDeg);
+			//cameraAnchor.transform.rotation = cameraRotation;
 
 			if (jump) {
 				moveDirection = normal * (jumpSpeed/2);

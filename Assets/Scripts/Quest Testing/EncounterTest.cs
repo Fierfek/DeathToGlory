@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class EncounterTest : MonoBehaviour {
 
-    //This must be attached to a box collider.
-
     private QuestTest eventScript;
     // Use this for initialization
     void Start () {
@@ -21,8 +19,4 @@ public class EncounterTest : MonoBehaviour {
     {
         eventScript.RecieveTriggerEnter(name, other);
     }
-
-
-
-
 }
