@@ -122,7 +122,7 @@ public class QuestTestV2 : MonoBehaviour
         if (fromObject == "Encounter Area A" && encounterStart[0]) // For removing enemies from list when dead.
         {
             //Checking if the enemy is dead and is in the list to despawn.
-            if (other.tag == "Enemy" && other.GetComponent<Enemy>().isDead() && enemiesAlive.Contains(other.GetComponent<Enemy>()))
+            if (other.tag == "Enemy" && (other.GetComponent<Health>().GetHealth() <= 0) && enemiesAlive.Contains(other.GetComponent<Enemy>()))
             {
                 enemyCounter--;
                 enemiesAlive.Remove(other.GetComponent<Enemy>()); // This will remove the enemy from the alive list.
